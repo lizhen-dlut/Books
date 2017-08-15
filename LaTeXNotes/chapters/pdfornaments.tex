@@ -1,0 +1,59 @@
+\chapter{\LaTeX 花花草草的装饰：Ornaments}
+	
+	\latexpackage{pgfornament}包提供了一系列的小的装饰性的图案。通过这个包，可以很轻松地在文档中插入，如 \pgfornament[width = 2cm, color = red]{68}、\pgfornament[width = 2cm, color = red]{2}、\pgfornament[width = 2cm, color = red]{107} 等图案。
+	
+	首先引入\latexpackage{pgfornament}：
+\begin{minted}{latex}
+\usepackage{pgfornament}
+\end{minted}
+
+在\latexpackage{pgfornament}中，最主要的命令是：\latexcmd{pgfornament}。该命令的使用方式如下：
+\begin{minted}{latex}
+\pgfornament[<options>]{number}
+\end{minted}
+其中，\mintinline{latex}{number}以数字的形式指定需要使用的小图案。\mintinline{latex}{options}可以对图形进行必要的个性化设置。
+
+命令使用举例：
+
+\begin{center}
+	\begin{longtable}{|l|c|}
+	\hline 
+	\textbf{命令} & \textbf{图形} \\ \hline
+	\mintinline{latex}{\pgfornament{1} %默认} & \pgfornament[width=2cm]{1}  \endhead \hline
+	\mintinline{latex}{\pgfornament[width=4em]{1}} & \pgfornament[width=4em]{1}  \\ \hline
+	\mintinline{latex}{\pgfornament[height=4em]{1}} & \pgfornament[height=4em]{1}  \\ \hline
+	
+	\mintinline{latex}{\pgfornament[scale=0.5,width=4em]{1}} & \pgfornament[scale=0.5,width=4em]{1}  \\ \hline
+	\mintinline{latex}{\pgfornament[scale=1.5]{1}} & \pgfornament[scale=1.5]{1}  \\ \hline
+	
+	\mintinline{latex}{\pgfornament[color=red]{1}} & \pgfornament[color=red]{1}  \\ \hline
+	\mintinline{latex}{\pgfornament[opacity=0.5]{1}} & \pgfornament[opacity=0.5]{1}  \\ \hline
+	\mintinline{latex}{\pgfornament[opacity=0.1]{1}} & \pgfornament[opacity=0.1]{1}  \\ \hline
+	
+	\mintinline{latex}{\pgfornament[ydelta=10pt]{1}} & \pgfornament[ydelta=10pt]{1}  \\ \hline
+	
+	\mintinline{latex}{\pgfornament[symmetry=v]{1}} & \pgfornament[symmetry=v]{1}  \\ \hline
+	\mintinline{latex}{\pgfornament[symmetry=h]{1}} & \pgfornament[symmetry=h]{1}  \\ \hline
+	\mintinline{latex}{\pgfornament[symmetry=c]{1}} & \pgfornament[symmetry=c]{1}  \\ \hline
+	
+	\caption{\latexpackage{pgfornament}使用举例}
+	\label{table:pgfornamentusagesample}
+\end{longtable}
+\end{center}
+
+其中，\latexcmd{pgfornament}可以设置的\mintinline{latex}{options}包括（具体含义可以参考\ref{table:pgfornamentusagesample}）：
+
+\begin{longtable}{|l|c|l|}
+	\hline
+	\textbf{属性名称} & \textbf{默认值} & \textbf{说明} \endhead \hline
+	scale & 1 & 高和宽的比值 \\ \hline
+	width & \{\} & 宽度\\ \hline
+	height & \{\} & 高度 \\ \hline
+	color & black & 颜色\\ \hline
+	opacity & 1 & 透明度 \\ \hline
+	ydelta & opt & 垂直调整距离 \\ \hline
+	symmetry & none & 对称性 \\ \hline
+	
+	\caption{\latexpackage{pgfornament}可以设置的options列表}
+	\label{table:pgfornamentoptions}
+\end{longtable}

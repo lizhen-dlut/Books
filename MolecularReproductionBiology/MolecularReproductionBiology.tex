@@ -1,0 +1,92 @@
+\documentclass[11pt,a4paper]{ctexbook}
+
+\input{./chapters/settings}
+\input{./chapters/terminology.tex}
+
+%\setCJKmainfont[AutoFakeBold=true]{Microsoft YaHei UI}
+\setCJKsansfont{Microsoft YaHei UI}
+\setCJKmonofont{Microsoft YaHei UI}
+
+\renewcommand{\underline}{\uline}
+
+\newcommand{\firstgls}[1]{\textbf{\,\gls{#1}}（\glsdesc{#1}）}
+\newcommand{\firstacr}[1]{\textbf{\,\gls{#1}}（\glssymbol{#1}）}
+\newcommand{\glsacr}[1]{\gls{#1}（\glssymbol{#1}）}
+\newcommand{\firstall}[1]{\textbf{\,\gls{#1}}（\glsdesc{#1}, \glssymbol{#1}）}
+
+\newcommand{\myGlossaryEntry}[1]{\textbf{\ \gls{#1}}（\glssymbol{#1}，\glsdesc{#1}）}
+
+\newcommand{\proteinName}[1]{\textcolor{red}{#1}}
+\newcommand{\lifeSpan}[2]{ $ #1 \sim #2 $ }
+
+\newcommand{\myHumanGene}[1]{\textbf{\textcolor{blue}{\textit{#1}}}}
+
+\newcommand{\mykeyword}[1]{\textbf{\textcolor{blue}{#1}}}
+\newcommand{\myImportantPoint}[1]{\textbf{\uline{#1}}}
+\newcommand{\myInlineGlossary}[1]{\textbf{\uline{#1}}}
+
+\newcommand{\myFigurePlaceholder}{
+    \vspace{2ex}
+    \noindent \centerline{\kaishu{\huge 此处需插入图片}}
+    \vspace{2ex}
+}
+
+\setcounter{secnumdepth}{4}
+
+
+\newcommand{\documentTitle}{
+    \texorpdfstring{\kaishu{细胞生物学\\分子生物学\\发育生物学\\生殖生物学\\基础知识}}
+    {细胞生物学、分子生物学、发育生物学与生殖生物学基础知识}
+}
+
+\hypersetup{
+	%hidelinks,
+	pdftitle={\documentTitle},
+	pdfauthor={张洋},
+	pdfsubject={细胞生物学, 分子生物学, 发育生物学, 生殖生物学},
+	pdfkeywords={细胞生物学, 分子生物学, 发育生物学, 生殖生物学},
+	pdfstartview=FitH,
+	pdfproducer = {张洋},
+	pdfcreator = {张洋},
+	pdfcopyright = {张洋},
+	pdflicenseurl = {https://github.com/hiatcg}
+}
+
+\begin{document}
+
+\title{\documentTitle}
+\author{\kaishu{张洋}}
+\date{\kaishu{\today}}
+\maketitle
+
+\tableofcontents
+
+\part{细胞生物学}
+\input{./chapters/CellBiologyIntroduction.tex}
+\input{./chapters/CellAndGenomes.tex}
+\input{./chapters/CellChemistryAndBioenergetics.tex}
+\input{./chapters/Proteins.tex}
+\input{./chapters/CellMembrane.tex}
+\input{./chapters/CellMembraneTransport.tex}
+\input{./chapters/CellSignaling.tex}
+
+\input{./chapters/CellSignaling.tex}
+\input{./chapters/Cytoskeleton.tex}
+\input{./chapters/CellCycle.tex}
+\input{./chapters/CellDeath.tex}
+\input{./chapters/CellJunctionsExtracellularMatrix.tex}
+
+
+\part{生殖生物学}
+\input{./chapters/PrincipalInvestigatorsIntroduction.tex}
+\input{./chapters/ReproductionBiologyPreface.tex}
+\input{./chapters/ReproductionIntroduction.tex}
+\input{./chapters/ReproductionOrgans.tex}
+\input{./chapters/Spermatogenesis.tex}
+
+\part{附录}
+
+
+\printnoidxglossary
+
+\end{document}

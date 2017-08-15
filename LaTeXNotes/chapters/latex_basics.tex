@@ -1,0 +1,95 @@
+\chapter{\LaTeX 基础知识}
+
+\section{\LaTeX 源文件的结构}
+所有的完整的\LaTeX 源文件都分为导言和正文两大部分。出现在“\verb|\begin{document}|”之前的部分，称为“导言”部分。出现在“\verb|\begin{document}|”和“\verb|\end{document}|”的内容称为“正文”部分。在完整的\LaTeX 源文件的“\verb|\end{document}|”之后的任何字符都会被忽略。
+
+\section{\LaTeX 提供的文档类型}
+
+文档类型简称为“文类”，是有\LaTeX 命令编写的、用于规范某种文档格式排版的程序性文件，其扩展名为“.cls”。完整的\LaTeX 源文件的第一条命令，就需要指定该文档的类型。比如“\verb|\documentclass[11pt,a4paper,oneside]{book}|”。
+
+\section{\LaTeX 命令简介}
+
+\LaTeX 命令以反斜杠“\textbackslash” 作为开头，其后跟命令名\footnote{这意味着在\LaTeX 源文件中需要通过特殊方法输入“\textbackslash”，其输入方法为通过命令“\textbackslash textbackslash”。}。\LaTeX 命令可以分为以下两种类型：
+
+\begin{enumerate}
+	\item \label{latexcmd_type_one} 反斜杠“\textbackslash”后跟多个英文字母组成的命令，命令区分大小写。这类命令以空格、数字或非字母符号作为结束标志。这类命令包括\latexbuiltincmd{\textbackslash newline}、\latexbuiltincmd{\textbackslash textbackslash}、\latexbuiltincmd{\textbackslash today}等。
+	\item 反斜杠“\textbackslash”后跟一个非字母符号组成的命令名， 如“\latexbuiltincmd{\textbackslash !}”、“\latexbuiltincmd{\textbackslash~\^}”等。
+\end{enumerate}
+
+在编译源文件时，紧跟在类型\ref{latexcmd_type_one}之后的所有空格，都将被系统视为命令结束符而被忽略。如果需要在这类命令后保留一个空格，可以采用以下几种方法：
+
+\begin{enumerate}
+	\item 可在命令之后紧跟一对大括号{}和一个空格。比如命令“\textbackslash textbackslash\{\} ”
+	\item 紧跟一个反斜杠和一个空格。比如命令“\textbackslash textbackslash\textbackslash\ ”
+	\item 在命令后紧跟一个“\~”，比如“\textbackslash textbackslash\~”
+\end{enumerate}
+
+\subsection{\LaTeX 命令的参数}
+
+\LaTeX 命令可以附带多个参数，这些参数可以分为必要参数和可选参数：
+
+\begin{enumerate}
+	\item 必要参数：这类参数需要置于一对大括号中，且各参数之间的顺序不能调换。
+	\item 可选参数：这类参数置于一对中括号中，各参数之间以英文逗号“,”分割。
+\end{enumerate}
+
+
+\section{\LaTeX 计数器学习}
+\LaTeX 系统内置了23个计数器，其中17个为序号计数器，6个为控制计数器。
+
+序号计数器包括：
+
+\begin{center}
+	\begin{longtable}{|c|c|l|}
+		\hline
+		计数器名称 & 计数器类别 & 用途简要说明 \endhead \hline
+		part & 序号计数器 & \\ \hline
+		chapter & 序号计数器 & \\ \hline
+		section & 序号计数器 & \\ \hline
+		subsection & 序号计数器 & \\ \hline
+		subsubsection & 序号计数器 & \\ \hline
+		paragraph & 序号计数器 & \\ \hline
+		subparagraph & 序号计数器 & \\ \hline
+		figure & 序号计数器 & \\ \hline
+		table & 序号计数器 & \\ \hline
+		equation & 序号计数器 & \\ \hline
+		footnote & 序号计数器 & \\ \hline
+		mpfootnote & 序号计数器 & \\ \hline
+		page & 序号计数器 & \\ \hline
+		enumi & 序号计数器 & \\ \hline
+		enumii & 序号计数器 & \\ \hline
+		enumiiI & 序号计数器 & \\ \hline
+		enumiv & 序号计数器 & \\ \hline
+		
+		\caption{\LaTeX 内置序号计数器}
+	\end{longtable}
+\end{center}
+控制计数器包括：
+\begin{center}
+	\begin{longtable}{|c|c|l|}
+		\hline
+		计数器名称 & 计数器类别 & 用途简要说明 \endhead \hline
+		bottomnumber & 控制计数器 & \\ \hline
+		dbltopnumber & 控制计数器 & \\ \hline
+		secnumdepth & 控制计数器 & \\ \hline
+		tocdepth & 控制计数器 & \\ \hline
+		topnumber & 控制计数器 & \\ \hline
+		totalnumber & 控制计数器 & \\ \hline
+		
+		\caption{\LaTeX 内置控制计数器}
+	\end{longtable}
+\end{center}
+
+
+\subsection{定义和修改计数器}
+定义一个计数器需要用到的命令是：
+
+\begin{minipage}{\textwidth}
+	\begin{verbatim}
+	\newcounter{⟨counter name⟩}
+	\newcounter{⟨counter name⟩}[⟨parent counter name⟩]
+	\end{verbatim}
+\end{minipage}
+
+
+其中⟨counter name⟩为计数器的名称，可选参数⟨parent counter name⟩ 定义为⟨counter name⟩的上级计数器。

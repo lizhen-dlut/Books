@@ -1,0 +1,149 @@
+\section{通过\mintinline{latex}{hyperref} 包生成PDF表单（PDF Form）}
+	\LaTeX 在生成PDF的同时，也可以生成PDF表单。生成PDF表达需要依赖 \mintinline{latex}{hyperref} 包。同时，PDF表达需要包含在 \mintinline{latex}{Form} 环境中。一个基本的包含PDF表单的\LaTeX 文档如下：
+\begin{minted}{latex}
+\documentclass{ctexbook}
+\usepackage{hyperref}
+\begin{document}
+    \begin{Form}[action=mailto:hiseq@outlook.com,encoding=html]
+        姓名：\TextField[name=name,width=5em]{} \\
+        性别：\ChoiceMenu[radio,default=f,name=sex, align=1]{}
+            {男=m,女=f} \\
+        城市：\ChoiceMenu[combo,name=城市,width=6cm]{}
+            {北京,上海,武汉,广州,深圳} \\
+        爱好：\CheckBox[name=movie]{电影}
+            \CheckBox[name=music]{音乐}
+            \CheckBox[name=painting]{美术} \\
+        \Submit{提交} \qquad \Reset{重置}
+    \end{Form}
+\end{document}
+\end{minted}
+
+这段代码生成的表单如下：
+
+\noindent \fbox{\begin{minipage}{\textwidth}
+	姓名：\TextField[name=name,width=5em]{} \\
+	性别：\ChoiceMenu[radio,default=f,name=sex, align=1]{}
+	{男=m,女=f} \\
+	城市：\ChoiceMenu[combo,name=城市,width=4cm]{}
+	{北京,上海,武汉,广州,深圳} \\
+	爱好：\CheckBox[name=movie]{电影}
+	\CheckBox[name=music]{音乐}
+	\CheckBox[name=painting]{美术}\\
+	\Submit{提交} \qquad	\Reset{重置}
+\end{minipage}}\\
+
+\subsection{\mintinline{latex}{Form} 环境}
+\mintinline{latex}{hyperref} 包提供了\mintinline{latex}{Form} 环境。每一个通过\mintinline{latex}{hyperref} 包实现的PDF表单的\LaTeX 文档都必须包含其只包含一个\mintinline{latex}{Form} 环境。
+
+\begin{minted}{latex}
+\begin{Form}[action=URL,encoding=name,method=name]
+
+\end{Form}
+\end{minted}
+
+\mintinline{latex}{Form} 环境包含三个可选参数：action、encoding和method。
+
+\begin{tabular}{|c|c|l|}
+	\hline
+	action & URL & 接受表单数据的URL（可以是邮箱）。 \\ \hline
+	encoding & name & 表单数据提交的格式，仅可选html。  \\ \hline
+	method & name & 仅针对HTML有用，可选post或get。\\
+	\hline
+\end{tabular}
+
+\subsection{\mintinline{latex}{Form} 控件}
+\mintinline{latex}{hyperref} 包支持的表达控件有六种：
+
+\begin{tabular}{|c|l|}
+	\hline
+	类型 & 使用方法 \\ \hline
+	文本框 & \mintinline{latex}{\TextField[parameters]{label}} \\ \hline
+	复选框 & \mintinline{latex}{\CheckBox[parameters]{label}}   \\ \hline
+	单选框 & \mintinline{latex}{\ChoiceMenu[parameters]{label}{choices}}   \\ \hline
+	PushButton & \mintinline{latex}{\PushButton[parameters]{label}}  \\ \hline
+	提交按钮 & \mintinline{latex}{\Submit[parameters]{label}}  \\ \hline
+	重置按钮 & \mintinline{latex}{\Reset[parameters]{label}}  \\ \hline
+\end{tabular}
+
+\subsubsection{\mintinline{latex}{Form} 控件的可选参数}
+在Form控件的使用方法中，都有可选的parameters，这些可选参数包括：
+
+\begin{longtable}{|c|c|c|l|}
+	\hline
+	参数名 & 值类型 & 默认值 & 说明 \endhead \hline 
+	align & number & 0 & 设置排列方式，0：左对齐；1：居中；2：右对齐。 \\ \hline
+	name & name & & 控件名称，强烈建议设置。\\ \hline
+	charsize &  & & 控件的字体大小。\\ \hline
+	width & 长度 & & 控件宽度。 \\ \hline
+	height & 高度 & & 控件高度。\\ \hline
+	value & & & 控件初始值。 \\ \hline
+	multiline & 布尔值 & false & 控件是否支持多行 \\ \hline
+	\multicolumn{4}{|c|}{颜色相关} \\ \hline
+	backgroundcolor &   & & 背景颜色 \\ \hline
+	bordercolor &  &   & 边框颜色 \\ \hline
+\end{longtable}
+
+
+
+
+\subsection{设置表单字体大小为：auto}
+对于这段代码，生成的表单，在填写时，我们会发现，可能无法正确的处理汉子，比如汉子无法完全显示等。
+
+\begin{minted}{latex}
+\documentclass{ctexbook}
+\usepackage{hyperref}
+\begin{document}
+    \begin{Form}[action=mailto:hiseq@outlook.com,encoding=html]
+        姓名：\TextField[name=name,charsize=0pt,width=5em]{} \\
+        性别：\ChoiceMenu[radio,default=f,charsize=0pt,name=sex, align=1]{}
+            {男=m,女=f} \\
+        城市：\ChoiceMenu[combo,charsize=0pt,name=city,width=6cm]{}
+            {北京,上海,武汉,广州,深圳} \\
+        爱好：\CheckBox[name=movie]{电影}
+            \CheckBox[name=music]{音乐}
+            \CheckBox[name=painting]{美术} \\
+        \Submit{提交} \qquad \Reset{重置}
+    \end{Form}
+\end{document}
+\end{minted}
+
+这段代码生成的表单如下：
+
+\noindent \fbox{\begin{minipage}{\textwidth}
+		姓名：\TextField[name=name,charsize=0pt,width=5em]{} \\
+		性别：\ChoiceMenu[radio,default=f,charsize=0pt,name=sex, align=1]{}
+		{男=m,女=f} \\
+		城市：\ChoiceMenu[combo,charsize=0pt,name=city,width=6cm]{}
+		{北京,上海,武汉,广州,深圳} \\
+		爱好：\CheckBox[name=movie]{电影}
+		\CheckBox[name=music]{音乐}
+		\CheckBox[name=painting]{美术} \\
+		\Submit{提交} \qquad \Reset{重置}
+\end{minipage}}\\
+
+\subsection{表单数据验证}
+PDF表单也可以对所输入的数据进行验证，在\mintinline{latex}{hyperref} 包中是通过JavaScript来实现的。
+
+\begin{tabular}{|c|}
+	\hline
+	validate\\ \hline
+	keystroke\\ \hline
+	format\\ \hline
+	onblur\\ \hline
+	onchange\\ \hline
+	onclick\\ \hline
+	ondblclick\\ \hline
+	onfocus\\ \hline
+	onkeydown\\ \hline
+	onkeypress\\ \hline
+	onkeyup\\ \hline
+	onmousedown\\ \hline
+	onmousemove\\ \hline
+	onmouseout\\ \hline
+	onmouseover\\ \hline
+	onmouseup\\ \hline
+	onselect\\ \hline	
+\end{tabular}\\
+
+
+具体怎么操作，我也不会。
