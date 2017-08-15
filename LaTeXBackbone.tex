@@ -1,69 +1,52 @@
 \documentclass{ctexbook}
-\usepackage{amsmath}  
 
-% 颜色
-\usepackage[table]{xcolor}
-  
-% 首字下沉
-\usepackage{lettrine}
-
-% 分栏
-\usepackage{multicol}
-
-% 数学环境
-\usepackage{amssymb}
-\usepackage{mathrsfs}
-\usepackage{yhmath}
-\usepackage{mathdots}
-\usepackage{mathtools}
-\usepackage{amsthm}
-\usepackage{esint} 
-\usepackage{extarrows}
-
-% 下划线宏包
-\usepackage[normalem]{ulem}
-% LaTeX符号宏包
-\usepackage{hologo}
-% 其他符号
-\usepackage{wasysym}
-% 带箱小页
-\usepackage{boxedminipage}
-% 绘图
-\usepackage{tikz}
-  \usetikzlibrary{calc}
-% 最后一页
-\usepackage{lastpage}
-
-% 编号列表宏包，并自定义了三个列表
-\usepackage[inline]{enumitem}
-
-% 目录和章节样式
-\usepackage{titlesec}
-\usepackage{titletoc}   % 用于目录
-
-\usepackage{array,multirow,makecell}
-
-\usepackage{diagbox}
-\usepackage{longtable}
-\usepackage{graphicx,wrapfig}
-
-\usepackage{animate}
-\usepackage{caption,subcaption}
-% 三线表
-\usepackage{booktabs}  
-
-% 页面修正宏包
-\usepackage{geometry}
-
-% 代码环境
-\usepackage{listings}
-% 复制代码时不复制行号
 \usepackage{accsupp}
-	\newcommand{\emptyaccsupp}[1]
-	{\BeginAccSupp{ActualText={}}#1\EndAccSupp{}}
-	
-\usepackage{tcolorbox} 
+	\newcommand{\emptyaccsupp}[1]{\BeginAccSupp{ActualText={}}#1\EndAccSupp{}}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{animate}
+\usepackage{appendix}
+\usepackage{array}
+\usepackage{booktabs}% 三线表
+\usepackage{boxedminipage}
+\usepackage{caption}
+\usepackage{diagbox}
+\usepackage{enumitem}
+\usepackage{esint}
+\usepackage{extarrows}
+\usepackage{geometry} % 页面修正宏包
+\usepackage{glossaries} % 词汇表支持
+	\makeglossaries
+\usepackage{graphicx}%图形包
+\usepackage{hologo}
+\usepackage{lastpage}
+\usepackage{lettrine} % 首字下沉
+\usepackage{lineno}% 行号
+\usepackage{listings}% 代码环境
+\usepackage{longtable}
+\usepackage{makecell}
+\usepackage{makeidx}%索引支持
+	\makeindex
+\usepackage{mathdots}
+\usepackage{mathrsfs}
+\usepackage{mathtools}
+\usepackage{multicol} % 分栏
+\usepackage{multirow}
+\usepackage[square,super,sort&compress]{natbib} %参考文献
+\usepackage{subcaption}
+\usepackage{tcolorbox}
 	\tcbuselibrary{listings,skins,breakable}
+\usepackage{tikz}
+	\usetikzlibrary{calc}
+\usepackage{titlesec}
+\usepackage{titletoc} % 用于目录
+\usepackage[numindex,numbib]{tocbibind}
+\usepackage{ulem}
+\usepackage{wasysym}
+\usepackage{wrapfig}
+\usepackage{xcolor} % 颜色
+\usepackage{yhmath}
 
 \newtcbox{\latexCommand}[1][green]{on line,
 	before upper=\char`\\, arc=2pt,outer arc=2pt, 
@@ -242,21 +225,6 @@
 		}
 		{}
 
-\usepackage{appendix}
-\renewcommand{\appendixname}{App.}
-
-% 行号
-\usepackage{lineno}
-
-% 索引与参考文献
-\usepackage{imakeidx}
-\makeindex[intoc]
-
-\bibliographystyle{plain}
-\renewcommand{\bibname}{参考文献}
-\usepackage[numindex,numbib]{tocbibind}
-\usepackage[square,super,sort&compress]{natbib}
-
 \usepackage{hyperref}
 \usepackage{hyperxmp}
 
@@ -288,4 +256,8 @@
 \tableofcontents
 
 
+
+\chapter*{附录}
+\printindex
+\printglossaries
 \end{document}
