@@ -1,0 +1,250 @@
+\usepackage{accsupp}
+	\newcommand{\emptyaccsupp}[1]{\BeginAccSupp{ActualText={}}#1\EndAccSupp{}}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{animate}
+\usepackage{appendix}
+\usepackage{array}%表格相关
+\usepackage{bbding}%符号
+\usepackage{booktabs}% 三线表
+\usepackage{boxedminipage}
+\usepackage[format=hang, font=small, textfont=it]{caption}%改变图表标题格式
+\usepackage{color}%颜色
+\usepackage{colortbl}%彩色表格
+\usepackage{diagbox}%斜线表格
+%\usepackage{dingbat}%符号
+\usepackage{enumitem}%定制列表的标签、尺寸等
+\usepackage{esint}
+\usepackage{extarrows}
+\usepackage{fancyvrb}
+\usepackage{fancyhdr}%页眉、页脚定制
+\usepackage{float}%提供H位置选项
+\usepackage{footmisc}%脚注定制
+\usepackage{geometry} % 设计页面尺寸
+\usepackage{glossaries} % 词汇表支持
+	\makeglossaries
+\usepackage{graphicx}%图形包
+\usepackage{hologo}%符号
+\usepackage{imakeidx}%索引支持
+\usepackage{lastpage}%获取最后一页的页码
+\usepackage{layout}
+\usepackage{lettrine} % 首字下沉
+\usepackage{lineno}% 行号
+\usepackage{listings}% 代码环境
+\usepackage{longtable}%处理跨页表格
+\usepackage{ltxtable}
+\usepackage{makecell}%单独控制表格单元
+\usepackage{makeidx}%索引支持
+	\makeindex
+\usepackage{mathdots}
+\usepackage{mathrsfs}
+\usepackage{mathtools}
+\usepackage{mflogo}%符号
+\usepackage{multicol} % 分栏控制
+\usepackage{multirow}%表格跨行排版
+\usepackage{picinpar}%图文绕排
+\usepackage[square,super,sort&compress]{natbib} %定制参考文献
+\usepackage{pifont}%符号
+\usepackage{shapepar}%根据预定义形状排版
+\usepackage{subcaption}%子图标排版
+\usepackage{syntonly}%语法检查
+%	\syntaxonly
+\usepackage{tabularx}%提供X格式说明符
+\usepackage{textcomp}%多种符号
+
+\usepackage{tcolorbox}
+	\tcbuselibrary{listings,skins,breakable}
+\usepackage{tikz}%绘图功能
+	\usetikzlibrary{calc}
+\usepackage{titlesec}%设置标题的对齐方式
+\usepackage{titletoc} % 用于目录
+\usepackage[numindex,numbib]{tocbibind}%把目录、参考文献等加入到目录中
+\usepackage{ulem}
+\usepackage{verbatim}%原文输出功能
+\usepackage{wasysym}
+\usepackage{wrapfig}%图文绕排
+\usepackage{xcolor} % 颜色
+%\usepackage{xtab} % 长表格处理
+\usepackage{xunicode}%Unicode处理
+\usepackage{yhmath}
+
+\newtcbox{\latexCommand}[1][green]{on line,
+	before upper=\char`\\, arc=2pt,outer arc=2pt, 
+	colback=#1!10!white, colframe=#1!50!black, boxsep=1pt, 
+	left=1pt, right=1pt, top=1pt, bottom=1pt,
+	boxrule=0pt, bottomrule=1pt, toprule=1pt}
+  
+\newtcbox{\latexEnvironment}[1][violet!70!cyan]{on line,
+	before upper=\ttfamily,arc=0pt,outer arc=0pt,
+	colback=#1!10!white,colframe=#1!50!black,
+	boxsep=0pt,left=1pt, right=1pt, top=1pt, bottom=1pt,
+	boxrule=0pt, bottomrule=1pt, toprule=1pt}
+
+\newtcbox{\latexPackage}[1][orange!70!red]{on line,
+	before upper={\rule[-0.2ex]{0pt}{1ex}\ttfamily},
+	arc=0.8ex,colback=#1!30!white, colframe=#1!50!black,
+	boxsep=0pt, left=1.5pt, right=1.5pt, top=1pt, bottom=1pt, boxrule=1pt}
+
+\newtcblisting{latexCode}{breakable,
+	skin=bicolor, listing only, 
+	colback=gray!30!white, colbacklower=white, colframe=cyan!75!black,
+	left=6mm, top=2pt, bottom=2pt, fontupper=\small,
+	% listing style
+	listing options={style=tcblatex,
+		keywordstyle=\color{blue}, 
+		breaklines = true,
+		commentstyle=\color{green!50!black},
+		numbers=left,
+		numberstyle=\tiny\color{red!75!black}\emptyaccsupp,
+		emptylines=1,
+		escapeinside=``}
+}
+
+\newtcblisting{cppCode}[1]{breakable,
+	title=#1, fonttitle=\bfseries,
+	skin=bicolor, listing only, 
+	colback=gray!30!white, colbacklower=white, colframe=cyan!75!black,
+	left=6mm, top=2pt, bottom=2pt, fontupper=\small,
+	% listing style
+	listing options={language=c++,
+		keywordstyle=\color{blue}, 
+		commentstyle=\color{green!50!black},
+		numbers=left,
+		numberstyle=\tiny\color{red!75!black}\emptyaccsupp,
+		emptylines=1,
+		escapeinside=``}
+}
+
+\newtcblisting{csCode}[1]{breakable,
+	title=#1, fonttitle=\bfseries,
+	skin=bicolor, listing only, 
+	colback=gray!30!white, colbacklower=white, colframe=cyan!75!black,
+	left=6mm, top=2pt, bottom=2pt, fontupper=\small,
+	% listing style
+	listing options={language=csh,
+		keywordstyle=\color{blue}, 
+		commentstyle=\color{green!50!black},
+		numbers=left,
+		numberstyle=\tiny\color{red!75!black}\emptyaccsupp,
+		emptylines=1,
+		escapeinside=``}
+}
+
+\newtcblisting{rCode}{breakable,
+	skin=bicolor, listing only, 
+	colback=gray!30!white, colbacklower=white, colframe=cyan!75!black,
+	left=6mm, top=2pt, bottom=2pt, fontupper=\small,
+	% listing style
+	listing options={language=R,
+		keywordstyle=\color{blue}, 
+		commentstyle=\color{green!50!black},
+		numbers=left,
+		numberstyle=\tiny\color{red!75!black}\emptyaccsupp,
+		emptylines=1,
+		escapeinside=``}
+}
+
+\newtcblisting{perlCode}{breakable,
+	skin=bicolor, listing only, 
+	colback=gray!30!white, colbacklower=white, colframe=cyan!75!black,
+	left=6mm, top=2pt, bottom=2pt, fontupper=\small,
+	% listing style
+	listing options={language=Perl,
+		keywordstyle=\color{blue}, 
+		commentstyle=\color{green!50!black},
+		numbers=left,
+		numberstyle=\tiny\color{red!75!black}\emptyaccsupp,
+		emptylines=1,
+		escapeinside=``}
+}
+
+\newtcblisting{pythonCode}{breakable,
+	skin=bicolor, listing only, 
+	colback=gray!30!white, colbacklower=white, colframe=cyan!75!black,
+	left=6mm, top=2pt, bottom=2pt, fontupper=\small,
+	% listing style
+	listing options={language=Python,
+		keywordstyle=\color{blue}, 
+		commentstyle=\color{green!50!black},
+		numbers=left,
+		numberstyle=\tiny\color{red!75!black}\emptyaccsupp,
+		emptylines=1,
+		escapeinside=``}
+}
+
+\newtcblisting{latexCodePreview}{
+	skin=bicolor,
+	colback=gray!30!white, colbacklower=pink!50!yellow, colframe=cyan!75!black, 
+	left=6mm, righthand width=0.4\linewidth, fontupper=\small,
+	% listing style
+	listing side text,
+	listing options={style=tcblatex,
+		keywordstyle=\color{blue},
+		commentstyle=\color{green!50!black},
+		numbers=left,
+		numberstyle=\tiny\color{red!75!black}\emptyaccsupp,
+		emptylines=1,
+		escapeinside=``}
+}
+
+\newtcblisting{latexCodePreviewAbove}{
+	skin=bicolor, 
+	colback=gray!30!white, colbacklower=pink!50!red, colframe=cyan!75!black, 
+	left=6mm, righthand width=0.4\linewidth, fontupper=\small,
+	% listing style
+	listing and text,
+	listing options={style=tcblatex,
+		keywordstyle=\color{blue},
+		commentstyle=\color{green!50!black},
+		numbers=left,
+		numberstyle=\tiny\color{red!75!black}\emptyaccsupp,
+		emptylines=1,
+		escapeinside=``}
+}
+
+% Tikz Code
+\newtcblisting{tikzshow}{tikz lower,
+	skin=bicolor,
+	colback=gray!30!white, colbacklower=white, colframe=cyan!75!black, 
+	left=6mm, righthand width=3.5cm, listing outside text,
+	% listing style  
+	listing options={style=tcblatex,
+		language=TeX,
+		basicstyle=\small\ttfamily,
+		keywordstyle=\color{blue},
+		commentstyle=\color{green!50!black},
+		numbers=left,
+		numberstyle=\tiny\color{red!75!black}\emptyaccsupp,
+		emptylines=1,
+		escapeinside=``}
+}
+
+\lstdefinelanguage{tikzlang}{
+	classoffset=0, % 蓝色的keyword
+	morekeywords={begin, end, newcommand, draw, node, 
+								coordinate, tikzstyle, foreach},
+	keywordstyle=\color{keywordcolor},
+	classoffset=1, % 棕色的其他关键字
+	morekeywords={tikzpicture,grid,at, thick,thin,very,ultra,
+								red,green,yellow,blue,cyan,magenta,black,
+								gray,darkgray,lightgray,brown,lime,
+								olive,orange,pink,purple,teal,violet,white},
+	keywordstyle=\color{envicolor},
+	morecomment=[l]{\%},
+	morecomment=[s]{/*}{*/},
+	morestring=[b]',
+	% Escape
+	escapeinside=``
+}
+
+\lstnewenvironment{tikzcode}[1]
+		{\lstset{language=tikzlang, 
+			basicstyle=\small\ttfamily,
+			breaklines=true,%backgroundcolor=\color{white},
+			linewidth=0.7\linewidth,#1}
+		}
+		{}
+
+\usepackage{hyperref}
+\usepackage{hyperxmp}
