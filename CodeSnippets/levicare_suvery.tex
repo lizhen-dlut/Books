@@ -1,0 +1,234 @@
+\documentclass{ctexart}
+\usepackage[left=1cm,right=1cm,bottom=1.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb} 
+\usepackage{array}
+
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{fontenc} 
+\usepackage{graphicx,calc}
+
+\usepackage{ifthen}
+\usepackage{inputenc} 
+\usepackage{lastpage}
+\usepackage{lipsum}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+
+\usepackage{hyperref}
+
+\newcommand{\productName}{\uline{``乐孕安''}}
+\newcommand{\DocumentTitle}{\kaishu{\LARGE 乐土精准医疗 \\
+	\vspace{1ex}
+	 \Large\productName 调查问卷}}
+\newcommand{\doumentAuthor}{张洋}
+
+\hypersetup{
+	pdftitle= {\DocumentTitle} ,
+	pdfauthor= {\doumentAuthor}, 
+	pdfkeywords = {乐孕安, 测试题}, 
+	pdfcreator={\doumentAuthor},
+	pdfproducer={\doumentAuthor},
+	pdfstartview={FitH},
+	hidelinks
+} 
+
+
+\newlength{\lengthOptionA}
+\newlength{\lengthOptionB}
+\newlength{\lengthOptionC}
+\newlength{\lengthOptionD}
+\newlength{\lhalf}
+\newlength{\lquarter}
+\newlength{\lmax}
+\setlength{\lhalf}{0.5\textwidth}
+\setlength{\lquarter}{0.25\textwidth}
+
+\newcommand{\choiceOptions}[4]
+{
+%	\hfill \\[.5pt]%
+	\settowidth{\lengthOptionA}{A.~#1~~~}
+	\settowidth{\lengthOptionB}{B.~#2~~~}
+	\settowidth{\lengthOptionC}{C.~#3~~~}
+	\settowidth{\lengthOptionD}{D.~#4~~~}
+	
+	\ifthenelse{\lengthtest{\lengthOptionA>\lengthOptionB}}
+		{\setlength{\lmax}{\lengthOptionA}}
+		{\setlength{\lmax}{\lengthOptionB}}
+	\ifthenelse{\lengthtest{\lengthOptionC>\lmax}}
+		{\setlength{\lmax}{\lengthOptionC}}{}
+	\ifthenelse{\lengthtest{\lengthOptionD>\lmax}}
+		{\setlength{\lmax}{\lengthOptionD}}{}
+	
+	\ifthenelse{\lengthtest{\lmax>\lhalf}}
+		{\noindent{}A.~#1 \\ B.~#2 \\ C.~#3 \\ D.~#4}
+		{
+			\ifthenelse{\lengthtest{\lmax>\lquarter}}
+				{\noindent\makebox[\lhalf][l]{A.~#1~~~}%
+					\makebox[\lhalf][l]{B.~#2~~~}\\\noindent%
+					\makebox[\lhalf][l]{C.~#3~~~}%
+					\makebox[\lhalf][l]{D.~#4~~~}
+				}%
+				{\noindent\makebox[\lquarter][l]{A.~#1~~~}%
+					\makebox[\lquarter][l]{B.~#2~~~}%
+					\makebox[\lquarter][l]{C.~#3~~~}%
+					\makebox[\lquarter][l]{D.~#4~~~}
+				}
+			}
+}
+
+\newcommand{\zongfenlana}
+{%☆总分栏
+	\begin{center}
+		\setlength{\tabcolsep}{4mm}%列宽
+		\renewcommand{\arraystretch}{1.5}%行高
+		\begin{tabular}{*{12}{|c}|}%格式化列样式
+			\hline
+			题号&一&二&三&四&总分&总分人&复核人\\ \hline
+			分数&&&&&&&\\
+			\hline
+		\end{tabular}
+	\end{center}
+\vskip-3mm
+}
+
+\newcommand{\examineeInfo}
+{
+	\ifthenelse{\isodd{\value{page}}}
+	{
+		\begin{tikzpicture}[remember picture,overlay]
+		\path 	(current page.south east) coordinate (a0);
+		\path 	(current page.north) coordinate (a0);
+		\draw 	(a0)[shift={(0,-2)}] node (a1) [rotate=0,fill=gray!0,minimum height=1cm,minimum width=1cm]
+		{\kaishu{}\zihao{4}
+			区域\raisebox{-2pt}{\rule{35mm}{0.4pt}}%
+			部门\raisebox{-2pt}{\rule{35mm}{0.4pt}}%
+			姓名\raisebox{-2pt}{\rule{35mm}{0.4pt}}%
+			工号\raisebox{-2pt}{\rule{35mm}{0.4pt}}}
+		(a1)[shift={(0,-1.5)}] node [rotate=0,fill=gray!0,minimum height=1cm,minimum width=1cm]
+		{\kaishu{}\zihao{4}...........................................%
+			\raisebox{-0.6ex}{装}............................................%
+			\raisebox{-0.6ex}{订}............................................%
+			\raisebox{-0.6ex}{线}...........................................};
+		\end{tikzpicture}
+	}
+	{
+		\begin{tikzpicture}[remember picture,overlay]
+		\path 	(current page.south east) coordinate (a0);
+		\path 	(current page.north) coordinate (a0);
+		\draw 	(a0)[shift={(0,-2)}] node (a1) [rotate=0,fill=gray!0,minimum height=1cm,minimum width=1cm]
+		{\kaishu{}\zihao{4}
+			区域\raisebox{-2pt}{\rule{35mm}{0.4pt}}%
+			部门\raisebox{-2pt}{\rule{35mm}{0.4pt}}%
+			姓名\raisebox{-2pt}{\rule{35mm}{0.4pt}}%
+			工号\raisebox{-2pt}{\rule{35mm}{0.4pt}}}
+		(a1)[shift={(0,-1.5)}] node [rotate=0,fill=gray!0,minimum height=1cm,minimum width=1cm]
+		{\kaishu{}\zihao{4}...........................................%
+			\raisebox{-0.6ex}{装}............................................%
+			\raisebox{-0.6ex}{订}............................................%
+			\raisebox{-0.6ex}{线}...........................................};
+		\end{tikzpicture}
+	}
+}
+
+\newcommand{\markArea}
+{
+	\setlength{\tabcolsep}{4mm}%列宽
+	\renewcommand{\arraystretch}{1}%行高
+	\begin{tabular}[c]{*{2}{|c}|}
+		\hline
+		评卷人&得分\\\hline
+		&\\[2mm]
+		\hline
+	\end{tabular}
+}
+
+\pagestyle{fancy}
+
+\lhead{\setlength{\unitlength}{1em}
+	\begin{picture}(0,0)
+	\put(0,0){\includegraphics[width=6em]{./figures/logo.pdf}}
+	\end{picture}}
+\chead{\textbf{\productName 调查问卷}} 
+\rhead{\textbf{姓名：\TextField[name=name,width=5em,charsize=0pt,align=1]{\mbox{}}}}
+
+\begin{document}
+	\begin{Form}[action=mailto:zhangyang@cheerlandgroup.com, encoding=html]
+
+	
+	%\examineeInfo
+	
+	\begin{center}
+		{\DocumentTitle}
+	\end{center}
+
+%	\zongfenlana
+	
+%	\begin{center}
+%		\begin{tabular}{p{15em}p{15em}p{15em}}
+%			\multicolumn{1}{c}{ \Submit[name=Submit]{\large 提\qquad 交}} & & \multicolumn{1}{c}{\Reset[name=Reset]{\large 重\qquad  置}}
+%		\end{tabular}
+%	\end{center}
+	
+	\newcommand{\answerField}[1][\theenumi]{\uline{\TextField[name=#1,charsize=0pt,width=4em,align=1]{\mbox{}}}。}
+	
+	\newcommand{\blockAnswer}[1]{答：
+		
+		\TextField[name=#1,charsize=0pt, height=5cm, width=0.9\textwidth, multiline=true]{\ }}
+	
+	\newcommand{\glossaryDefinitionAnswer}[1]{
+		\TextField[name=#1,width=0.9\textwidth,charsize=0pt,multiline=true]{}}
+	
+	\newcommand{\fillBlankField}[1]{\TextField[name=#1,width=0.3\textwidth,charsize=0pt]{}}
+	
+	\begin{enumerate}
+		%\item[\kaishu{一}]{\makebox[2mm][r]{、}\kaishu{}选择题}
+		
+		\item 对于染色体异常检测产品，您更关心\answerField{} 
+			\choiceOptions{能够检测的片段大小：比如核型检测的片段大小约在3M$ \sim $ 10M}{检测的断点精度：即是否满足PCR、FISH等检测需求}{检测的变异类型是否全面：数目变异、缺失、重复、倒位、易位}{其他}
+
+		\item 目前来说，Array-CGH可以检测的染色体结构变异包括\answerField{} 
+			\choiceOptions{染色体缺失}{染色体重复}{染色体倒位}{染色体易位}
+			
+		\item 若有一产品，其相对于现有产品来说，最大的优势是可以检测出样本中存在的染色体的倒位和易位，您认为临床上该产品价值如何\answerField{} 
+			\choiceOptions{有比较高的价值}{有价值，但价值较低}{基本上无价值}{保留意见}
+		
+		\item 若有一产品，其相对于现有产品来说，最大的优势是检测精度更高，满足PCR和FISH等下游实验的要求，您认为临床上该产品价值如何\answerField{} 
+			\choiceOptions{有比较高的价值}{有价值，但价值较低}{基本上无价值}{保留意见}
+						
+		\item 若一产品，其可用来检测染色体的结构变异（数目变异、缺失、重复、\uline{倒位}、\uline{易位}），其片段精度在100KB，断点精度为1KB，您认为临床上是否有应用价值\answerField{} 
+			\choiceOptions{有}{无}{临床说不清楚，但是可以考虑科研}{保留意见}
+
+		\item 若一产品，其可用来检测染色体的结构变异（数目变异、缺失、重复、\uline{倒位}、\uline{易位}），其片段精度在100KB，断点精度为1KB，对其检测的结果，临床实践中，您是否有意愿通过PCR、FISH等方法来验证\answerField{} 
+			\choiceOptions{有}{无}{视情况而定}{保留意见}
+						
+		\item 对于不明原因的不孕不育患者，您认为其原因更可能是\answerField{} 
+			\choiceOptions{心理原因}{遗传物质异常}{免疫方面的原因}{保留意见}
+			
+		\item 我们认为，不明原因不孕不育患者的诊断过程中，应优先考虑染色体问题，您是否赞同\answerField{} 
+			\choiceOptions{赞同}{不赞同}{部分赞同}{保留意见}
+		
+		\item 临床诊疗中，了解染色体变异的大致区域即可满足需求，您是否赞同\answerField{} 
+			\choiceOptions{赞同}{不赞同}{部分赞同}{保留意见}
+			
+		\item 临床实践中，不同染色体变异在人群中分布情况是\answerField{} 
+			\choiceOptions{}{不赞同}{部分赞同}{保留意见}
+		
+		\item 您是否了解过\productName\ \answerField{} 
+			\choiceOptions{没有}{有}{部分了解}{保留意见}
+		
+		\item 您认为可以用来在临床上检测染色体结构变异的产品有哪些\answerField{} 
+			\choiceOptions{核型分析}{NIPT}{CNV-Seq}{\productName}
+			
+		\item 如果您需要了解\productName，您更希望我们提供哪些材料\answerField{} 
+			\choiceOptions{产品宣传手册}{发表的相关文章}{与其他技术相比的技术优势}{其他材料}
+		
+		\item 对于成熟的高通量测序产品，在临床实践中，您认为最重要的问题是\answerField{} 
+			\choiceOptions{产品的科学性}{是否能够解决世纪问题}{是否得到相关部门批准}{价格和周期}		
+	\end{enumerate}
+\end{Form}
+\end{document}
