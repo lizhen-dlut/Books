@@ -1,0 +1,71 @@
+\documentclass{ctexbook}
+
+\input{../preamble}
+\input{../Terminology}
+\bibliographystyle{plain} %推荐JabRef工具
+
+\newcommand{\documentTitle}
+    {\texorpdfstring{数学学习笔记}{数学学习笔记}}
+\newcommand{\documentAuthor}{Roger Young}
+\newcommand{\documentKeywords}{高等数学,线性代数,概率论,数理统计}
+\newcommand{\documentSubject}{高等数学,线性代数,概率论,数理统计}
+
+\hypersetup{
+	pdftitle=\documentTitle,
+	pdfauthor=\documentAuthor,
+	pdfsubject= \documentSubject,
+	pdfkeywords= \documentKeywords,
+	pdfstartview=FitH,
+	pdfproducer = \documentAuthor,
+	pdfcreator = \documentAuthor, 
+	pdfcopyright = \documentAuthor, 
+	pdflicenseurl = {https://github.com/hiatcg}
+}
+
+\begin{document}
+\title{\documentTitle}
+\author{\documentAuthor}
+
+\maketitle
+\tableofcontents
+
+\input{./chapters/函数与极限}
+\input{./chapters/导数与微分}
+\input{./chapters/微分中值定理与导数的应用}
+\input{./chapters/不定积分}
+\input{./chapters/定积分}
+\input{./chapters/定积分的应用}
+\input{./chapters/微分方程}
+\input{./chapters/向量代数与空间解析几何}
+\input{./chapters/多元函数微分法及其应用}
+\input{./chapters/重积分}
+\input{./chapters/曲线积分与曲面积分}
+\input{./chapters/无穷级数}
+\input{./chapters/积分表}
+
+\input{./chapters/行列式}
+\input{./chapters/矩阵及其运算}
+\input{./chapters/矩阵的初等变换与线性方程组}
+\input{./chapters/向量组的线性相关性}
+\input{./chapters/相似矩阵及二次型}
+\input{./chapters/线性空间与线性变换}
+
+
+\input{./chapters/概率论的基本概念}
+\input{./chapters/随机变量及其分布}
+\input{./chapters/多维随机变量及其分布}
+\input{./chapters/随机变量的数字特征}
+\input{./chapters/大数定律及中心极限定理}
+\input{./chapters/样本及抽样分布}
+\input{./chapters/参数估计}
+\input{./chapters/假设检验}
+\input{./chapters/方差分析及回归分析}
+\input{./chapters/bootstrap方法}
+\input{./chapters/随机过程及其统计描述}
+\input{./chapters/马尔可夫链}
+
+
+\chapter*{附录}
+\printindex
+\printglossaries
+\end{document}
