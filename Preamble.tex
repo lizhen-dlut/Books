@@ -1,3 +1,4 @@
+\usepackage{ctex}
 \usepackage{accsupp}
 	\newcommand{\emptyaccsupp}[1]{\BeginAccSupp{ActualText={}}#1\EndAccSupp{}}
 \usepackage{amsmath}
@@ -14,7 +15,7 @@
 \usepackage{chemformula}
 \usepackage{color}%颜色
 \usepackage{colortbl}%彩色表格
-\usepackage{ctex}
+
 \usepackage{ctexcap}
 \usepackage{diagbox}%斜线表格
 %\usepackage{dingbat}%符号
@@ -73,7 +74,7 @@
 \usepackage{tikz}%绘图功能
 	\usetikzlibrary{shapes}
 \usepackage{titlesec}%设置标题的对齐方式
-\usepackage{titletoc} % 用于目录
+%\usepackage{titletoc} % 用于目录
 \usepackage[numindex,numbib]{tocbibind}%把目录、参考文献等加入到目录中
 \usepackage{tracefnt}
 \usepackage{ulem}
@@ -132,20 +133,20 @@
 		escapeinside=``}
 }
 
-\newtcblisting{csCode}[1]{breakable,
-	title=#1, fonttitle=\bfseries,
-	skin=bicolor, listing only, 
-	colback=gray!30!white, colbacklower=white, colframe=cyan!75!black,
-	left=6mm, top=2pt, bottom=2pt, fontupper=\small,
-	% listing style
-	listing options={language=csh,
-		keywordstyle=\color{blue}, 
-		commentstyle=\color{green!50!black},
-		numbers=left,
-		numberstyle=\tiny\color{red!75!black}\emptyaccsupp,
-		emptylines=1,
-		escapeinside=``}
-}
+%\newtcblisting{csCode}[1]{breakable,
+%	title=#1, fonttitle=\bfseries,
+%	skin=bicolor, listing only, 
+%	colback=gray!30!white, colbacklower=white, colframe=cyan!75!black,
+%	left=6mm, top=2pt, bottom=2pt, fontupper=\small,
+%	% listing style
+%	listing options={language=csh,
+%		keywordstyle=\color{blue}, 
+%		commentstyle=\color{green!50!black},
+%		numbers=left,
+%		numberstyle=\tiny\color{red!75!black}\emptyaccsupp,
+%		emptylines=1,
+%		escapeinside=``}
+%}
 
 \newtcblisting{rCode}{breakable,
 	skin=bicolor, listing only, 
