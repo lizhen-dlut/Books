@@ -1,2 +1,57 @@
 \chapter{行列式}
 
+行列式是线性代数中常用的工具。本章主要介绍$ n $阶行列式的定义、性质及其计算方法。
+
+\section{二阶与三阶行列式}
+
+用\terminologyItem{消元法}解二元线性方程组
+
+\begin{equation} \label{equationBinaryLinearEquationsGeneralForm}
+	\left\{
+	\begin{array}{r}
+		a_{11}x_1 + a_{12}x_2 = b_1, \\
+		a_{21}x_1 + a_{22}x_2 = b_2. \\
+	\end{array} \right.
+\end{equation}
+
+为消去未知数$ x_2 $，以$ a_{22} $和$ a_{12} $分别乘上列方程的两端，然乎两个方程相减，得到
+
+\begin{equation}
+	(a_{11}a_{22}-a_{12}a_{21})x_{1} = b_{1}a_{22}-a_{12}b_{2};
+\end{equation}
+
+类似地，消去$ x_1 $，得
+\begin{equation}
+	(a_{11}a_{22}-a_{12}a_{21})x_{2} = a_{11}b_{2}-b_{1}a_{21};
+\end{equation}
+
+当$ a_{11}a_{22}-a_{12}a_{21} \ne 0 $时，求得方程组 \ref{equationBinaryLinearEquationsGeneralForm} 的解为：
+
+\begin{equation} \label{equationBinaryLinearEquationsGeneralFormResult}
+	\left\{
+	\begin{array}{r}
+	x_{1} = \dfrac{b_{1}a_{22}-a_{12}b_{2}}{a_{11}a_{22}-a_{12}a_{21}} \\
+	\\
+	x_{2} = \dfrac{a_{11}b_{2}-b_{1}a_{21}}{a_{11}a_{22}-a_{12}a_{21}}
+	
+	\end{array} \right.
+\end{equation}
+
+\ref{equationBinaryLinearEquationsGeneralFormResult} 式中的分子、分母都是四个数分两对相乘、再相减而得，其中分母$ (a_{11}a_{22}-a_{12}a_{21}) $是由方程组 \ref{equationBinaryLinearEquationsGeneralForm} 的四个系数确定的，把这四个数按它们在方程组 \ref{equationBinaryLinearEquationsGeneralForm} 中的位置，排列成两行两列（横排称\terminologyItem{行}、竖排成\terminologyItem{列}）的数表
+
+\begin{equation} \label{equationBinaryLinearEquationsGeneralFormNumberTable}
+\begin{array}{cc}
+a_{11} & a_{12}\\
+a_{21} & a_{22}.
+\end{array}
+\end{equation}
+
+表达式$ (a_{11}a_{22}-a_{12}a_{21}) $称为数表 \ref{equationBinaryLinearEquationsGeneralFormNumberTable} 所确定的二阶行列式，并记作
+
+\begin{equation} 
+\left | \begin{array}{cc}
+a_{11} & a_{12}\\
+a_{21} & a_{22}
+\end{array} \right |
+\end{equation}
+
