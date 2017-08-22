@@ -48,10 +48,76 @@ a_{21} & a_{22}.
 
 表达式$ (a_{11}a_{22}-a_{12}a_{21}) $称为数表 \ref{equationBinaryLinearEquationsGeneralFormNumberTable} 所确定的二阶行列式，并记作
 
-\begin{equation} 
+\begin{equation} \label{equationDeterminantGeneralForm}
 \left | \begin{array}{cc}
 a_{11} & a_{12}\\
 a_{21} & a_{22}
-\end{array} \right |
+\end{array} \right |.
 \end{equation}
+
+数$ a_{ij} (i=1,2;j=1,2) $称为行列式 \ref{equationDeterminantGeneralForm} 的\terminologyItem{元素}或\terminologyItem{元}。元素$ a_{ij} $的第一个下标$ i $称为\terminologyItem{行标}，表明该元素位于第$ i $行；第二个下标$ j $称为\terminologyItem{列标}，表明该元素位于第$ j $列。位于第$ i $行、第$ j $列的元素称为行列式 \ref{equationDeterminantGeneralForm} 的 \terminologyItem{ $ (i,j) $元}。
+
+上述二阶行列式的定义，可用对角线法则来记忆。把$ a_{11} $到$ a_{22} $的实连线称为\terminologyItem{主对角线}，$ a_{12} $到$ a_{21} $的虚连线称为\terminologyItem{副对角线}，于是二阶行列式便是\myKeypoint{主对角线上两元素之积减去副对角线上两元素之积所得的差}。
+
+利用二阶行列式的概念，式 \ref{equationBinaryLinearEquationsGeneralFormResult} 中的$ x_{1} $，$ x_{2} $的分子也可写成二阶行列式，即
+
+\begin{equation} \label{equationDeterminantGeneralFormResult}
+	\begin{array}{r}
+	b_{1}a_{22}-a_{12}b_{2} = \left | \begin{array}{cc}
+	b_{1} & a_{12}\\
+	b_{2} & a_{22}
+	\end{array} \right | \\
+	\\
+	a_{11}b_{2}-b_{1}a_{21} = \left | \begin{array}{cc}
+		a_{11} & b_{1}\\
+		a_{21} & b_{2}
+		\end{array} \right |
+	\end{array}
+\end{equation}
+
+若记
+
+\begin{equation}
+	\begin{array}{r}
+	D = \left | \begin{array}{cc}
+			a_{11} & a_{12}\\
+			a_{21} & a_{22}
+			\end{array} \right | \\
+	\\
+	D_{1} = \left | \begin{array}{cc}
+		b_{1} & a_{12}\\
+		b_{2} & a_{22}
+		\end{array} \right | \\
+	\\
+	D_{2} = \left | \begin{array}{cc}
+		a_{11} & b_{1}\\
+		a_{21} & b_{2}
+		\end{array} \right |
+	\end{array}
+\end{equation}
+
+那么式 \ref{equationBinaryLinearEquationsGeneralFormResult} 可写成
+
+\begin{equation}
+	\begin{array}{r}
+	x_{1}= \dfrac{D_{1}}{D_{2}} = \dfrac{\left | \begin{array}{cc}
+			b_{1} & a_{12}\\
+			b_{2} & a_{22}
+			\end{array} \right |}{\left | \begin{array}{cc}
+				a_{11} & a_{12}\\
+				a_{21} & a_{22}
+				\end{array} \right |}\\
+	\\
+	
+	x_{1}= \dfrac{D_{2}}{D_{2}} = \dfrac{\left | \begin{array}{cc}
+			a_{11} & b_{1}\\
+			a_{21} & b_{2}
+			\end{array} \right |}{\left | \begin{array}{cc}
+					a_{11} & a_{12}\\
+					a_{21} & a_{22}
+					\end{array} \right |}
+	\end{array}
+\end{equation}
+
+注意
 
