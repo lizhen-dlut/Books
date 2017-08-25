@@ -1,0 +1,91 @@
+
+\section{三角形基础}
+\label{sec:triangle-base-discussion}
+
+三角形是平面几何中最基本的图形之一，简单的图形却蕴含了丰富的内容，三角形的内容可以说是平面几何基础中最重要的内容。
+
+\subsection{内外角平分线定理}
+\label{sec:triangle-angle-bisector-theorem}
+
+\begin{theorem}[三角形内外角平分线定理]
+  三角形$ABC$中，角$A$的内角平分线交$BC$边于$E$，同时它的外角平分线交$BC$边延长线于$F$，那么有
+  \begin{equation}
+    \label{eq:triangle-angle-bisector-theorem}
+    \frac{BE}{EC} = \frac{AB}{AC} = \frac{BF}{FC}
+  \end{equation}
+  反之，如果三角形$BC$边上和边的延长线上分别有两个点$E$和$F$能满足这比例式，那么$AE$和$AF$就分别是$\angle BAC$的内角平分线和外角平分线。
+\end{theorem}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics{content/plane-geometry/pic/triangle-angle-bisector-theorem.pdf}
+\caption{三角形内外角平分线定理}
+\label{fig:triangle-angle-bisector-theorem}
+\end{figure}
+
+如果外角平分线与$BC$边平行，可以视为点$F$无穷远，此时右边的$BF : FC$按极限理解，等式也是成立的。
+
+只证明定理本身，逆定理根据同一法是容易得到的。
+
+\begin{proof}[证明一]
+  过点$C$分别作内角平分线和外角平分线的平行线，分别与$AB$边及其延长线相交于点$P$和$Q$，那么易得$AC=AP$和$AC=AQ$，所以
+
+\begin{figure}[htbp]
+\centering
+\includegraphics{content/plane-geometry/pic/triangle-angle-bisector-theorem-proof.pdf}
+\caption{三角形内外角平分线定理的证明}
+\label{fig:triangle-angle-bisector-theorem-proof}
+\end{figure}
+
+  \begin{equation*}
+    \frac{BE}{EC} = \frac{BA}{AP} = \frac{AB}{AC}
+  \end{equation*}
+  和
+  \begin{equation*}
+    \frac{BF}{FC} = \frac{BA}{AQ} = \frac{AB}{AC}
+  \end{equation*}
+于是定理得证。
+\end{proof}
+
+\begin{proof}[证明二]
+  辅助线的作法同证明一，对三角形$QBC$和截线$AE$应用梅涅劳斯定理可得$BE:EC=AB:AC$，对三角形$PBC$和截线$AF$应用梅涅劳斯定理可得$BF:FC=AB:AC$。
+\end{proof}
+
+\begin{example}[阿波罗尼奥斯圆]
+  今来考虑平面上到两个定点的距离之比为常数的动点轨迹，记这两个定点为$A$和$B$，动点$P$在运动过程中始终满足$PA:PB=\lambda(\neq 1)$，这里限制常数不等于1是因为那是线段$AB$的垂直平分线。
+
+\begin{figure}[htbp]
+\centering
+\includegraphics{content/plane-geometry/pic/apollonius-circle.pdf}
+\caption{Apollonius圆}
+\label{fig:apollonius-circle}
+\end{figure}
+
+ 首先在直线$AB$上可以找到两个点$E$和$F$，使得$\vv{AE}=\lambda\vv{EB}$和$\vv{AF}=-\lambda\vv{FB}$，这里点$E$在线段$AB$上而点$F$在延长线上，动点$P$在运动过程中恒有$PA:PB=AE:EB$和$PA:PB=AF:FB$，当$P$不在直线$AB$上时，根据三角形的内外角平分线定理的逆定理，就有$PE$和$PF$分别是$\angle APB$的内角平分线和外角平分线，所以$PE \perp PF$，于是点$P$的轨迹就是以线段$EF$为直径的圆。这个结论最早是由古希腊几何学家阿波罗尼奥斯\footnote{参考文献\cite{conic-sections}的作者。}(Apollonius)发现的，所以称为阿波罗尼奥斯圆。
+
+ 值得一提的是，点$E$和$F$分线段$AB$的比为$\lambda$，则点$A$和$B$分线段$EF$的比也相同，这个比值是$|1-\lambda|/(1+\lambda)$，证明是很容易的，只要把线段$AE$、$EB$、$BF$、$AF$的长度都用$AB$的长度来表示就能得到这一点，这个结论是有用的，比如说任给一个圆和一个不等于1的正实数，我们可以反过来找出它是关于哪两个点的阿波罗尼斯圆，当然这两个点不是唯一的，在每一条直径上都能找出两对。
+\end{example}
+
+\subsection{正弦定理和余弦定理}
+\label{sec:sine-theorem-and-cosine-theorem}
+
+\subsection{外心}
+\label{sec:triangle-excenter}
+
+\subsection{内心}
+\label{sec:triangle-incenter}
+
+\subsection{重心}
+\label{sec:triangle-centroid}
+
+\subsection{垂心}
+\label{sec:triangle-orthocentre}
+
+\subsection{旁心}
+\label{sec:escenter}
+
+
+
+%%% Local Variables:
+%%% TeX-master: "../../book"
+%%% End:

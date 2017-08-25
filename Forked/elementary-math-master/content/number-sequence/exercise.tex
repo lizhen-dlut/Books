@@ -1,0 +1,147 @@
+
+\section{题集}
+\label{sec:number-sequence-exercise}
+\begin{exercise}
+  已知各项都是正实数的数列$x_n$对一切正整数$n$都成立$x_n+\frac{1}{x_{n+1}}<2$，求证该数列所有项都满足$x_n<1$.
+\end{exercise}
+\begin{proof}[解答]
+  如果用上极限理论，则可以很容易的得出它单调增加并以1为极限，结论不证自明，所以这里主要讨论的是初等证明。
+
+因为
+$$
+x_n+\frac{1}{x_{n+1}}<2 \leqslant 
+x_{n+1}+\frac{1}{x_{n+1}}
+$$
+所以$x_n<x_{n+1}$，即该数列单调增加。
+
+又显然$x_n<2$，所以
+$$
+2>x_n+\frac{1}{x_{n+1}}>x_n+\frac{1}{2}
+$$
+于是$x_n<2-\frac{1}{2}$，我们得到一个更加好的上限，重复这个过程，我们由$x_n<y_m$就可以得到
+$$
+x_n<2-\frac{1}{y_m}
+$$
+所以我们作数列$y_m$，它由$y_1=2$和
+$$
+y_{m+1}=2-\frac{1}{y_m}
+$$
+来确定。
+
+数列$y_m$的每一项都大过数列$x_n$的全部项，所以它的下标特意用$m$而不是$n$来表示，以示不相关。
+
+现在来求$y_m$的通项公式，由于
+$$
+\frac{1}{y_{m+1}-1}=1+\frac{1}{y_{m}-1}
+$$
+因此数列$\frac{1}{y_m-1}$是等差数列，它的通项为$y_m=1+\frac{1}{m}$\footnote{这是分式型递推数列求通项的不动点解法。}，于是$x_n<y_m$对一切正整数$n$和$m$都成立，所以必定有$x_n\leqslant 1$（用反证法），而$x_n$的单调性则保证了等号是不能取的。
+
+下面关于$y_m$再给个不求通项的玩法\footnote{其实这是高数的玩法，就差提到确界二字了。}，$y_m>1$这一点根据数学归纳法是明显成立的。下面证明它可以任意接近1，也就是要证明，对于无论多么小的正实数$\delta$，总存在$y_m$中的某一项$y_M$，使得$y_M<1+\delta$。
+采用反证法，假定存在某个正实数$\delta$，使得$y_m$中的所有项都满足$y_m\geqslant 1+\delta$，则
+$$
+y_{m+1}-1=\frac{1}{y_m}(y_m-1)\leqslant 
+\frac{1}{1+\delta}(y_m-1)
+$$
+于是
+$$
+y_m-1\leqslant \frac{1}{(1+\delta)^m}
+$$
+显然与假设矛盾，故得证。
+\end{proof}
+
+\begin{exercise}
+  数列$a_n$满足：$a_1=\frac{1}{2}$，$a_{n+1}=\frac{na_n+a_n^2}{n+1}$，
+  \begin{enumerate}
+  \item 求证该数列是递减的。
+  \item 求证 $a_n < \frac{7}{4n}$
+  \end{enumerate}
+\end{exercise}
+\begin{proof}[解答]
+  根据数列归纳法易知 $0<a_n<1$，所以
+  \begin{equation*}
+    a_{n+1}=\frac{na_n+a_n^2}{n+1} < \frac{na_n+a_n}{n+1} = a_n
+  \end{equation*}
+  所以数列递减，第二问，只要证明$n>3$时有如下更强的不等式即可（使用数学归纳法，过程略去）
+  \begin{equation*}
+    a_n \leqslant \frac{7}{4n}-\frac{4}{n^2}
+  \end{equation*}
+\end{proof}
+
+\begin{exercise}
+  记 $I_n=1-\frac{1}{2}+\frac{1}{3}-\frac{1}{4}+\cdots+\frac{1}{2n-1}-\frac{1}{2n}$，求证，在正整数$n\geqslant 100$时，有$0.68<I_{n}<0.7$.
+\end{exercise}
+\begin{proof}[证明]
+  记$J_n=\sum_{k=1}^n(\frac{1}{2k}-\frac{1}{2k+1})$，由于$z_n=\frac{1}{n-1}-\frac{1}{n}=\frac{1}{n(n-1)}$是递减的，并且相邻两项也相差越来越小，所以有不等式$z_{2k}<\frac{1}{2}(z_{2k-1}+z_{2k+1})$,也就是如下的:
+\begin{equation*}
+  \frac{1}{2k-1} - \frac{1}{2k} < \frac{1}{2} \left[ \left( \frac{1}{2k-2} - \frac{1}{2k-1} \right) + \left( \frac{1}{2k} - \frac{1}{2k+1} \right) \right]
+\end{equation*}
+对上式左边进行累加，但从$k=3$到$k=n$使用右边放缩，得
+\begin{equation*}
+  I_n<\frac{1}{2}+\frac{1}{12}+\frac{1}{2} \left[ \left( J_n-\frac{1}{6}-\frac{1}{2n(2n+1} \right) + \left( J_n-\frac{1}{6}-\frac{1}{20} \right) \right]
+\end{equation*}
+化简
+\begin{equation*}
+ I_n<J_n+\frac{47}{120} - \frac{1}{4n(2n+1)}
+\end{equation*}
+利用$I_n+J_n=1-\frac{1}{2n+1}$从上式中换掉$J_n$得
+\begin{equation}
+  \label{eq:sign-sum-reciprocal-positive-integer-max}
+  I_n<\frac{167}{240}-\frac{1}{2(2n+1)}-\frac{1}{8n(2n+1)}<\frac{167}{240}<\frac{168}{240}=0.7
+\end{equation}
+于是不等式的右边得证，接下来考虑左边不等式，同样因为$z_n$是递减的，有不等式$z_{2k}>\frac{1}{2}(z_{2k}+z_{2k+1})$，也就是
+\begin{equation*}
+  \frac{1}{2k-1} - \frac{1}{2k} > \frac{1}{2} \left[ \left( \frac{1}{2k-1} - \frac{1}{2k} \right) + \left( \frac{1}{2k} - \frac{1}{2k+1} \right) \right]
+\end{equation*}
+对左边进行累加，在$k \geqslant 3$ 时使用右边放缩，得到
+\begin{equation*}
+  I_n > \frac{1}{2} + \frac{1}{12} + \frac{1}{2} \left( \frac{1}{5} - \frac{1}{2n+1} \right)
+\end{equation*}
+也就是
+\begin{equation}
+  \label{eq:sign-sum-reciprocal-positive-integer-min}
+ I_n > \frac{41}{60} -\frac{1}{2(2n+1)} 
+\end{equation}
+在$n \geqslant 100$时，有
+\begin{equation*}
+  I_{n} \geqslant I_{100} > \frac{41}{60} - \frac{1}{402} = 0.680845771... > 0.68
+\end{equation*}
+所以不等式左边得证.
+
+其实证明左边所用的放缩是比较松的，实际上因为$\lim_{n\to\infty}I_n=\ln{2}=0.693147...$，所以左边不等式的放缩余地较大，所以这样的放缩也能达到要求，现在来尝试使用更强的放缩，看看能得到一个什么样的结果。
+
+对于$z_{n}$，不等式$z_n>2z_{n+1}-z_{n+2}$将是一个更强的放缩，所以我们有$z_{2k}>2z_{2k+1}-z_{2k+2}$，也就是下面的不等式
+\begin{equation*}
+  \frac{1}{2k-1}-\frac{1}{2k} > 2 \left( \frac{1}{2k}-\frac{1}{2k+1} \right) - \left( \frac{1}{2k+1}-\frac{1}{2k+2} \right)
+\end{equation*}
+对上式左边进行累加，但只在$k\geqslant 3$时使用右边放缩，即得
+\begin{equation*}
+  I_n > \frac{1}{2}+\frac{1}{12} + 2 \left( J_n-\frac{1}{6}-\frac{1}{20} \right) - \left( I_n-\frac{1}{2}-\frac{1}{12}-\frac{1}{30}+\frac{1}{(2n+1)(2n+2)} \right)
+\end{equation*}
+将其中的$J_{n}$用$1-I_n-\frac{1}{2n+1}$替换掉，即得
+\begin{equation*}
+  I_n>\frac{83}{120}-\frac{1}{2(2n+1)}-\frac{1}{4(2n+1)(2n+2)}
+\end{equation*}
+因此在$n \geqslant 100$时，便有
+\begin{equation*}
+  I_n \geqslant I_{100} > \frac{83}{120}-\frac{1}{2(2\times 100+1)}-\frac{1}{4(2\times 100+1)(2 \times 100 + 2)} = 0.6891729471.....
+\end{equation*}
+这个值已经非常接近$0.69$了。
+\end{proof}
+
+\begin{exercise}
+  已知数列$\{a_n\}$满足: $a_1=1$，$a_{n+1}=a_n+\frac{1}{a_n^2}$，求证$a_{2015}>18$.
+\end{exercise}
+
+\begin{proof}[证明]
+  易见这是一个递增的正项数列，在递推式两边同时三次方:
+  \begin{equation*}
+    a_{n+1}^3=\left( a_n+\frac{1}{a_n^2} \right)^3 = a_n^3+3+\frac{3}{a_n^3}+\frac{1}{a_n^6}>a_n^3+3
+  \end{equation*}
+  所以$a_{2015}>a_1^3+3\times 2014=6043 > 5832 = 18^3$.
+\end{proof}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../../book"
+%%% End:
