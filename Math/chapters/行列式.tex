@@ -124,6 +124,109 @@ a_{21} & a_{22}
 
 \subsection{三阶行列式}
 
-\begin{MathDefinition}
-	设
-\end{MathDefinition}
+\begin{定义}
+	设有9个数排成3行3列的数表：
+	\begin{equation} \label{三阶数表}
+		\begin{array}{ccc}
+			a_{11} & a_{12} & a_{13}\\
+			a_{21} & a_{22} & a_{23}\\
+			a_{31} & a_{32} & a_{33}\\
+		\end{array}
+	\end{equation}
+	记
+	\begin{equation} \label{三阶行列式}
+	\left |
+		\begin{array}{ccc}
+		a_{11} & a_{12} & a_{13}\\
+		a_{21} & a_{22} & a_{23}\\
+		a_{31} & a_{32} & a_{33}\\
+		\end{array}\right |
+		=a_{11}a_{22}a_{23}+a_{12}a_{23}a_{31}+a_{13}a_{21}a_{32}-a_{13}a_{22}a_{31}-a_{12}a_{21}a_{33}-a_{23}a_{32}a_{11}
+	\end{equation}	
+	\ref{三阶行列式} 式成为数表 \ref{三阶数表} 所确定的三阶行列式。
+\end{定义}
+
+上述定义表明三阶行列式含6项，每项均为不同行、不同列的三个元素的乘积再加上正负号。
+
+\section{全排列和对换}
+
+\subsection{排列及其逆序数}
+
+把$ n $个不同的元素排成一列，叫做这$ n $个元素的\terminologyItem{全排列}（也简称\terminologyItem{排列}）。
+
+$ n $个不同元素的所有排列的总数，通常用$ P_{n} $表示，可计算如下：
+\begin{enumerate}
+	\item 从n个元素中任取一个放在第一个位置上，有n中取法；
+	\item 从剩下的$ n-1 $个元素中任取一个放在第二个位置上，有$ n-1 $种取法；
+	\item 这样继续下去，直到只剩下一个元素放在第$ n $个位置上，只有1种取法。
+\end{enumerate}
+于是
+\begin{equation}
+	P_{n} = n \times (n-1) \times \dots \times 3 \times 2 \times 1 = n!
+\end{equation}
+
+例如，用1、2、3三个数字做排列，排列的总数$ P_{3} = 3 \times 2 \times 1 = 6 $，它们是
+\begin{center}
+	123、231、321、132、213、312。
+\end{center}
+
+\begin{定义}
+	对于$ n $个\myKeypoint{不同}的元素，先规定各元素之间有一个标准次序（例如$ n $个不同的自然数，可规定由小到大为标准次序），于是在这$ n $个元素的任一排列中，当某一对元素的先后次序与标准次序不同时，就说它构成了1个\terminologyItem{逆序}。一个排列中所有逆序的总数叫做这个\terminologyItem{排列的逆序数}。
+\end{定义}
+
+逆序数为奇数的排列叫做奇排列，逆序数为偶数的排列叫做偶排列。
+
+下面来讨论计算排列逆序数的方法。
+
+不失一般性，不妨设$ n $个元素为1到$ n $这$ n $个自然数，并规定由小到大为标准次序。设$ p_{1}p_{2}\dots p_{n} $为这n个自然数的一个排列，考虑元素$ p_{1}\ (i=1,2,\dots,n) $，如果比$ p_{i} $大的且排在$ p_{i} $前面的元素有$ t_{i} $个，就说$ p_{i} $这个元素的逆序数是$ t_{i} $。全体元素的逆序数之总和
+\begin{equation}
+t = t_{1} + t_{2} + \dots + t_{n} = \sum_{i=1}^{n}t_{i}
+\end{equation}
+即是这个排列的逆序数。
+
+\subsection{对换}
+
+在排列中，将任意两个元素对调，其余的元素不动，这种做出新排列的手续叫做对换。将相邻两个元素对换，叫做相邻对换。
+
+\begin{定理}
+	一个排列中任意两个元素对换，排列改变奇偶性。
+\end{定理}
+
+\begin{推论}
+	奇排列对换成标准排列的对换次数为奇数，偶排列对换成标准排列的对换次数为偶数。
+\end{推论}
+
+\section{$ n $阶行列式的定义}
+
+\begin{定义}
+	设有$ n^{2} $个数，排成$ n $行$ n $列的数表
+	\begin{equation} \label{n阶数表}
+		\begin{array}{cccc}
+			a_{11} & a_{12} & \dots & a_{1n}\\
+			a_{21} & a_{22} & \dots & a_{2n}\\
+			\multicolumn{4}{c}{\dots\dots\dots}\\
+			a_{n1} & a_{n2} & \dots & a_{nn}\\
+		\end{array}
+	\end{equation}
+	做出表中位于不同行、不同列的$ n $个数的乘积，并冠以符号$ (-1)^{t} $，得到形如	
+	\begin{equation}\label{n阶行列式一般项}
+		(-1)^{t}a_{1p_{1}}a_{2p_{2}}\dots a_{np_{n}}
+	\end{equation}
+	\noindent 的项，其中$ p_{1}p_{2}\dots p_{n} $为自然数1、2、$ \dots $、$ n $的一个排列，$ t $为这个排列的逆序数。由于这样的排列共有$ n! $个，因而形如\ref{n阶行列式一般项}式的项共有$ n! $项。所有这$ n! $项的代数和	
+	\begin{equation}
+		\sum(-1)^{t}a_{1p_{1}}a_{2p_{2}}\dots a_{np_{n}}
+	\end{equation}
+	称为$ n $阶行列式，记作
+	\begin{equation} \label{n阶行列式}
+		D=\left |\begin{array}{cccc}
+			a_{11} & a_{12} & \dots & a_{1n}\\
+			a_{21} & a_{22} & \dots & a_{2n}\\
+			\multicolumn{4}{c}{\dots\dots\dots}\\
+			a_{n1} & a_{n2} & \dots & a_{nn}\\
+		\end{array}\right |,
+	\end{equation}
+	简记为$ det(a_{ij}) $，其中数$ a_{ij} $为行列式$ D $的$ (i,j) $元。
+\end{定义}
+
+主对角线以下的元素都为0的行列式叫做上三角行列式；主对角线以上的元素都为0的行列式叫做下三角行列式；主对角线以上和以下的元素都为0的行列式叫做对角行列式。
+
