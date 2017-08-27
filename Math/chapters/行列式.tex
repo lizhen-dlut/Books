@@ -230,3 +230,143 @@ t = t_{1} + t_{2} + \dots + t_{n} = \sum_{i=1}^{n}t_{i}
 
 主对角线以下的元素都为0的行列式叫做上三角行列式；主对角线以上的元素都为0的行列式叫做下三角行列式；主对角线以上和以下的元素都为0的行列式叫做对角行列式。
 
+\section{行列式的性质}
+
+\begin{定义}
+	记
+	
+	\begin{equation} \label{装置行列式}
+		D=\left |\begin{array}{cccc}
+		a_{11} & a_{12} & \dots & a_{1n}\\
+		a_{21} & a_{22} & \dots & a_{2n}\\
+		\multicolumn{4}{c}{\dots\dots\dots}\\
+		a_{n1} & a_{n2} & \dots & a_{nn}\\
+		\end{array}\right | \text{，} 
+		D^{T}=\left |\begin{array}{cccc}
+		a_{11} & a_{21} & \dots & a_{n1}\\
+		a_{12} & a_{22} & \dots & a_{n2}\\
+		\multicolumn{4}{c}{\dots\dots\dots}\\
+		a_{1n} & a_{2n} & \dots & a_{nn}\\
+		\end{array}\right | \text{，} 
+	\end{equation}
+	
+	\noindent 行列式$ D^{T} $称行列式$ D $的\terminologyItem{转置行列式}。
+\end{定义}
+
+\begin{性质}
+	行列式与它的装置行列式相等。
+\end{性质}
+
+\begin{性质}
+	对换行列式的两行（或两列），行列式变号。
+\end{性质}
+
+\begin{推论}
+	如果行列式有两行（或两列）完全相同，则此行列式等于零。
+\end{推论}
+
+\begin{性质}
+	行列式的某一行（某一列）中所有的元素都乘同一数$ k $，等于用数$ k $乘此行列式。
+\end{性质}
+
+\begin{推论}
+	行列式中某一行（某一列）的所有元素的公因子可以提到行列式记号的外面。
+\end{推论}
+
+\begin{性质}
+	行列式如果有两行（两列）成比例，则此行列式等于零。
+\end{性质}
+
+\begin{性质}
+	若行列式的某一行（某一列）的元素都是两数之和，例如第$ i $行的元素都是两数之和：
+	
+	\begin{equation}
+		D=\left |\begin{array}{cccc}
+		a_{11} & a_{12} & \dots & a_{1n}\\
+		\vdots & \vdots & & \vdots \\
+		a_{i1} + a_{i1}^{'} & a_{i2} + a_{i2}^{'} & \dots & a_{in} + a_{in}^{'}\\
+		\vdots & \vdots & & \vdots \\
+		a_{n1} & a_{n2} & \dots & a_{nn}\\
+		\end{array}\right |,
+	\end{equation}
+	\noindent 则$ D $等于下列两个行列式之和：
+	\begin{equation}
+		D=\left |\begin{array}{cccc}
+		a_{11} & a_{12} & \dots & a_{1n}\\
+		\vdots & \vdots & & \vdots \\
+		a_{i1} & a_{i2} & \dots & a_{in}\\
+		\vdots & \vdots & & \vdots \\
+		a_{n1} & a_{n2} & \dots & a_{nn}\\
+		\end{array}\right | +
+		\left |\begin{array}{cccc}
+		a_{11} & a_{12} & \dots & a_{1n}\\
+		\vdots & \vdots & & \vdots \\
+		a_{i1}^{'} & a_{i2}^{'} & \dots & a_{in}^{'}\\
+		\vdots & \vdots & & \vdots \\
+		a_{n1} & a_{n2} & \dots & a_{nn}\\
+		\end{array}\right | \text{。}
+	\end{equation}
+\end{性质}
+
+\begin{性质}
+	把行列式的某一行（某一列）的各元素乘同一数、然后加到另一行（另一列）对应的元素上，行列式不变。
+\end{性质}
+
+\section{行列式按行（列）展开}
+
+一般来说，低阶行列式的计算比高阶行列式的计算要简便，于是，我们自然地考虑用低阶行列式来表示高阶行列式的问题。为此，先引进\terminologyItem{余子式}和\terminologyItem{代数余子式}的概念。
+
+\begin{定义}
+	在$ n $阶行列式中，把$ (i,j) $元$ a_{ij} $所在的第$ i $行和第$ j $列划去后，留下的$ n-1 $阶行列式叫做$ (i,j) $元$ a_{ij} $的\terminologyItem{余子式}，记作$ M_{ij} $，记
+	\begin{equation}
+		A_{ij} = (-1)^{i+j}M_{ij}\text{，}
+	\end{equation}
+	\noindent $ A_{ij} $叫做$ (i,j) $元$ a_{ij} $的\terminologyItem{代数余子式}。
+\end{定义}
+
+\begin{引理}
+	一个$ n $阶行列式，如果其中第$ i $行所有元素除$ (i,j) $元$ a_{ij} $外都为零，那么这行列式等于$ a_{ij} $与它的代数余子式的乘积，即
+	\begin{equation}
+		D = a_{ij}A_{ij}\text{。}
+	\end{equation}
+\end{引理}
+
+\begin{定理}
+	行列式等于它的任一行（任一列）的各元素与其对应的代数余子式乘积之和，即
+	\begin{equation}
+		D = a_{i1}A_{i1} + a_{i2}A_{i2} + \dots + a_{in}A_{in} (i=1,2,\dots,n) 
+	\end{equation}
+	或
+	\begin{equation}
+		D = a_{1j}A_{ij} + a_{2j}A_{2j} + \dots + a_{nj}A_{nj} (j=1,2,\dots,n) 
+	\end{equation}
+\end{定理}
+
+证明范德蒙德（Vandermonde）行列数
+\begin{equation}\label{VandermondeDeterminant}
+	D_{n}=\left |\begin{array}{cccc}
+	1 & 1 & \dots & 1\\
+	a_{1}^{1} & a_{2}^{1} & \dots & a_{n}^{1}\\
+	a_{1}^{2} & a_{2}^{2} & \dots & a_{n}^{2}\\
+	\vdots & \vdots & & \vdots \\
+	a_{1}^{n-1} & a_{2}^{n-1} & \dots & a_{n}^{n-1}\\
+	\end{array}\right | = \prod_{2 \geqslant i > j \geqslant i}(x_{i} - x_{j})\text{，}
+\end{equation}
+其中，记号``$ \prod $''表示全体同类因子的乘积。
+
+\begin{推论}
+	行列式某一行（某一列）的元素与另一行（另一列）的对应元素的代数余子式乘积之和等于零，即
+	\begin{equation}
+		a_{i1}A_{j1} + a_{i2}A_{j2} + \dots + a_{in}A_{jn} = 0 \text{，} (i \ne j) 
+	\end{equation}
+	或
+	\begin{equation}
+		a_{1i}A_{1j} + a_{2i}A_{2j} + \dots + a_{ni}A_{nj} = 0 \text{，} (i \ne i) 
+	\end{equation}
+\end{推论}
+
+
+
+
+
+
