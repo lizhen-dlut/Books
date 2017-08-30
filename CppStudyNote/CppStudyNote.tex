@@ -1,0 +1,43 @@
+\documentclass{ctexbook}
+
+\input{../preamble}
+\input{../commands}
+\input{../terminology}
+
+\bibliographystyle{plain} %推荐JabRef工具
+
+\newcommand{\documentTitle}
+    {\texorpdfstring{C++语言学习笔记}{C++语言学习笔记}}
+\newcommand{\documentAuthor}{Roger Young}
+\newcommand{\documentKeywords}{C++,笔记}
+\newcommand{\documentSubject}{C++,笔记}
+
+\hypersetup{
+	pdftitle=\documentTitle,
+	pdfauthor=\documentAuthor,
+	pdfsubject= \documentSubject,
+	pdfkeywords= \documentKeywords,
+	pdfstartview=FitH,
+	pdfproducer = \documentAuthor,
+	pdfcreator = \documentAuthor, 
+	pdfcopyright = \documentAuthor, 
+	pdflicenseurl = {https://github.com/hiatcg}
+}
+
+\begin{document}
+\title{\documentTitle}
+\author{\documentAuthor}
+
+\maketitle
+\tableofcontents
+
+
+\input{./chapters/c++17更新}
+
+
+\input{./chapters/附录}
+
+
+\printindex
+\printglossaries
+\end{document}

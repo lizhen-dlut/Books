@@ -1,14 +1,47 @@
+\renewcommand{\underline}{\uline}
+
+
+%\setCJKmainfont[AutoFakeBold=true]{Microsoft YaHei UI}
+\setCJKsansfont{Microsoft YaHei UI}
+\setCJKmonofont{Microsoft YaHei UI}
+
+
+
+\newcommand{\firstgls}[1]{\textbf{\,\gls{#1}}（\glsdesc{#1}）}
+\newcommand{\firstacr}[1]{\textbf{\,\gls{#1}}（\glssymbol{#1}）}
+\newcommand{\glsacr}[1]{\gls{#1}（\glssymbol{#1}）}
+\newcommand{\firstall}[1]{\textbf{\,\gls{#1}}（\glsdesc{#1}, \glssymbol{#1}）}
+
+\newcommand{\myGlossaryEntry}[1]{\textbf{\ \gls{#1}}（\glssymbol{#1}，\glsdesc{#1}）}
+
+\newcommand{\proteinName}[1]{\textcolor{red}{#1}}
+\newcommand{\lifeSpan}[2]{ $ #1 \sim #2 $ }
+
+\newcommand{\myHumanGene}[1]{\textbf{\textcolor{blue}{\textit{#1}}}}
+
+\newcommand{\mykeyword}[1]{\textbf{\textcolor{blue}{#1}}}
+\newcommand{\myImportantPoint}[1]{\textbf{\uline{#1}}}
+\newcommand{\myInlineGlossary}[1]{\textbf{\uline{#1}}}
+
+\newcommand{\myFigurePlaceholder}{
+    \vspace{2ex}
+    \noindent \centerline{\kaishu{\huge 此处需插入图片}}
+    \vspace{2ex}
+}
+
+\setcounter{secnumdepth}{4}
+
+
 \newcommand{\terminologyItem}[1]{\textbf{\uwave{#1}}}
 
 \newcommand{\myKeypoint}[1]{\textbf{\uline{#1}}}
 
-<<<<<<< HEAD
 \newcommand{\Bioconductor}{\href{http://www.bioconductor.org/}{Bioconductor}}
-=======
+
 \newtheorem{定义}{定义}
 
 \newtheorem{定理}{定理}
 \newtheorem{推论}{推论}
 \newtheorem{引理}{引理}
 \newtheorem{性质}{性质}
->>>>>>> 97193ccf4830164a30bc27786b9be691f36e1e4f
+

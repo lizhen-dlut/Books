@@ -1,38 +1,7 @@
 \documentclass[11pt,a4paper]{ctexbook}
-
-\input{../Preamble}
-\input{../Terminology}
-
-%\setCJKmainfont[AutoFakeBold=true]{Microsoft YaHei UI}
-\setCJKsansfont{Microsoft YaHei UI}
-\setCJKmonofont{Microsoft YaHei UI}
-
-\renewcommand{\underline}{\uline}
-
-\newcommand{\firstgls}[1]{\textbf{\,\gls{#1}}（\glsdesc{#1}）}
-\newcommand{\firstacr}[1]{\textbf{\,\gls{#1}}（\glssymbol{#1}）}
-\newcommand{\glsacr}[1]{\gls{#1}（\glssymbol{#1}）}
-\newcommand{\firstall}[1]{\textbf{\,\gls{#1}}（\glsdesc{#1}, \glssymbol{#1}）}
-
-\newcommand{\myGlossaryEntry}[1]{\textbf{\ \gls{#1}}（\glssymbol{#1}，\glsdesc{#1}）}
-
-\newcommand{\proteinName}[1]{\textcolor{red}{#1}}
-\newcommand{\lifeSpan}[2]{ $ #1 \sim #2 $ }
-
-\newcommand{\myHumanGene}[1]{\textbf{\textcolor{blue}{\textit{#1}}}}
-
-\newcommand{\mykeyword}[1]{\textbf{\textcolor{blue}{#1}}}
-\newcommand{\myImportantPoint}[1]{\textbf{\uline{#1}}}
-\newcommand{\myInlineGlossary}[1]{\textbf{\uline{#1}}}
-
-\newcommand{\myFigurePlaceholder}{
-    \vspace{2ex}
-    \noindent \centerline{\kaishu{\huge 此处需插入图片}}
-    \vspace{2ex}
-}
-
-\setcounter{secnumdepth}{4}
-
+\input{../preamble}
+\input{../commands}
+\input{../terminology}
 
 \newcommand{\documentTitle}{
     \texorpdfstring{\kaishu{细胞生物学\\分子生物学\\发育生物学\\生殖生物学\\基础知识}}
@@ -79,14 +48,29 @@
 
 \part{生殖生物学}
 \input{./chapters/PrincipalInvestigatorsIntroduction.tex}
-\input{./chapters/ReproductionBiologyPreface.tex}
-\input{./chapters/ReproductionIntroduction.tex}
-\input{./chapters/ReproductionOrgans.tex}
-\input{./chapters/Spermatogenesis.tex}
+\input{./chapters/生殖生物学序言.tex}
+\input{./chapters/生殖与生殖生物学概论.tex}
+\input{./chapters/生殖器官的结构与功能.tex}
+\input{./chapters/精子发生与成熟.tex}
+\input{./chapters/卵泡发育、卵子发生和排卵}
+\input{./chapters/受精}
+\input{./chapters/胚胎发育}
+\input{./chapters/胚胎着床及妊娠识别}
+\input{./chapters/胎盘和胎盘的结构与功能}
+\input{./chapters/妊娠的维持和妊娠期的生理变化}
+\input{./chapters/分娩与泌乳}
+\input{./chapters/性别决定与性腺发育}
+\input{./chapters/生殖激素}
+\input{./chapters/性行为及激素调节}
+\input{./chapters/生殖缺陷与辅助生殖}
+
+\input{./chapters/生殖免疫}
+\input{./chapters/动物的无性生殖}
+\input{./chapters/环境与生殖健康}
+\input{./chapters/现代生殖生物学研究方法与技术简介}
 
 \part{附录}
 
 
 \printnoidxglossary
-
 \end{document}
