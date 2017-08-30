@@ -1,14 +1,16 @@
 \documentclass{ctexbook}
 
 \input{../preamble}
+\input{../commands}
 \input{../terminology}
+
 \bibliographystyle{plain} %推荐JabRef工具
 
 \newcommand{\documentTitle}
-    {\texorpdfstring{\LaTeX 项目模板}{LaTeX项目模板}}
+    {\texorpdfstring{R语言学习笔记}{R语言学习笔记}}
 \newcommand{\documentAuthor}{Roger Young}
-\newcommand{\documentKeywords}{LaTeX,模板}
-\newcommand{\documentSubject}{LaTeX,模板}
+\newcommand{\documentKeywords}{R,笔记}
+\newcommand{\documentSubject}{R,笔记}
 
 \hypersetup{
 	pdftitle=\documentTitle,
@@ -30,8 +32,12 @@
 \tableofcontents
 
 
+\input{./chapters/RNA-Seq分析流程}
 
-\chapter*{附录}
+
+\input{./chapters/附录}
+
+
 \printindex
 \printglossaries
 \end{document}

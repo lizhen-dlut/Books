@@ -1,0 +1,5 @@
+\chapter{RNA-Seq分析流程}
+
+RNA-Seq，即转录组测序技术，就是把某一生物样本的mRNA、small RNA和non-coding RNA等，用高通量测序技术测出其序列，通过分析各种RNA的富集度和质量，揭示其各个基因表达水平。本章主要介绍如何通过使用R语言\Bioconductor 工具包对RNA-Seq数据进行基因层面上的差异表达分析。本流程将从FASTQ文件开始，利用\Bioconductor 软件，展示其如何比对到参考基因组，如何准备每个样本中每个基因的RNA-Seq片段的计数矩阵，如何根据计数矩阵进行分析。会使用探索性数据分析完成质量评估、不同样本关系探索、基因差异表达分析以及分析结果可视化流程。
+
+\section{\Bioconductor 介绍}
