@@ -1,0 +1,46 @@
+\documentclass[11pt,a4paper]{ctexbook}
+
+\input{./chapters/settings}
+
+%\setCJKmainfont[AutoFakeBold=true]{Microsoft YaHei UI}
+\setCJKsansfont{Microsoft YaHei UI}
+\setCJKmonofont{Microsoft YaHei UI}
+
+\renewcommand{\underline}{\uline}
+
+\setcounter{secnumdepth}{4}
+
+\newcommand{\documentTitle}{
+    \texorpdfstring{Protocols In Biology Laboratory}
+    {Protocols In Biology Laboratory}
+}
+
+\newcommand{\documentAuthor}{张洋}
+
+
+
+\hypersetup{
+	%hidelinks,
+	pdftitle={\documentTitle},
+	pdfauthor={\documentAuthor},
+	pdfsubject={},
+	pdfkeywords={},
+	pdfstartview=FitH,
+	pdfproducer = {\documentAuthor},
+	pdfcreator = {\documentAuthor},
+	pdfcopyright = {\documentAuthor},
+	pdflicenseurl = {https://github.com/hiatcg}
+}
+
+\begin{document}
+
+\title{\documentTitle}
+\author{\kaishu{\documentAuthor}}
+\date{\kaishu{\today}}
+
+\maketitle
+
+\tableofcontents
+
+
+\end{document}

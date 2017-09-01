@@ -1,0 +1,21 @@
+\documentclass{book}
+
+\usepackage{hyperref}
+\usepackage[nomain,acronym,xindy,toc]{glossaries}
+\makenoidxglossaries
+
+\loadglsentries{glossaries}
+
+\usepackage[xindy]{imakeidx}
+\makeindex
+
+
+\begin{document}
+	\chapter{\glsentrytext{glsTraCeR}}
+	
+	T lymphocytes recognize specific \gls{acropMHC} combinations presented on the surface of \gls{acroAPC}. This highly specific recognition is mediated by the \gls{acroTCR}, an extremely diverse heterodimeric cell-surface protein comprising an $\alpha- $ and a $ \beta- $chain encoded by gene produced by recombination of V(D)J loci during T cell development. The DNA sequence diversity of mouse \gls{acroTCR} has been estimated as $ 5 \times 10^{21} $ different paired combinations.
+	
+	\glsaddall
+	\printnoidxglossaries 
+	
+\end{document}

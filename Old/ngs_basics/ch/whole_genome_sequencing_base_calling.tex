@@ -1,0 +1,178 @@
+\chapter{预处理和测序质量控制}
+
+\section{Base calling}
+
+Next-generation sequencing platforms are dramatically reducing the cost of DNA sequencing. With these technologies, bases are inferred from light intensity signals, a process commonly referred to as base-calling. Thus, understanding and improving the quality of sequence data generated using these approaches are of high interest.
+
+\subsection{bcl2fastq Conversion Software}
+
+\url{https://support.illumina.com/downloads/bcl2fastq_conversion_software_184.html}
+
+\section{Read quality control}
+
+Next-generation sequencing (NGS) technologies have been widely used in life sciences. However, several kinds of sequencing artifacts, including low-quality reads and contaminating reads, were found to be quite common in raw sequencing data, which compromise downstream analysis. Therefore, quality control (QC) is essential for raw NGS data.
+
+\subsection{Picard}
+
+\url{http://broadinstitute.github.io/picard/}
+
+\subsection{FastQC}
+
+\url{http://www.bioinformatics.babraham.ac.uk/projects/fastqc/}
+
+\subsection{NGS QC Toolkit}
+
+\url{http://nipgr.res.in/ngsqctoolkit.html}
+
+\subsection{SAMtools}
+
+\url{http://www.htslib.org/}
+
+\subsection{FASTX-Toolkit}
+
+\url{http://hannonlab.cshl.edu/fastx_toolkit/}
+
+\subsection{BAMStats}
+
+
+
+
+
+\section{Error correction}
+
+
+\section{Duplicate read removal}
+
+
+\section{Adapter trimming}
+
+\subsection{Trimmomatic}
+Trimmomatic是使用java编写的去除Illumina高通量测序数据接头的程序 \cite{Trimmomatic2014bioinformatics}。最新程序可以通过以下链接获取：
+\url{http://www.usadellab.org/cms/index.php?page=trimmomatic}
+
+\subsubsection{使用简介}
+
+先按照官方说明，来两段代码吧：
+
+\subparagraph{第一段}
+
+\begin{minted}{bash}
+java -jar trimmomatic-0.35.jar PE -phred33 
+    input_forward.fq.gz input_reverse.fq.gz 
+    output_forward_paired.fq.gz output_forward_unpaired.fq.gz 
+    output_reverse_paired.fq.gz output_reverse_unpaired.fq.gz 
+    ILLUMINACLIP:TruSeq3-PE.fa:2:30:10 
+    LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
+\end{minted}
+
+这段代码，对Illumina测序平台双端测序（PE，Paired End）的数据文件input\_forward.fq.gz和input\_reverse.fq.gz进行了以下操作：
+
+\begin{itemize}
+	\item 去除测序接头（\mintinline{bash}{ILLUMINACLIP:TruSeq3-PE.fa:2:30:10}）
+	\item 去除开头的3个或低质量碱基（\mintinline{bash}{LEADING:3}）
+	\item 去除结尾的3个或低质量碱基（\mintinline{bash}{TRAILING:3}）
+	\item 以四个碱基为一个窗口，当平均碱基质量低于15时，去除（SLIDINGWINDOW:4:15）
+	\item 去除短语36个碱基的Reads（MINLEN:36）
+\end{itemize}
+
+其输出文件为：
+\begin{itemize}
+	\item output\_forward\_paired.fq.gz：经清理后，input\_forward.fq.gz文件剩余的配对的Reads。
+	\item output\_forward\_unpaired.fq.gz： 经清理后，input\_forward.fq.gz文件剩余的未配对的Reads。
+	\item output\_reverse\_paired.fq.gz：经清理后，input\_reverse.fq.gz文件剩余的配对的Reads。
+	\item output\_reverse\_unpaired.fq.gz：经清理后，input\_reverse.fq.gz文件剩余的未配对的Reads。
+\end{itemize}
+
+\subparagraph{第二段}
+
+\begin{minted}{bash}
+java -jar trimmomatic-0.35.jar SE -phred33 
+    input.fq.gz 
+    output.fq.gz 
+    ILLUMINACLIP:TruSeq3-SE:2:30:10 
+    LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
+\end{minted}
+
+这一段代码，和上一段代码完成了相同的工作，不过，其输入文件为SE测序数据（input.fq.gz）
+
+\subsubsection{使用说明}
+
+Trimmomatic可以用来处理Illumina双端测序和单端测序产生的FASTQ文件。其中FASTQ文件可以采用Phred-33或Phred-64碱基质量表示方法。Trimmomatic支撑以gzip和bzip2压缩的FASTQ文件。
+
+其支持的命令包括：
+
+\begin{longtable}{|l|p{25em}|}
+	\hline
+	命令 & 说明 \endhead \hline
+	ILLUMINACLIP & 去除Illumina测序平台的接头 \\ \hline
+	SLIDINGWINDOW & 以窗口的形式从5端扫描reads。如果平均碱基质量低于给定值，则切断Reads \\ \hline
+	MAXINFO & 综合考虑Read长度和碱基质量，以使Read的评分最高 \\ \hline
+	LEADING & 去掉开头的几个低于阈值的碱基 \\ \hline
+	TRAILING & 去掉结尾的几个低于阈值碱基 \\ \hline
+	CROP & 截取开头的指定数目的碱基 \\ \hline
+	HEADCROP & 去除开头指定数目的碱基 \\ \hline
+	MINLEN & 去掉小于指定长度的reads \\ \hline
+	AVGQUAL & 去掉评价碱基质量小于指定值的reads \\ \hline
+	TOPHRED33 & 将碱基质量表示方法转化为Phred-33 \\ \hline
+	TOPHRED64 & 将碱基质量表示方法转化为Phred-64 \\ \hline
+	
+\end{longtable}
+
+\begin{minted}{bash}
+java -jar <path to trimmomatic jar> SE [-threads <threads>]
+    [-phred33 | -phred64] [-trimlog <logFile>] 
+    <input> <output> <step 1> ...
+\end{minted}
+
+\begin{minted}{bash}
+java -classpath <path to trimmomatic jar>
+    org.usadellab.trimmomatic.TrimmomaticSE 
+    [threads <threads>] [-phred33 | -phred64] [-trimlog <logFile>] 
+    <input> <output> <step 1> ... 
+\end{minted}
+
+\begin{minted}{bash}
+java -jar <path to trimmomatic.jar> PE 
+    [-threads <threads] [-phred33 | -phred64] 
+    [-trimlog <logFile>] 
+    [-basein <inputBase> | <input 1> <input 2>] 
+    [-baseout <outputBase> | <unpaired output 1> 
+        <paired output 2> <unpaired output 2>
+    <step 1> ... 
+\end{minted}
+
+\begin{minted}{bash}
+java -classpath <path to trimmomatic jar>
+    org.usadellab.trimmomatic.TrimmomaticPE 
+    [threads <threads>] [-phred33 | -phred64] 
+    [-trimlog <logFile>] 
+    [-basein <inputBase> | <input 1> <input 2>] 
+    [-baseout <outputBase> | <paired output 1> <unpaired output 1>
+        <paired output 2> <unpaired output 2>
+    <step 1> ... 
+\end{minted}
+
+\subsection{cutadapt}
+
+\subsection{NGS QC Toolkit}
+
+\subsection{BCL2FASTQ Conversion Software}
+
+\subsection{FASTX-Toolkit}
+
+\url{http://hannonlab.cshl.edu/fastx_toolkit/}
+
+
+\section{Read Clustering}
+
+
+\section{k-mer counting}
+
+\subsection{Jellyfish}
+
+
+\section{Depth of Coverage}
+
+
+\section{Variant recalibration}
+

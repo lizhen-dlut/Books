@@ -1,0 +1,925 @@
+\chapter{C++ 17 Features}
+\url{http://www.bfilipek.com/2017/01/cpp17features.html}
+
+This year we’ll get a new version of C++: C++17!
+
+In this mega long article I’ve built a list of all features of the new standard. 
+
+Have a look and see what we get!
+
+\section{Intro}
+
+Updated: This post was updated 16th June 2017.
+
+The list is mostly done! Still some descriptions could be improved or more example could be provided.
+
+If you have code examples, better explanations or any ideas, let me know! I am happy to update the current post so that it has some real value for others.
+
+The plan is to have a list of features with some basic explanation, little example (if possible) and some additional resources, plus a note about availability in compilers. Probably, most of the features might require separate articles or even whole chapters in books, so the list here will be only a jump start.
+
+See this github repo: github/fenbf/cpp17features. Add a pull request to update the content.
+
+The list comes from the following resources:
+\begin{enumerate}
+\item SO: What are the new features in C++17?
+\item cppreference.com/C++ compiler support.
+\item AnthonyCalandra/modern-cpp-features cheat sheet - unfortunately it doesn’t include all the features of C++17.
+\item plus other findings and mentions
+\end{enumerate}
+
+And one of the most important resource: Working Draft, Standard for Programming Language C++
+
+Plus there’s an official list of changes: P0636r0: Changes between C++14 and C++17 DIS
+
+I am also working on a bit detailed series:
+\begin{enumerate}
+    \item Fixes and deprecation
+    \item Language clarification
+    \item Templates
+    \item Attributes
+    \item Simplification
+    \item Library changes - Filesystem
+    \item Library changes 2 (soon)
+    \item Library changes 3 (soon + 1)
+    \item Wrap up, Bonus
+\end{enumerate}
+
+\section{Language Features}
+
+\subsection{New auto rules for direct-list-initialization}
+
+Fixes some cases with auto type deduction. The full background can be found in Auto and braced-init-lists, by Ville Voutilainen.
+
+It fixes the problem of deducing \mintinline{c++}{std::initializer_list} like:
+
+\begin{minted}{c++}
+auto x = foo(); // copy-initialization
+auto x{foo}; // direct-initialization, initializes an \mintinline{c++}{initializer_list}
+int x = foo(); // copy-initialization
+int x{foo}; // direct-initialization
+\end{minted}
+
+And for the direct initialization, new rules are:
+
+\begin{enumerate}
+\item For a braced-init-list with only a single element, auto deduction will deduce from that entry;
+\item For a braced-init-list with more than one element, auto deduction will be ill-formed.
+\end{enumerate}
+
+Basically, auto x { 1 }; will be now deduced as int, but before it was an initializer list.
+
+\subsection{\mintinline{c++}{static_assert} with no message}
+
+Self-explanatory. It allows just to have the condition without passing the message, version with the message will also be available. It will be compatible with other asserts like \mintinline{c++}{BOOST_STATIC_ASSERT} (that didn’t take any message from the start).
+
+\subsection{typename in a template template parameter}
+
+Allows you to use typename instead of class when declaring a template template parameter. Normal type parameters can use them interchangeably, but template template parameters were restricted to class, so this change unifies these forms somewhat.
+
+\begin{minted}{c++}
+template <template <typename...> typename Container>
+//            used to be invalid ^^^^^^^^
+struct foo;
+
+foo<std::vector> my_foo;
+\end{minted}
+
+\subsection{Removing trigraphs}
+
+Removes ??=, ??(, ??>, … 
+
+Makes the implementation a bit simpler, see MSDN Trigraphs
+
+\subsection{Nested namespace definition}
+
+Allows to write:
+
+\begin{minted}{c++}
+namespace A::B::C {
+   //…
+}
+\end{minted}
+
+Rather than:
+
+\begin{minted}{c++}
+namespace A {
+    namespace B {
+        namespace C {
+            //…
+        }
+    }
+}
+\end{minted}
+
+
+\subsection{Attributes for namespaces and enumerators}
+
+Permits attributes on enumerators and namespaces. More details in N4196.
+\begin{minted}{c++}
+enum E {
+  foobar = 0,
+  foobat [[deprecated]] = foobar
+};
+
+E e = foobat; // Emits warning
+
+namespace [[deprecated]] old_stuff{
+    void legacy();
+}
+
+old_stuff::legacy(); // Emits warning
+\end{minted}
+
+\subsection{u8 character literals}
+
+UTF-8 character literal, e.g. u8'a'. Such literal has type char and the value equal to ISO 10646 code point value of c-char, provided that the code point value is representable with a single UTF-8 code unit. If c-char is not in Basic Latin or C0 Controls Unicode block, the program is ill-formed.
+
+The compiler will report errors if character cannot fit inside u8 ASCII range.
+
+Reference:
+\begin{enumerate}
+\item cppreference.com/character literal
+\item SO: What is the point of the UTF-8 character literals proposed for C++17?
+\end{enumerate}
+
+\subsection{Allow constant evaluation for all non-type template arguments}
+
+Remove syntactic restrictions for pointers, references, and pointers to members that appears as non-type template parameters:
+
+For instance:
+\begin{minted}{c++}
+template<int *p> struct A {};
+int n;
+A<&n> a; // ok
+
+constexpr int *p() { return &n; }
+A<p()> b; // error before C++17
+\end{minted}
+
+\subsection{Fold Expressions}
+
+More background here in P0036
+
+Allows to write compact code with variadic templates without using explicit recursion.
+
+Example:
+
+\begin{minted}{c++}
+template<typename... Args>
+auto SumWithOne(Args... args){
+    return (1 + ... + args);
+}
+\end{minted}
+
+Articles:
+\begin{enumerate}
+\item C++ Truths: Folding Monadic Functions
+\item Simon Brand: Exploding tuples with fold expressions
+\item Baptiste Wicht: C++17 Fold Expressions
+\item Fold Expressions - ModernesCpp.com
+\end{enumerate}
+
+\subsection{Unary fold expressions and empty parameter packs}
+
+If the parameter pack is empty then the value of the fold is:
+
+\begin{tabular}{|c|c|}
+\hline 
+Operator & Value \\ 
+\hline 
+\&\& & true \\ 
+\hline 
+|| & false \\ 
+\hline 
+, & void() \\ 
+\hline 
+\end{tabular} 
+
+For any operator not listed above, an unary fold expression with an empty parameter pack is ill-formed.
+
+\subsection{Remove Deprecated Use of the register Keyword}
+
+The register keyword was deprecated in the 2011 C++ standard. C++17 tries to clear the standard, so the keyword is now removed. This keyword is reserved now and might be repurposed in the future revisions. 
+
+\subsection{Remove Deprecated operator++(bool)}
+
+The ++ operator for bool was deprecated in the original 1998 C++ standard, and it is past time to remove it formally. 
+
+\subsection{Removing Deprecated Exception Specifications from C++17}
+
+Dynamic exception specifications were deprecated in C++11. This paper formally proposes removing the feature from C++17, while retaining the (still) deprecated throw() specification strictly as an alias for noexcept(true).
+
+\subsection{Make exception specifications part of the type system}
+
+Previously exception specifications for a function didn’t belong to the type of the function, but it will be part of it.
+
+We’ll get an error in the case:
+
+\begin{minted}{c++}
+void (*p)();
+void (**pp)() noexcept = &p;   // error: cannot convert to pointer to noexcept function
+
+struct S { typedef void (*p)(); operator p(); };
+void (*q)() noexcept = S();   // error: cannot convert to pointer to noexcept function
+\end{minted}
+
+\subsection{Aggregate initialization of classes with base classes}
+
+If a class was derived from some other type you couldn’t use aggregate initialization. But now the restriction is removed.
+
+\begin{minted}{c++}
+struct base { int a1, a2; };
+struct derived : base { int b1; };
+
+derived d1{{1, 2}, 3};      // full explicit initialization
+derived d1{{}, 1};          // the base is value initialized
+\end{minted}
+
+To sum up: from the standard:
+An aggregate is an array or a class with: 
+\begin{enumerate}
+\item * no user-provided constructors (including those inherited from a base class), 
+\item * no private or protected non-static data members (Clause 11), 
+\item * no base classes (Clause 10) and // removed now! 
+\item * no virtual functions (10.3), and 
+\item * no virtual, private or protected base classes (10.1). 
+\end{enumerate}
+
+\subsection{Lambda capture of *this}
+
+this pointer is implicitly captured by lambdas inside member functions (if you use a default capture, like \mintinline{c++}{[&]} or \mintinline{c++}{[=]}). Member variables are always accessed by this pointer.
+
+Example:
+\begin{minted}{c++}
+struct S {
+   int x ;
+   void f() {
+      // The following lambda captures are currently identical
+      auto a = [&]() { x = 42 ; } // OK: transformed to (*this).x
+      auto b = [=]() { x = 43 ; } // OK: transformed to (*this).x
+      a();
+      assert( x == 42 );
+      b();
+      assert( x == 43 );
+   }
+};
+\end{minted}
+
+Now you can use *this when declaring a lambda, for example \mintinline{c++}{ auto b = [=, *this]() { x = 43 ; }}. That way this is captured by value. Note that the form \mintinline{c++}{[&,this]} is redundant but accepted for compatibility with ISO C++14.
+
+Capturing by value might be especially important for async invocation, paraller processing.
+
+\subsection{Using attribute namespaces without repetition}
+
+Other name for this feature was “Using non-standard attributes” in P0028R3 and PDF: P0028R2 (rationale, examples).
+
+Simplifies the case where you want to use multiple attributes, like:
+
+\begin{minted}{c++}
+void f() {
+    [[rpr::kernel, rpr::target(cpu,gpu)]] // repetition
+    do-task();
+}
+\end{minted}
+
+Proposed change:
+
+\begin{minted}{c++}
+void f() {
+    [[using rpr: kernel, target(cpu,gpu)]]
+    do-task();
+}
+\end{minted}
+
+That simplification might help when building tools that automatically translate annotated such code into a different programming models.
+
+\subsection{Dynamic memory allocation for over-aligned data}
+
+In the following example:
+\begin{minted}{c++}
+class alignas(16) float4 {
+    float f[4];
+};
+float4 *p = new float4[1000];
+\end{minted}
+
+C++11/14 did not specify any mechanism by which over-aligned data can be dynamically allocated correctly (i.e. respecting the alignment of the data). In the example above, not only is an implementation of C++ not required to allocate properly-aligned memory for the array, for practical purposes it is very nearly required to do the allocation incorrectly.
+
+C++17 fixes that hole by introducing additional memory allocation functions that use align parameter:
+
+\begin{minted}{c++}
+void* operator new(std::size_t, std::align_val_t);
+void* operator new[](std::size_t, std::align_val_t);
+void operator delete(void*, std::align_val_t);
+void operator delete[](void*, std::align_val_t);
+void operator delete(void*, std::size_t, std::align_val_t);
+void operator delete[](void*, std::size_t, std::align_val_t);
+\end{minted}
+
+\subsection{\mintinline{c++}{__has_include} in preprocessor conditionals}
+
+This feature allows a C++ program to directly, reliably and portably determine whether or not a library header is available for inclusion.
+
+Example: This demonstrates a way to use a library optional facility only if it is available.
+
+\begin{minted}{c++}
+#if __has_include(<optional>)
+#  include <optional>
+#  define have_optional 1
+#elif __has_include(<experimental/optional>)
+#  include <experimental/optional>
+#  define have_optional 1
+#  define experimental_optional 1
+#else
+#  define have_optional 0
+#endif
+\end{minted}
+
+\subsection{Template argument deduction for class templates}
+
+Before C++17, template deduction worked for functions but not for classes. 
+For instance, the following code was legal:
+\begin{minted}{c++}
+void f(std::pair<int, char>);
+
+f(std::make_pair(42, 'z'));
+\end{minted}
+
+because \mintinline{c++}{std::make_pair} is a template function (so we can perform template deduction). 
+
+But the following wasn’t:
+
+\begin{minted}{c++}
+void f(std::pair<int, char>);
+
+f(std::pair(42, 'z'));
+\end{minted}
+
+Although it is semantically equivalent. This was not legal because std::pair is a template class, and template classes could not apply type deduction in their initialization.
+
+So before C++17 one has to write out the types explicitly, even though this does not add any new information:
+
+\begin{minted}{c++}
+void f(std::pair<int, char>);
+
+f(std::pair<int, char>(42, 'z'));
+\end{minted}
+
+This is fixed in C++17 where template class constructors can deduce type parameters. The syntax for constructing such template classes is therefore consistent with the syntax for constructing non-template classes.
+
+todo: deduction guides.
+
+\begin{enumerate}
+\item A 4 min episode of C++ Weekly on class template argument type deduction
+\item A 4 min episode of C++ Weekly on deduction guides
+\item Modern C++ Features - Class Template Argument Deduction -
+\end{enumerate}
+
+\subsection{Non-type template parameters with auto type}
+
+Automatically deduce type on non-type template parameters.
+
+\begin{minted}{c++}
+template <auto value> void f() { }
+f<10>();               // deduces int
+\end{minted}
+
+Trip report: Summer ISO C++ standards meeting (Oulu) | Sutter’s Mill
+
+\subsection{Guaranteed copy elision}
+
+Articles:
+\begin{enumerate}
+\item Jonas Devlieghere: Guaranteed Copy Elision
+\end{enumerate}
+
+\subsection{New specification for inheriting constructors (DR1941 et al)}
+
+More description and reasoning in P0136R0. Some excerpts below:
+
+An inheriting constructor does not act like any other form of using-declaration. All other using-declarations make some set of declarations visible to name lookup in another context, but an inheriting constructor declaration declares a new constructor that merely delegates to the original.
+
+This feature changes inheriting constructor declaration from declaring a set of new constructors, to making a set of base class constructors visible in a derived class as if they were derived class constructors. (When such a constructor is used, the additional derived class subobjects will also be implicitly constructed as if by a defaulted default constructor). Put another way: make inheriting a constructor act just like inheriting any other base class member, to the extent possible.
+
+This change does affect the meaning and validity of some programs, but these changes improve the consistency and comprehensibility of C++.
+
+\begin{minted}{c++}
+// Hiding works the same as for other member 
+// using-declarations in the presence of default arguments 
+struct A {
+  A(int a, int b = 0);
+  void f(int a, int b = 0);
+};
+struct B : A {
+  B(int a);      using A::A;
+  void f(int a); using A::f;
+};
+struct C : A {
+  C(int a, int b = 0);      using A::A;
+  void f(int a, int b = 0); using A::f;
+};
+
+B b(0); // was ok, now ambiguous
+b.f(0); // ambiguous (unchanged)
+
+C c(0); // was ambiguous, now ok
+c.f(0); // ok (unchanged)
+\end{minted}
+
+\begin{minted}{c++}
+// Inheriting constructor parameters are no longer copied
+struct A { A(const A&) = delete; A(int); };
+struct B { B(A); void f(A); };
+struct C : B { using B::B; using B::f; };
+C c({0}); // was ill-formed, now ok (no copy made)
+c.f({0}); // ok (unchanged)
+\end{minted}
+
+\subsection{Direct-list-initialization of enumerations}
+
+Allows to initialize enum class with a fixed underlying type:
+
+\begin{minted}{c++}
+enum class Handle : uint32_t { Invalid = 0 };
+Handle h { 42 }; // OK
+\end{minted}
+
+Allows to create ‘strong types’ that are easy to use…
+
+\subsection{Stricter expression evaluation order}
+
+In a nutshell, given an expression such as f(a, b, c), the order in which the sub-expressions f, a, b, c (which are of arbitrary shapes) are evaluated is left unspecified by the standard.
+\begin{minted}{c++}
+// unspecified behaviour below!
+f(i++, i);
+
+v[i] = i++; 
+
+std::map<int, int> m;
+m[0] = m.size(); // {{0, 0}} or {{0, 1}} ?
+\end{minted}
+
+Summary of changes:
+\begin{enumerate}
+\item Postfix expressions are evaluated from left to right. This includes functions calls and member selection expressions.
+\item Assignment expressions are evaluated from right to left. This includes compound assignments.
+\item Operands to shift operators are evaluated from left to right.
+\end{enumerate}
+
+Reference:
+\begin{enumerate}
+\item C++ Order of evaluation, cppreference
+\item SO: What are the evaluation order guarantees introduced by C++17?
+\item How compact code can become buggy code: getting caught by the order of evaluations, Fluent C++
+\end{enumerate}
+
+\subsection{constexpr lambda expressions}
+
+consexpr can be used in the context of lambdas.
+
+\begin{minted}{c++}
+constexpr auto ID = [] (int n)  { return n; };
+constexpr int I = ID(3);
+static_assert(I == 3);
+
+constexpr int AddEleven(int n) {
+  // Initialization of the 'data member' for n can
+  // occur within a constant expression since 'n' is
+  // of literal type.
+  return [n] { return n + 11; }();
+}
+static_assert(AddEleven(5) == 16);
+\end{minted}
+
+Articles 
+\begin{enumerate}
+\item * A 5 min episode of Jason Turner’s C++ Weekly about constexpr lambdas 
+\item * Lambda expression comparison between C++11, C++14 and C++17
+\end{enumerate}
+
+\subsection{Different begin and end types in range-based for}
+
+Changing the definition of range based for from:
+\begin{minted}{c++}
+{
+   auto && __range = for-range-initializer;
+   for ( auto __begin = begin-expr,
+              __end = end-expr;
+              __begin != __end;
+              ++__begin ) {
+        for-range-declaration = *__begin;
+        statement
+   }
+}
+\end{minted}
+
+Into:
+
+\begin{minted}{c++}
+{
+  auto && __range = for-range-initializer;
+  auto __begin = begin-expr;
+  auto __end = end-expr;
+  for ( ; __begin != __end; ++__begin ) {
+    for-range-declaration = *__begin;
+    statement
+  }
+}
+\end{minted}
+
+Types of \mintinline{c++}{__begin} and \mintinline{c++}{__end} might be different; only the comparison operator is required. This little change allows Range TS users a better experience.
+
+\subsection{[[fallthrough]] attribute}
+
+Indicates that a fallthrough in a switch statement is intentional and a warning should not be issued for it. More details in P0068R0.
+\begin{minted}{c++}
+switch (c) {
+case 'a':
+    f(); // Warning emitted, fallthrough is perhaps a programmer error
+case 'b':
+    g();
+[[fallthrough]]; // Warning suppressed, fallthrough is intentional
+case 'c':
+    h();
+}
+\end{minted}
+
+\subsection{[[nodiscard]] attribute}
+
+[[nodiscard]] is used to stress that the return value of a function is not to be discarded, on pain of a compiler warning. More details in P0068R0.
+
+\begin{minted}{c++}
+[[nodiscard]] int foo();
+void bar() {
+    foo(); // Warning emitted, return value of a nodiscard function is discarded
+}
+\end{minted}
+
+This attribute can also be applied to types in order to mark all functions which return that type as [[nodiscard]]:
+
+\begin{minted}{c++}
+[[nodiscard]] struct DoNotThrowMeAway{};
+DoNotThrowMeAway i_promise();
+void oops() {
+    i_promise(); // Warning emitted, return value of a nodiscard function is discarded
+}
+\end{minted}
+
+[A 4 min video about \mintinline{c++}{[[nodiscard]]} in Jason Turner’s C++ Weekly](\url{https://www.youtube.com/watch?v=l_5PF3GQLKc})
+
+\subsection{\mintinline{c++}{[[maybe_unused]]} attribute}
+
+Suppresses compiler warnings about unused entities when they are declared with \mintinline{c++}{[[maybe_unused]]}. More details in P0068R0.
+
+\begin{minted}{c++}
+                 static void impl1() { ... } // Compilers may warn about this
+[[maybe_unused]] static void impl2() { ... } // Warning suppressed
+
+
+void foo() {
+                      int x = 42; // Compilers may warn about this
+     [[maybe_unused]] int y = 42; // Warning suppressed
+}
+\end{minted}
+
+[A 3 min video about \mintinline{c++}{[[maybe_unused]]} in Jason Turner’s C++ Weekly](https://www.youtube.com/watch?v=WSPmNL9834U)
+
+\subsection{Ignore unknown attributes}
+
+Clarifies that implementations should ignore any attribute namespaces which they do not support, as this used to be unspecified. More details in P0283R1.
+\begin{minted}{c++}
+//compilers which don't support MyCompilerSpecificNamespace will ignore this attribute
+[[MyCompilerSpecificNamespace::do_special_thing]] 
+void foo();
+\end{minted}
+
+\subsection{Pack expansions in using-declarations}
+
+Allows you to inject names with using-declarations from all types in a parameter pack.
+
+In order to expose operator() from all base classes in a variadic template, we used to have to resort to recursion:
+
+\begin{minted}{c++}
+template <typename T, typename... Ts>
+struct Overloader : T, Overloader<Ts...> {
+    using T::operator();
+    using Overloader<Ts...>::operator();
+    // […]
+};
+
+template <typename T> struct Overloader<T> : T {
+    using T::operator();
+};
+\end{minted}
+
+Now we can simply expand the parameter pack in the using-declaration:
+
+\begin{minted}{c++}
+template <typename... Ts>
+struct Overloader : Ts... {
+    using Ts::operator()...;
+    // […]
+};
+\end{minted}
+
+Remarks
+\begin{enumerate}
+\item Implemented in GCC 7.0, see this change.
+\end{enumerate}
+
+\subsection{Decomposition declarations}
+
+Helps when using tuples as a return type. It will automatically create variables and tie them. More details in P0144R0. Was originally called “structured bindings”.
+
+For example:
+
+\begin{minted}{c++}
+std::tie(a, b, c) = tuple; // a, b, c need to be declared first
+\end{minted}
+
+Now we can write:
+
+\begin{minted}{c++}
+auto [ a, b, c ] = tuple;
+\end{minted}
+
+Such expressions also work on structs, pairs, and arrays.
+
+Articles:
+\begin{enumerate}
+\item Steve Lorimer, C++17 Structured Bindings
+\item jrb-programming, Emulating C++17 Structured Bindings in C++14
+\item Simon Brand, Adding C++17 decomposition declaration support to your classes
+\end{enumerate}
+
+\subsection{Hexadecimal floating-point literals}
+
+Allows to express some special floating point values, for example, the smallest normal IEEE-754 single precision value is readily written as 0x1.0p-126.
+
+\subsection{init-statements for if and switch}
+
+New versions of the if and switch statements for C++: if (init; condition) and switch (init; condition). 
+
+This should simplify the code. For example, previously you had to write:
+
+\begin{minted}{c++}
+{   
+    auto val = GetValue();   
+    if (condition(val))    
+        // on success  
+    else   
+        // on false... 
+}
+\end{minted}
+
+Look, that val has a separate scope, without it it will ‘leak’.
+
+Now you can write:
+
+\begin{minted}{c++}
+if (auto val = GetValue(); condition(val))    
+    // on success  
+else   
+    // on false... 
+\end{minted}
+
+val is visible only inside the if and else statements, so it doesn’t ‘leak’. 
+condition might be any condition, not only if val is true/false.
+
+Examples:
+
+C++ Weekly - Ep 21 C++17’s if and switch Init Statements
+
+\subsection{Inline variables}
+
+Previously only methods/functions could be specified as inline, now you can do the same with variables, inside a header file.
+
+A variable declared inline has the same semantics as a function declared inline: it can be defined, identically, in multiple translation units, must be defined in every translation unit in which it is used, and the behavior of the program is as if there is exactly one variable.
+
+\begin{minted}{c++}
+struct MyClass
+{
+    static const int sValue;
+};
+
+inline int const MyClass::sValue = 777;
+\end{minted}
+
+Or even:
+\begin{minted}{c++}
+struct MyClass
+{
+    inline static const int sValue = 777;
+};
+\end{minted}
+
+Articles
+
+SO: What is an inline variable and what is it useful for?
+
+\subsection{DR: Matching of template template-arguments excludes compatible} templates
+
+This feature resolves Core issue CWG 150.
+
+From the paper:
+
+This paper allows a template template-parameter to bind to a template argument whenever the template parameter is at least as specialized as the template argument. This implies that any template argument list that can legitimately be applied to the template template-parameter is also applicable to the argument template.
+
+Example:
+
+\begin{minted}{c++}
+template <template <int> class> void FI();
+template <template <auto> class> void FA();
+template <auto> struct SA { /* ... */ };
+template <int> struct SI { /* ... */ };
+FI<SA>();  // OK; error before this paper
+FA<SI>();  // error
+
+template <template <typename> class> void FD();
+template <typename, typename = int> struct SD { /* ... */ };
+FD<SD>();  // OK; error before this paper (CWG 150)
+\end{minted}
+
+(Adapted from the comment by IncongruentModulo1) For a useful example, consider something like this:
+
+\begin{minted}{c++}
+template <template <typename> typename Container>
+struct A
+{
+    Container<int>    m_ints;
+    Container<double> m_doubles;
+};
+\end{minted}
+
+In C++14 and earlier, A<std::vector> wouldn’t be valid (ignoring the typename and not class before container) since std::vector is declared as:
+
+\begin{minted}{c++}
+template <typename T, typename Allocator = std::allocator<T>> 
+class vector;
+\end{minted}
+
+This change resolves that issue. Before, you would need to declare template \mintinline{c++}{<template <typename...> typename Container>}, which is more permissive and moves the error to a less explicit line (namely the declaration of \mintinline{c++}{m_ints} wherever the struct A is implemented / declared, instead of where the struct is instantiated with the wrong template type.
+
+\subsection{\mintinline{c++}{std::uncaught_exceptions()}}
+
+More background in the original paper: PDF: N4152 and GOTW issue 47: Uncaught Exceptions.
+
+The function returns the number of uncaught exception objects in the current thread.
+
+This might be useful when implementing proper Scope Guards that works also during stack unwinding.
+
+A type that wants to know whether its destructor is being run to unwind this object can query \mintinline{c++}{uncaught_exceptions} 
+
+in its constructor and store the result, then query \mintinline{c++}{uncaught_exceptions} again in its destructor; if the result is different, 
+
+then this destructor is being invoked as part of stack unwinding due to a new exception that was thrown later than the object’s construction
+
+The above quote comes from PDF: N4152.
+
+\subsection{constexpr if-statements}
+
+The static-if for C++! This allows you to discard branches of an if statement at compile-time based on a constant expression condition.
+\begin{minted}{c++}
+if constexpr(cond)
+     statement1; // Discarded if cond is false
+else
+     statement2; // Discarded if cond is true
+\end{minted}
+     
+This removes a lot of the necessity for tag dispatching and SFINAE:
+
+\subsection{SFINAE}
+
+\begin{minted}{c++}
+template <typename T, std::enable_if_t<std::is_arithmetic<T>{}>* = nullptr>
+auto get_value(T t) {/*...*/}
+
+template <typename T, std::enable_if_t<!std::is_arithmetic<T>{}>* = nullptr>
+auto get_value(T t) {/*...*/}
+\end{minted}
+
+\subsection{Tag dispatching}
+
+\begin{minted}{c++}
+template <typename T>
+auto get_value(T t, std::true_type) {/*...*/}
+
+template <typename T>
+auto get_value(T t, std::false_type) {/*...*/}
+
+template <typename T>
+auto get_value(T t) {
+    return get_value(t, std::is_arithmetic<T>{}); 
+}
+\end{minted}
+
+\subsection{if constexpr}
+
+\begin{minted}{c++}
+template <typename T>
+auto get_value(T t) {
+     if constexpr (std::is_arithmetic_v<T>) {
+         //...
+     }
+     else {
+         //...
+     }
+}
+\end{minted}
+
+Articles:
+\begin{enumerate}
+\item LoopPerfect Blog, C++17 vs C++14 - Round 1 - if-constexpr
+\item SO: constexpr if and \mintinline{c++}{static_assert}
+\item Simon Brand: Simplifying templates and \mintinline{c++}{#ifdefs} with if constexpr
+\end{enumerate}
+
+\section{Library Features}
+To get more details about library implementation I suggest those links:
+
+\begin{enumerate}
+\item VS 2015 Update 2’s STL is C++17-so-far Feature Complete - Jan 2016
+\item libstdc++, C++ 201z status
+\item libc++ C++1z Status
+\end{enumerate}
+
+This section only mentions some of the most important parts of library changes, it would be too impractical to go into details of every little change.
+
+\subsection{Merged: The Library Fundamentals 1 TS (most parts)}
+
+We get the following items:
+
+\begin{enumerate}
+    \item Tuples - Calling a function with a tuple of arguments
+    \item Functional Objects - Searchers
+    \item Optional objects
+    \item Class any
+    \item \mintinline{c++}{string_view}
+    \item Memory: 
+        \begin{enumerate}
+            \item Shared-ownership pointers
+            \item Class \mintinline{c++}{memory_resource}
+            \item Class \mintinline{c++}{memory_resource}
+            \item Access to program-wide \mintinline{c++}{memory_resource} objects
+            \item Pool resource classes
+            \item Class \mintinline{c++}{monotonic_buffer_resource}
+            \item Alias templates using polymorphic memory resources
+        \end{enumerate}
+    \item Algorithms: 
+       \begin{enumerate}
+            \item  Search
+            \item Sampling
+       \end{enumerate}
+    \item \mintinline{c++}{shared_ptr} natively handles arrays: see Merging \mintinline{c++}{shared_ptr} changes from Library Fundamentals to C++17
+\end{enumerate}
+
+The wording from those components comes from Library Fundamentals V2 to ensure the wording includes the latest corrections.
+
+Resources:
+
+Marco Arena, \mintinline{c++}{string_view} odi et amo
+
+\subsection{Removal of some deprecated types and functions, including \mintinline{c++}{std::auto_ptr}, \mintinline{c++}{std::random_shuffle}, and old function adaptors}
+
+\begin{enumerate}
+    \item Function objects - \mintinline{c++}{unary_function}/\mintinline{c++}{binary_function}, \mintinline{c++}{ptr_fun()}, and \mintinline{c++}{mem_fun()}/\mintinline{c++}{mem_fun_ref()}
+    \item Binders - \mintinline{c++}{bind1st()}/\mintinline{c++}{bind2nd()}
+    \item \mintinline{c++}{auto_ptr}
+    \item Random shuffle - \mintinline{c++}{random_shuffle(first, last)} and \mintinline{c++}{random_shuffle(first, last, rng)}
+\end{enumerate}
+
+\subsection{Merged: The Parallelism TS, a.k.a. “Parallel STL.”,}
+
+Articles:
+Parallel Algorithm of the Standard Template Library - ModernesCpp.com
+
+\subsection{Merged: File System TS,}
+
+P0218R1
+
+\subsection{Merged: The Mathematical Special Functions IS,}
+
+\subsection{Improving std::pair and std::tuple}
+
+\subsection{\mintinline{c++}{std::shared_mutex} (untimed)}
+
+\subsection{Variant}
+
+Variant is a typesafe union that will report errors when you want to access something that’s not currently inside the object.
+
+\begin{enumerate}
+\item cppreference/variant
+\item IsoCpp: The Variant Saga: A happy ending?
+\end{enumerate}
+
+\subsection{Splicing Maps and Sets}
+
+From Herb Sutter, Oulu trip report:
+
+You will now be able to directly move internal nodes from one node-based container directly into another container of the same type. Why is that important? Because it guarantees no memory allocation overhead, no copying of keys or values, and even no exceptions if the container’s comparison function doesn’t throw.
+
+\section{Summary}
+Thanks for all the support with the list!
+
+There are still items that should be updated, but the list is mostly done.

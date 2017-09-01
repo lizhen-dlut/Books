@@ -1,0 +1,257 @@
+\section{C++17 in details: Code Simplification}
+
+\url{http://www.bfilipek.com/2017/07/cpp17-details-simplifications.html}
+
+With each C++ standard, we aim for a simpler, cleaner and more expressive code. C++17 offers several "big" language features that should make our code nicer. Let’s have a look.
+
+Intro
+You might say that most of the new language features (not to mention The Standard Library improvements) are there to write simpler/cleaner code. The “C++17 in details” series reviews most of the bigger things, still for today, I tried to pick a few features that make your code more compact right off the bat.
+Structured bindings/Decomposition declarations
+Init-statement for if/switch
+Inline variables
+constexpr if (again!)
+a few other mentions
+The Series
+This post is a fifth in the series about C++17 features details.
+The plan for the series
+Fixes and deprecation
+Language clarification
+Templates
+Attributes
+Simplification (today)
+Library changes - Filesystem
+Library changes 2 (soon)
+Library changes 3 (soon + 1)
+Wrap up, Bonus
+Documents & Links
+Just to recall:
+First of all, if you want to dig into the standard on your own, you can read the latest draft here: 
+N4659, 2017-03-21, Working Draft, Standard for Programming Language C++ - the link also appears on the isocpp.org.
+And you can also grab my list of concise descriptions of all of the C++17 language features:
+Download a free copy of my C++17 Cheat Sheet! 
+It’s a one-page reference card, PDF.
+Links:
+Compiler support: C++ compiler support
+The official paper with changes: P0636r0: Changes between C++14 and C++17 DIS
+There’s also a talk from Bryce Lelbach: C++Now 2017: C++17 Features
+My master C++17 features post: C++17 Features
+Jason Turner: C++ Weekly channel, where he covered most (or even all!) of C++17 features.
+OK, let’s discuss the features!
+Structured Binding Declarations
+Do you often work with tuples?
+If not, then you should probably start looking into it. Not only are tuples suggested for returning multiple values from a function, but they've also got special language support - so that the code is even easier and cleaner.
+For example (got it from std::tie at cppreference):
+std::set<S> mySet;
+
+S value{42, "Test", 3.14};
+std::set<S>::iterator iter;
+bool inserted;
+
+// unpacks the return val of insert into iter and inserted
+std::tie(iter, inserted) = mySet.insert(value);
+
+if (inserted)
+    std::cout << "Value was inserted\n";
+Notice that you need to declare iter and inserted first. Then you can use std::tie to make the magic… Still, it’s a bit of code.
+With C++17:
+std::set<S> mySet;
+
+S value{42, "Test", 3.14};
+
+auto [iter, inserted] = mySet.insert(value);
+One line instead of three! It’s also easier to read and safer, isn’t it?
+Also, you can now use const and write const auto [iter, inserted] and be const correct.
+Structured Binding is not only limited to tuples, we have three cases:
+1. If initializer is an array:
+// works with arrays:
+double myArray[3] = { 1.0, 2.0, 3.0 };  
+auto [a, b, c] = myArray;
+2. if initializer supports std::tuple_size<> and provides get<N>() function (the most common case I think):
+auto [a, b] = myPair; // binds myPair.first/second
+In other words, you can provide support for your classes, assuming you add get<N> interface implementation.
+3. if initializer’s type contains only non static, public members:
+struct S { int x1 : 2; volatile double y1; };
+S f();
+const auto [ x, y ] = f();
+Now it’s also quite easy to get a reference to a tuple member:
+auto& [ refA, refB, refC, refD ] = myTuple;
+And one of the coolest usage (support to for loops!):
+std::map myMap;    
+for (const auto & [k,v] : myMap) 
+{  
+    // k - key
+    // v - value
+} 
+BTW: Structured Bindings or Decomposition Declaration?
+For this feature, you might have seen another name “decomposition declaration” in use. As I see this, those two names were considered, but now the standard (the draft) sticks with “Structured Bindings.” 
+More Details in:
+Section: 11.5 Structured binding declarations [dcl.struct.bind]
+P0217R3
+P0144R0
+P0615R0: Renaming for structured bindings
+c++ today: Structured Binding (C++17 inside)
+C++17 Structured Bindings – Steve Lorimer
+Working in GCC: 7.0, Clang: 4.0, MSVC: VS 2017.3
+Init-statement for if/switch
+New versions of the if and switch statements for C++: 
+if (init; condition) and switch (init; condition). 
+Previously you had to write:
+{   
+    auto val = GetValue();   
+    if (condition(val))    
+        // on success  
+    else   
+        // on false... 
+}
+Look, that val has a separate scope, without that it ‘leaks’ to enclosing scope.
+Now you can write:
+if (auto val = GetValue(); condition(val))    
+    // on success  
+else   
+    // on false... 
+val is visible only inside the if and else statements, so it doesn’t ‘leak.’ 
+condition might be any condition, not only if val is true/false.
+Why is this useful?
+Let’s say you want to search for a few things in a string:
+const std::string myString = "My Hello World Wow";
+
+const auto it = myString.find("Hello");
+if (it != std::string::npos)
+    std::cout << it << " Hello\n"
+
+const auto it2 = myString.find("World");
+if (it2 != std::string::npos)
+    std::cout << it2 << " World\n"
+We have to use different names for it or enclose it with a separate scope:
+{
+    const auto it = myString.find("Hello");
+    if (it != std::string::npos)
+        std::cout << it << " Hello\n"
+}
+
+{
+    const auto it = myString.find("World");
+    if (it != std::string::npos)
+        std::cout << it << " World\n"
+}
+The new if statement will make that additional scope in one line:
+if (const auto it = myString.find("Hello"); it != std::string::npos)
+    std::cout << it << " Hello\n";
+
+if (const auto it = myString.find("World"); it != std::string::npos)
+    std::cout << it << " World\n";
+As mentioned before, the variable defined in the if statement is also visible in the else block. So you can write:
+if (const auto it = myString.find("World"); it != std::string::npos)
+    std::cout << it << " World\n";
+else
+    std::cout << it << " not found!!\n";
+Plus, you can use it with structured bindings (following Herb Sutter code):
+// better together: structured bindings + if initializer
+if (auto [iter, succeeded] = mymap.insert(value); succeeded) {
+    use(iter);  // ok
+    // ...
+} // iter and succeeded are destroyed here
+Hasn’t C++ Become More Pythonic? - as was written in one blog post from Jeff Preshing? :)
+More details in 
+P0305R1
+C++ Weekly - Ep 21 C++17’s if and switch Init Statements
+GCC: 7.0, Clang: 3.9, MSVC: VS 2017.3.
+Inline variables
+With Non-Static Data Member Initialization (see my post about it here), we can now declare and initialize member variables in one place. Still, with static variables (or const static) you usually need to define it in some cpp file.
+C++11 and constexpr keyword allow you to declare and define static variables in one place, but it’s limited to constexpr’essions only. I’ve even asked the question: c++ - What’s the difference between static constexpr and static inline variables in C++17? - Stack Overflow - to make it a bit clear.
+Ok, but what’s the deal with this feature?
+Previously only methods/functions could be specified as inline, but now you can do the same with variables, inside a header file.
+A variable declared inline has the same semantics as a function declared inline: it can be defined, identically, in multiple translation units, must be defined in every translation unit in which it is used, and the behavior of the program is as if there was exactly one variable.
+struct MyClass
+{
+    static const int sValue;
+};
+
+inline int const MyClass::sValue = 777;
+Or even:
+struct MyClass
+{
+    inline static const int sValue = 777;
+};
+Also, note that constexpr variables are inline implicitly, so there’s no need to use constexpr inline myVar = 10;.
+Why can it simplify the code?
+For example, a lot of header only libraries can limit the number of hacks (like using inline functions or templates) and just use inline variables.
+The advantage over constexpr is that your initialization expression doesn’t have to be constexpr.
+More info in: 
+P0386R2
+SO: What is an inline variable and what is it useful for?
+GCC: 7.0, Clang: 3.9, MSVC: not yet
+constexpr if
+I’ve already introduced this feature in my previous post about templates: templates/constexpr-if. It was only a brief description, so now we can think about examples that shed a bit more light on the feature.
+Regarding code samples? Hmm… As you might recall constexpr if can be used to replace several tricks that were already done:
+SFINAE technique to remove not matching function overrides from the overload set 
+you might want to look at places with C++14’s std::enable_if - that should be easily replaced by constexpr if.
+Tag dispatch
+So, in most of the cases, we can now just write a constexpr if statement and that will yield much cleaner code. This is especially important for metaprogramming/template code that is, I think, complex by its nature.
+A simple example: Fibonacci:
+template<int  N>
+constexpr int fibonacci() {return fibonacci<N-1>() + fibonacci<N-2>(); }
+template<>
+constexpr int fibonacci<1>() { return 1; }
+template<>
+constexpr int fibonacci<0>() { return 0; }
+Now, it can be written almost in a ‘normal’ (no compile time version):
+template<int N>
+constexpr int fibonacci()
+{
+    if constexpr (N>=2)
+        return fibonacci<N-1>() + fibonacci<N-2>();
+    else
+        return N;
+}
+In C++ Weekly episode 18 Jason Turner makes an example that shows that constexpr if won’t do any short circuit logic, so the whole expression must compile:
+if constexpr (std::is_integral<T>::value && 
+              std::numeric_limits<T>::min() < 10)
+{
+
+}
+For T that is std::string you’ll get a compile error because numeric_limits are not defined for strings.
+In the C++Now 2017: Bryce Lelbach “C++17 Features”/16th minute there’s a nice example, where constexpr if can be used to define get<N> function - that could work for structured bindings.
+struct S 
+{
+    int n;
+    std::string s;
+    float d;
+};
+
+template <std::size_t I>
+auto& get(S& s)
+{
+    if constexpr (I == 0)
+        return s.n;
+    else if constexpr (I == 1)
+        return s.s;
+    else if constexpr (I == 2)
+        return s.d;
+}
+Versus previously you would have needed to write:
+template <> auto& get<0>(S &s) { return s.n; }
+template <> auto& get<1>(S &s) { return s.s; }
+template <> auto& get<2>(S &s) { return s.d; }
+As you can see it’s questionable which is the simpler code here. Although in this case, we’ve used only a simple struct, with some real world examples the final code would be much more complex and thus constexpr if would be cleaner.
+More details:
+C++ Weekly Special Edition - Using C++17’s constexpr if - YouTube - real examples from Jason and his projects.
+C++17: let’s have a look at the constexpr if – FJ - I’ve taken the idea of fibonacci example from there.
+C++ 17 vs. C++ 14 — if-constexpr – LoopPerfect – Medium - a lot of interesting examples
+MSVC 2017.3, GCC: 7.0, Clang: 3.9.
+Other features
+We can argue that most of the new features of C++ simplify the language in one way or another. In this post, I focused on the bigger parts, also without doing much repetition.
+Still, just for recall you might want to consider the following features, which also make the code simpler:
+template <auto> - see here.
+Fold Expressions - already mentioned in my previous post in the series.
+Template argument deduction for class templates - mentioned here.
+Not to mention a lot of library features! But we’ll cover them later :)
+Summary
+In my opinion, C++17 makes real progress towards compact, expressive and easy to read code. 
+One of the best things is constexpr if that allows you to write template/metaprogramming code in a similar way to standard code. For me, it’s a huge benefit (as I am always frightened of those scary template tricks). 
+The second feature: structured bindings (that works even in for loops) feels like code from dynamic languages (like Python).
+As you can see all of the mentioned features are already implemented in GCC and Clang. If you work with the recent versions of those compilers you can immediately experiment with C++17. Soon, a lot of those features will be available in VS: VS 2017.3
+What are your best C++17 language features that make code cleaner? 
+Have you played with constexpr if or structured bindings?
+For now, we’ve covered most of the language features, so now it’s time to move to some new things in the Standard Library. Stay tuned for the next articles in the series! (STL: Filesystem)
+remember about my C++17 Ref Card:

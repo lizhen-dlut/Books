@@ -1,0 +1,115 @@
+\documentclass{ctexbook}
+\usepackage[left=2cm, right=2cm]{geometry}
+
+\usepackage{xcolor}
+\definecolor{bg}{rgb}{0.95,0.95,0.95}
+
+\usepackage{minted}
+\usepackage{hyperref}
+
+\newcommand{\Rplus}{\protect\hspace{-.1em}\protect\raisebox{.35ex}{\smaller{\smaller\textbf{+}}}}
+\newcommand{\Cpp}{c++}
+\newcommand{\csharp}{C\#}
+
+\newmintedfile[]{news}{
+linenos=true,frame=single, bgcolor=bg
+}
+
+\begin{document}
+	\chapter{网络编程}
+	\url{http://www.cnblogs.com/mushroom/p/5079964.html}
+	
+	\section{概述}
+	作为一个Universal Windows Platform (UWP)开发者，如果你尝试使用http与web服务或其他服务端通讯时，有多个API可以选择。 UWP中最常见并推荐使用的HTTP客户端API实现是 \mintinline{csharp}{System.Net.Http.HttpClient} 和 \mintinline{csharp}{Windows.Web.Http.HttpClient} 。
+	
+	关于这些APIs不同之处，从功能上来说两组APIs是上相等的，那在不同场景下选择哪一个呢，诸如此类的问题。 在这篇文章中，我们会去尝试定位这些问题，理清楚这两组APIs的用途及使用场景。
+	
+	第一个推荐AIP是 \mintinline{csharp}{System.Net.Http.HttpClient}，相比旧的HttpWebRequest API，这个API的目标是提供一个简单的，干净的抽象层，比较灵活的实现http客户端功能。比如，它允许链接自定义处理器，开发者可以拦截每个request和response，去实现自定义逻辑。 在windows8.1之后，所有功能都在.NET下面实现。 在windows10 UWP中这个API实现移到 \mintinline{csharp}{Windows.Web.Http}和 \mintinline{csharp}{WinINet Http}层上。
+	
+	另外一个推荐API是 \mintinline{csharp}{Windows.Web.Http.HttpClient}，增加这个API的主要目是，把不同windows应用开发语言(C\#, VB, C++, JavaScript)下，不同Http APIs合成一个，它支持上述APIs的所有特性。 大多数基础API都是从System.Net.Http派生的，在Windows HTTP基础上实现。
+	
+	\section{如何选择}
+	在UWP中这些HTTP API都是可以使用的，对于开发者来说最大的问题是在APP中应该使用哪一个。其答案取决去几个因素：
+	\begin{itemize}
+		\item 是否需要结合本地UI收集用户证书，控制HTTP缓存读和写，或者通过指定的ssl客户端证书去做认证？ 如果需要认证，那是应使用Windows.Web.Http.HttpClient。在现在的UWP中，Windows.Web.Http提供HTTP设置，它比System.Net.Http API更好的控制这些。 在未来的版本，也会加强支持System.Net.Http在UWP中的特性。
+		\item 是否考虑写\textbf{跨平台}的.NET代码(跨UWP/ASP.NET 5/IOS和Android)？ 如果需要，那使用System.Net.Http API。它可以让你写的代码复用在其他.Net平台上，比如ASP.Net 5和.NET桌面平台应用。 通过使用Xamarin，这些API在IOS和Android中也得到支持。
+	\end{itemize}
+	现在就比较好理解为什么会有两个相似APIs了，也了解怎么在二者之间进行选择，下面进一步了解这两个对象模型。
+	
+	\section{System.Net.Http}
+	其HttpClient对象是最顶端的抽象模型，在HTTP协议client-server模型中它表示client这部分。其client能发出多个request请求(用HttpRequestMessage表示)到服务端上，从服务端接收响应(用HttpResponseMessage表示)。用HttpContent基类和它派生出的类，表示对象body和每个request或response的content头部，比如StreamContent，MultipartContent和StringContent。它们表示各种http实体body内容。这些类都会提供ReadAs开头的一组方法，它能从请求或响应实体body中，以字符串形式、字节数组、流形式读取内容。
+	
+	每一个HttpClient对象下都有一个处理者对象，它表示client下所有与HTTP相关的配置。从概念上来说，可以认为它是client部分下HTTP协议栈的代表。在客户端发送HTTP请求到服务端和传输数据到客户端上，它是非常可靠的。
+	
+	在System.Net.Http API中默认处理者是HttpClientHandler。当你创建HttpClient对象实例时，会使用默认HTTP stack设置，自动帮你创建一个HttpClientHandler。如果你想修改默认一些设置，比如缓存行为，自动压缩，证书或代理，可以直接创建一个HttpClientHandler实例，修改它的属性，把它当做HttpClient构造函数的参数传入。这样HttpClient对象就会使用我们自定义的处理器，如下:
+	
+\begin{minted}[frame=single]{csharp}
+HttpClientHandler myHandler = new HttpClientHandler(); 
+myHandler.AllowAutoRedirect = false; 
+HttpClient myClient = new HttpClient(myHandler);
+\end{minted}
+
+\subsection{链式处理器}
+System.Net.Http.HttpClient API设计中一个重要优势是：能够插入自定义处理器、在HttpClient对象下创建一连串的处理器。例如：构建一个app，它从web服务中请求一些数据。这时就可以自定义逻辑去处理HTTP服务端响应的4xx (客户端错误)和5xx (服务端错误)，使用具体的重试步骤，比如尝试不同的端口请求或添加一个用户认证。 还可能会想从业务逻辑部分分离出HTTP相关的工作，它只关心web服务的数据返回。
+
+这就可以使用自定义处理器类来完成，它从DelegatingHandler派生出，例如CustomHandler1，然后创建一个新实例，把它传入HttpClient构造函数。 DelegatingHandler类的InnerHandler属性被用指定下一个处理器，比如，可以添加个新的自定处理器(例CustomHandler2)到处理链上。处理链上最后一个处理者的InnerHandler，可以设置成HttpClientHandler的实例，它将传递请求到系统的HTTP协议栈上。 从概念上来看如下图：
+
+下面是完成这部分的例子代码：
+
+\begin{minted}[frame=single]{csharp}
+public class CustomHandler1 : DelegatingHandler
+{
+    protected async override Task<HttpResponseMessage> SendAsync(
+        HttpRequestMessage request, CancellationToken cancellationToken)
+    {
+            Debug.WriteLine("Processing request in Custom Handler 1");
+            HttpResponseMessage response = await base.SendAsync(request,
+                cancellationToken);
+            Debug.WriteLine("Processing response in Custom Handler 1");
+            return response;
+        }
+}
+
+public class CustomHandler2 : DelegatingHandler
+{
+    // Similar code as CustomHandler1.
+}
+
+public class Foo
+{
+    public void CreateHttpClientWithChain()
+    {
+        HttpClientHandler systemHandler = new HttpClientHandler();
+        CustomHandler1 myHandler1 = new CustomHandler1();
+        CustomHandler2 myHandler2 = new CustomHandler2();
+
+        // Chain the handlers together.
+        myHandler1.InnerHandler = myHandler2;
+        myHandler2.InnerHandler = systemHandler;
+
+        // Create the client object with the topmost handler in the chain.
+        HttpClient myClient = new HttpClient(myHandler1);
+    }
+}
+\end{minted}
+
+说明：
+
+如果你试图发送一个请求到远程服务器端口上，其链上最后的处理器通常是HttpClientHandler，它实际是从系统HTTP协议栈层面发送这个请求或接收这个响应。作为一种选择，可以使用一个模拟处理器，模拟发送请求到服务器上，返回一个伪造的响应，这可以用来单元测试。
+
+在传递请求到内部处理器之前或响应处理器之上，添加一个处理逻辑，能减少性能消耗。这个处理器场景下，最好能避免使用耗时的同步操作。
+
+关于链式处理概念的详细信息，可以看Henrik Nielsen的这篇博客,(注意文章参考的是ASP.NET Web API的API版本。它和本文讨论的.NET framework有一些细微的不同，但在链式处理器上的概念是一样的)
+
+\subsection{Windows.Web.Http}
+Windows.Web.Http API的对象模型跟上面描述的System.Net.Http版本非常 ，它也有client entity的概念，一个处理器(在这叫“filter”过滤器)，及在client和系统默认过滤器之间选择是否插入自定义逻辑。
+
+其大多数类型是直接类似于System.Net.Http的类型的，如下:
+
+在上面关于System.Net.Http API的链式处理器讨论，也可应用于Windows.Web.Http API，这里你可以创建自定义链式过滤器，传递它们到HttpClient对象的构造函数中。
+	
+	
+	\input{./chapters/databases}
+%	\input{./chapters/more_like_uwp}
+	
+\end{document}

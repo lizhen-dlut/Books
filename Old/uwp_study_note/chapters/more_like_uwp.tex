@@ -1,0 +1,37 @@
+\chapter{Tips}
+	
+	UWP（Universal Windows Platform，通用Windows平台）是正快速发展的、相当具有潜力的平台之一，其应用所遵循的设计规范令UWP应用的辨识度很高。本文即将介绍的，就是一些UWP的特色API（包含参考资料），以及一些让你的Win10 UWP看起来更像一个UWP的小技巧。
+	
+	\begin{enumerate}
+		\item 使用UWP图标集
+		\item 使用动态磁贴
+		\item 使用跳转列表
+	\end{enumerate}
+
+\section{使用UWP图标集}
+
+微软为开发者们提供了一整套与UWP风格相适应的图标集，并集合成了一个字体：Segoe MDL2 Assets。这个字体提供了大量的专用字符（其实就是一些Icon）。
+
+一般来讲，只需要创建一个普通的TextBlock，设置字体为Segoe MDL2 Assets，并从字符映射表里找到相应的字符拷贝进内容，就可以正确显示这些Icon。这些Icon可以参考：\href{https://docs.microsoft.com/en-us/windows/uwp/style/segoe-ui-symbol-font}{Segoe MDL2 icons}的说明。
+
+\section{使用动态磁贴}
+
+UWP应用有个独特的展示区：它的磁贴。正确更新动态磁贴内容能给用户提供关键信息，并吸引用户眼球。
+
+更新磁贴有两种方式，一种是按时轮询一个URI来获取磁贴信息，另一种是使用代码在本地更新磁贴。通常来说，后者更灵活，但前者更方便。这里只讲解后者。
+
+本地更新动态磁贴的官方说法，是“推送本地磁贴通知”，这和右下角的弹出式通知一样，属于“通知”一类。使用名称空间 \mintinline{csharp}{Windows.UI.Notifications} 下的TileUpdateManager类提供的 \mintinline{csharp}{CreateTileUpdaterForApplication()} 静态方法，可以获取当前应用磁贴的“更新器（Updater）”。使用这个TileUpdater实例的Update()方法可以依照参数中提供的TileNotification对象来更新磁贴。
+
+TileNotification对象的本质是一段XAML，但是由于微软提供了用于构建磁贴的社区工具包，我们再也不用自己去手动写这种XAML了。引用下面的Nuget包，你就能用很直观的C\#代码来构建一个自适应磁贴。
+
+这里不赘述“自适应磁贴”具体构造方式，可以参见：\href{https://docs.microsoft.com/zh-cn/windows/uwp/controls-and-patterns/tiles-and-notifications-create-adaptive-tiles}{https://docs.microsoft.com/zh-cn/windows/uwp/controls-and-patterns/tiles-and-notifications-create-adaptive-tiles}
+
+\section{使用跳转列表}
+
+对于桌面端和正在构建中的Windows 10 CShell来说，右键菜单中的跳转列表也是UWP的特色之一。正确使用跳转列表能使用户快速访问他们需要的功能、快速抵达他们想到的位置或者快速恢复最近还没做完的工作
+
+跳转列表只被版本号高于Build 10586的Windows 10支持，其核心API位于\mintinline{csharp}{Windows.UI.StartScreen} 名称空间下。使用JumpList类的\mintinline{csharp}{LoadCurrentAsync()}静态方法来取得当前应用的跳转列表实例，对其Items属性（对应跳转列表的各项的集合）作出修改后，调用这个实例的\mintinline{csharp}{SaveAsync()}方法来更新跳转列表。
+
+值得一提的是，Items属性的集合成员类型是JumpListItem，这个类型有几个重要成员，它们分别是：Arguments（对应后面提到的、App的OnLaunch事件中传递的参数值），DisplayName（显示名称），GroupName（所在组的名称）和Logo（一个URI，指明该项的Logo位置）。
+
+响应跳转列表的操作的具体方法是在App的OnLaunch事件处理程序中编写代码。凡是通过跳转列表启动的App，该列表项的Arguments属性就会被传递到这个事件的参数中，以此可以确定用户选择了跳转列表的哪一项。可以参阅此处：

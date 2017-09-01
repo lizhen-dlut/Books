@@ -1,0 +1,170 @@
+
+\chapter{cBioPortal数据库简介}
+cBioPortal数据库主要针对癌症基因组学（Cancer Genomics）研究，其提供了大规模癌症基因组的可视化、分析和下载功能。其官方网址为：
+\centerline{\href{http://www.cbioportal.org/index.do}{http://www.cbioportal.org/index.do}}
+
+\section{API简介}
+通过cBioPortal提供的CGDS网络服务（Cancer Genomic Data Server web service），可以通过编程的方式快速获取cBioPortal所有的基因组学数据。CGDS网络服务是基于REST的，其返回的数据是Tab键分隔的文本格式或者XML格式。可以选择的编程语言包括：
+\begin{itemize}
+	\item Python
+	\item R
+	\item Perl
+	\item Java
+	\item MatLab
+\end{itemize}
+
+所有的请求通过\href{http://www.cbioportal.org/webservice.do}{http://www.cbioportal.org/webservice.do}提交，请求时需要附上一些必要的参数：
+\begin{itemize}
+\item cmd：需要执行的操作，可选值包括：
+\begin{itemize}
+	\item getTypesOfCancer：\href{http://www.cbioportal.org/webservice.do?cmd=getTypesOfCancer}{获取癌症类型。}
+	\item getNetwork：\href{http://www.cbioportal.org/webservice.do?cmd=getNetwork}{获取。}
+	\item getCancerStudies：\href{http://www.cbioportal.org/webservice.do?cmd=getCancerStudies}{获取癌症研究。}
+	\item getGeneticProfiles：\href{http://www.cbioportal.org/webservice.do?cmd=getGeneticProfiles&cancer_study_id=msk_impact_2017}{获取特定癌症研究项目的Genetic Profile信息。}
+	\item getProfileData：\href{http://www.cbioportal.org/webservice.do?cmd=getProfileData&case_set_id=msk_impact_2017_all&genetic_profile_id=msk_impact_2017_mutations&gene_list=p53,kras}{获取一个或多个基因的genomic profile数据。}
+	\item getCaseLists：\href{http://www.cbioportal.org/webservice.do?cmd=getCaseLists&cancer_study_id=msk_impact_2017}{获取。}
+	\item getClinicalData：\href{http://www.cbioportal.org/webservice.do?cmd=getClinicalData&case_set_id=msk_impact_2017_all}{获取样本的临床信息。}
+	\item getMutationData：\href{http://www.cbioportal.org/webservice.do?cmd=getMutationData&genetic_profile_id=msk_impact_2017_mutations&gene_list=p53,kras}{获取基因的突变信息。}
+\end{itemize}
+\item 其他的一些可选参数，该参数跟所执行的cmd相关。
+\end{itemize}
+比如，我们可以通过以下链接获取cBioPortal中所有的有关癌症的研究项目：
+\centerline{\href{http://www.cbioportal.org/webservice.do?cmd=getCancerStudies}{http://www.cbioportal.org/webservice.do?cmd=getCancerStudies}}
+
+对于不同的cmd，其所对应的可选参数也不同。
+
+\subsection{getTypesOfCancer命令}\label{subsec:getTypesOfCancer}
+getTypesOfCancer命令用于获取服务器中存储的癌症列表。在调用该命令时，不需要可选参数。其返回的数据包括两列：
+\begin{center}
+\begin{tabular}{|c|l|}
+\hline
+$ type\_of\_cancer\_id $ & cBioPortal中唯一表示该癌症的编号。\\
+\hline
+$ name $ & 癌症名称 \\
+\hline
+\end{tabular}
+\end{center}
+
+
+\subsection{getCancerStudies命令}\label{subsec:getCancerStudies}
+getCancerStudies命令可以用来获取服务器上存储的有关癌症的研究项目的基础数据。在调用该命令时，不需要可选参数。其返回的数据包括三列：
+\begin{center}
+\begin{tabular}{|c|l|l|}
+	\hline
+	$ cancer\_study\_id $ & cBioPortal中唯一表示该癌症研究项目的编号。\\
+	\hline
+	$ name $ & 研究项目的名称 \\
+	\hline
+	$ description $ & 有关该研究项目的简单说明 \\ 
+	\hline
+\end{tabular}
+\end{center}
+
+\subsection{getGeneticProfiles命令}\label{subsec:getGeneticProfiles}
+getGeneticProfiles命令用于获取某个癌症研究项目的所有元数据，包括变异信息、拷贝数信息等。在调用该命令时需要提供一个可选参数：
+\begin{center}
+	\begin{tabular}{|c|l|}
+		\hline
+		$ cancer\_study\_id $ & 癌症研究项目的编号。\\
+		\hline
+	\end{tabular}
+\end{center}
+其返回的数据包括六列：
+\begin{center}
+\begin{tabular}{|c|l|l|}
+	\hline
+	$ genetic\_profile\_id $ & cBioPortal中唯一表示该genetic profile的编号。\\
+	\hline
+	$ genetic\_profile\_name $ & genetic profile的名称 \\
+	\hline
+	$ genetic\_profile\_description $ & genetic profile的简单说明 \\ 
+	\hline
+	$ cancer\_study\_id $ & 癌症研究项目的ID \\ 
+	\hline
+	$ genetic\_alteration\_type $ & 有关该研究项目的简单说明 \\ 
+	\hline
+	$ show\_profile\_in\_analysis\_tab $ & 有关该研究项目的简单说明 \\ 
+	\hline
+\end{tabular}
+\end{center}
+\subsubsection{举例}
+通过链接：
+
+\centerline
+{\href{http://www.cbioportal.org/webservice.do?cmd=getGeneticProfiles\&cancer\_study\_id=msk\_impact\_2017}{http://www.cbioportal.org/webservice.do?cmd=getGeneticProfiles\&cancer\_study\_id=msk\_impact\_2017}}可以获取癌症研究项目“MSK-IMPACT”的Genetic Profiles。
+
+\subsection{getCaseLists命令}\label{subsec:getCaseLists}
+getCaseLists命令可以返回特定癌症研究项目中的样本信息。在调用该命令时需要提供一个必选参数：
+\begin{center}
+	\begin{tabular}{|c|l|}
+		\hline
+		$ cancer\_study\_id $ & 癌症研究项目的编号。\\
+		\hline
+	\end{tabular}
+\end{center}
+
+其返回信息包括五列：
+\begin{center}
+\begin{tabular}{|c|l|}
+	\hline
+	$ case\_list\_id $ & \\
+	\hline
+	$ case\_list\_name $ & \\
+	\hline
+	$ case\_list\_description $& \\
+	\hline
+	$ cancer\_study\_id $& \\
+	\hline
+	$ case\_ids $ &  \\
+	\hline
+\end{tabular}
+\end{center}
+
+\subsection{getProfileData命令}\label{subsec:getProfileData}
+	getProfileData命令可以返回一个或多个基因的genomic profile数据。在调用该命令时需要提供三个必选参数：
+\begin{center}
+	\begin{tabular}{|c|l|}
+		\hline
+		$ case\_set\_id $ & 由\hyperref[subsec:getCaseLists]{getCaseLists}命令返回的Case Set的ID。\\
+		\hline
+		$ genetic\_profile\_id $ & 由\hyperref[subsec:getGeneticProfiles]{getGeneticProfiles}命令返回的Genetic Profile。\\
+		\hline
+		$ gene\_list $ & 基因列表，多个基因之间以英文逗号“,”分隔。\\
+		\hline
+	\end{tabular}
+\end{center}
+
+\subsection{getMutationData命令}\label{subsec:getMutationData}
+getMutationData命令可以获取一些额外的信息，比如变异的注释信息。使用该命令时，需要添加以下参数：
+\begin{center}
+\begin{tabular}{|c|c|l|}
+	\hline
+	$ genetic\_profile\_id $ & 必选 & 由\hyperref[subsec:getGeneticProfiles]{getGeneticProfiles}命令返回的$ genetic\_profile\_id $。\\
+	\hline
+	$ case\_set\_id $ & 可选 & 由\hyperref[subsec:getGeneticProfiles]{getGeneticProfiles}命令返回的$ case\_list\_id $。 \\
+	\hline
+	$ gene\_list $ & 必选 & 以逗号分隔的基因列表（HUGO基因名称或Entrez的基因ID）。\\
+	\hline
+\end{tabular}
+\end{center}
+
+\subsection{getClinicalData 命令}\label{subsec:getClinicalData }
+getClinicalData用于获取癌症研究项目中所涉及的样本的基本临床信息。可以获取到的基本信息包括样本编号（CASE\_ID）癌症类型（CANCER\_TYPE）、癌症稍微详细的描述（CANCER\_TYPE\_DETAILED）、所使用的DNA量（DNA\_INPUT）、癌症的转移位置（METASTATIC\_SITE）、Oncotree编号（ONCOTREE\_CODE）、原发灶（PRIMARY\_SITE）、样本类型（SAMPLE\_CLASS）、患者性别（SEX）等。在调用该命令时需要提供一个可选参数：
+\begin{center}
+\begin{tabular}{|c|l|}
+	\hline
+	$ case\_set\_id $ & 样本集编号 \\
+	\hline
+\end{tabular}
+\end{center}
+
+
+\section{cBioPortal使用流程}
+cBioPortal数据下载流程：
+\begin{enumerate}
+	\item 通过“\hyperref[subsec:getCancerStudies]{getCancerStudies}”命令，获取癌症研究项目的基本信息，主要获取$ cancer\_study\_id $值；
+	\item 以$ cancer\_study\_id $值为参数，调用“\hyperref[subsec:getCaseLists]{getCaseLists}”命令，获取癌症项目研究的样本集合的 $ case\_list\_id $值。
+	\item 以$ case\_list\_id $值作为参数，调用“\hyperref[subsec:getClinicalData]{getClinicalData}”命令，获取癌症项目研究样本的临床信息。
+	\item 以$ cancer\_study\_id $值为参数，调用“\hyperref[subsec:getGeneticProfiles]{getGeneticProfiles}”命令，获取癌症项目研究的Genetic Profile的列表。
+	\item 以$ genetic\_profile\_id $为参数，$ case\_list\_id $值作为$ case\_set\_id $的参数
+\end{enumerate}

@@ -1,0 +1,41 @@
+\documentclass[11pt,a4paper,oneside]{ctexbook}
+
+\input{./ch/usepackages}
+
+\input{./ch/private_cmd}
+
+\input{./ch/glossaries}
+
+\hypersetup{
+	hidelinks,
+	baseurl=https://github.com/hiatcg,
+	pdftitle=高通量测序技术手册,
+	pdfauthor=张洋,
+	pdfsubject={高通量测序技术手册},
+	pdfkeywords={NGS, 高通量测序, 技术手册},
+	pdfstartview=FitH,
+	pdfcreator=hiatcg,
+	pdfproducer=hiatcg,
+	pdfcenterwindow=true
+}
+
+\begin{document}
+	\tableofcontents
+
+\part{高通量测序平台介绍}
+	\input{./ch/hts_platforms_illumina}
+	\input{./ch/hts_platforms_thermo}
+	\input{./ch/hts_platforms_pacbio}
+	\input{./ch/hts_platforms_nanopore}
+	\input{./ch/hts_platforms_helicos}
+	
+\part{全基因组测序}	
+	\input{./ch/whole_genome_sequencing_base_calling}
+	
+	
+	\section{Ion AmpliSeq\texttrademark}
+	
+	
+	
+	\bibliography{citations}
+\end{document}

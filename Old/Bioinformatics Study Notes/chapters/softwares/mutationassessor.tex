@@ -1,0 +1,64 @@
+\section{MutationAssessor：预测氨基酸变异对蛋白功能的影响}
+
+该工具可以通过网址：\url{http://mutationassessor.org/}来访问。
+
+This server predicts the functional impact of amino-acid substitutions in proteins, such as mutations discovered in cancer or missense polymorphisms. The functional impact is assessed based on evolutionary conservation of the affected amino acid in protein homologs. The method has been validated on a large set (60k) of disease associated (OMIM) and polymorphic variants. To explore the functional impact of missense mutations found in The Cancer Genome Atlas please use cBioPortal for Cancer Genomics.
+
+\subsection{How it Works}
+
+This server provides semantic linking to variant analysis, annotations, variant multiple sequence alignment html page, and variant 3D structure page. 
+
+Please note that the analysis of submitted variations is done asynchronously - if a new variant falls into a protein domain which does not yet have a multiple sequence alignment (MSA) in the server database, "word [sent]" is returned in the "MSA" field until the MSA is built. You can see the size of current MSA queue on about page. The same approach applies when computing Functional Impact scores of new variants. 
+
+\subsubsection{Input}
+The server accepts list of variants, one variant per line, plus optional text describing your variants, in genomic coordinates, "+" strand assumed : 
+
+\begin{minted}{c}
+<genome build>,<chromosome>,<position>,<reference allele>,<substituted allele> 
+\end{minted}
+
+Genome build is optional (build 19 assumed), accepted values: 'hg19' and 'hg38' 
+
+Examples: 
+
+\begin{minted}{c}
+hg38,13,32338418,G,T   BRCA2 
+hg19,7,55211080,G,A   EGFR 
+7,55211080,G,A   EGFR 
+\end{minted}
+
+or in protein space: 
+
+\begin{minted}{c}
+<protein ID> <variant> <text>, 
+\end{minted}
+
+where <protein ID> can be : 
+
+\begin{itemize}
+	\item - Uniprot protein accession (e.g. EGFR_HUMAN) 
+	\item - NCBI Refseq protein ID (e.g. NP_005219) 
+\end{itemize}
+
+Examples: 
+
+\begin{minted}{c}
+EGFR_HUMAN R521K 
+EGFR_HUMAN R98Q Polymorphism 
+EGFR_HUMAN G719D disease 
+NP_000537 G356A 
+NP_000537 G360A dbSNP:rs35993958 
+NP_000537 S46A Abolishes phosphorylation 
+\end{minted}
+
+ID types can be mixed in one list in any way. 
+
+The server maps each variant to both Uniprot and Refseq protein sequences (if possible). 
+
+If the reference residue in the Uniprot protein sequence is different from the one indicated in your variant the analysis will not be performed. 
+
+For non-human variants please use Uniprot IDs as mapping to Refseq is not supported. 
+
+Uniprot IDs are used to extract information about domain boundaries (Pfam, Uniprot), annotated functional regions (Uniprot), protein-protein interactions (Piana). Refseq protein IDs are used to extract known alterations in cancer (COSMIC), SNPs (dbSNP) and known role in cancer (CancerGenes). 
+
+The server determines domain boundaries (using Pfam or Uniprot) for the region with the variant and builds multiple sequence alignment using all Uniprot protein sequences or uses existing one from the repository. To obtain the list of existing alignments in the repository for a giver protein please see WEBAPI section below. 

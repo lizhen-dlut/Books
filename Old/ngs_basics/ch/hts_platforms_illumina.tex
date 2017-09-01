@@ -1,0 +1,80 @@
+\chapter{Illumina\textregistered}
+	Illumina新一代测序技术可以高通量、并行对核酸片段进行深度测序，测序的技术原理是采用可逆性末端边合成边测序反应，首先在DNA片段两端加上序列已知的通用接头构建文库，文库加载到测序芯片Flowcell上，文库两端的已知序列与Flowcell基底上的Oligo序列互补，每条文库片段都经过桥式PCR扩增形成一个簇，测序时采用边合成边测序反应，即在碱基延伸过程中，每个循环反应只能延伸一个正确互补的碱基，根据四种不同的荧光信号确认碱基种类，保证最终的核酸序列质量，经过多个循环后，完整读取核酸序列。
+	
+	\section{测序原理}
+	Illumina/Solexa Genome Analyzer测序的基本原理是边合成边测序（SBS，Sequencing By Synthesis）。在Sanger等测序方法的基础上，通过技术创新，用不同颜色的荧光标记四种不同的dNTP，当DNA聚合酶合成互补链时，每添加一种dNTP就会释放出不同的荧光，根据捕捉的荧光信号并经过特定的计算机软件处理，从而获得待测DNA的序列信息。
+	
+	\subsection{测序文库的构建（Library Construction）}
+	首先准备基因组DNA，然后将DNA随机片段化成几百碱基或更短的小片段，并在两头加上特定的接头（Adaptor）。如果是转录组测序，则文库的构建要相对麻烦些，RNA片段化之后需反转成cDNA，然后加上接头，或者先将RNA反转成cDNA，然后再片段化并加上接头。片段的大小（Insert size）对于后面的数据分析有影响，可根据需要来选择。对于基因组测序来说，通常会选择几种不同的insert size，以便在组装（Assembly）的时候获得更多的信息。
+	
+	\subsection{锚定桥接（Surface Attachment and Bridge Amplification）}
+	Solexa测序的反应在叫做flow cell的玻璃管中进行，flow cell又被细分成8个Lane，每个Lane的内表面有无数的被固定的单链接头。上述步骤得到的带接头的DNA 片段变性成单链后与测序通道上的接头引物结合形成桥状结构，以供后续的预扩增使用。
+	
+	\subsection{预扩增（Denaturation and Complete Amplification）}
+	添加未标记的dNTP 和普通Taq 酶进行固相桥式PCR 扩增，单链桥型待测片段被扩增成为双链桥型片段。通过变性，释放出互补的单链，锚定到附近的固相表面。通过不断循环，将会在Flow cell 的固相表面上获得上百万条成簇分布的双链待测片段。
+	
+	\subsection{单碱基延伸测序（Single Base Extension and Sequencing）}
+	在测序的flow cell中加入四种荧光标记的dNTP 、DNA 聚合酶以及接头引物进行扩增，在每一个测序簇延伸互补链时，每加入一个被荧光标记的dNTP就能释放出相对应的荧光，测序仪通过捕获荧光信号，并通过计算机软件将光信号转化为测序峰，从而获得待测片段的序列信息。从荧光信号获取待测片段的序列信息的过程叫做Base Calling，Illumina公司Base Calling所用的软件是Illumina’s Genome Analyzer Sequencing Control Software and Pipeline Analysis Software。读长会受到多个引起信号衰减的因素所影响，如荧光标记的不完全切割。随着读长的增加，错误率也会随之上升。
+	
+	\subsection{数据分析（Data Analyzing）}
+	这一步严格来讲不能算作测序操作流程的一部分，但是只有通过这一步前面的工作才显得有意义。测序得到的原始数据是长度只有几十个碱基的序列，要通过生物信息学工具将这些短的序列组装成长的Contigs甚至是整个基因组的框架，或者把这些序列比对到已有的基因组或者相近物种基因组序列上，并进一步分析得到有生物学意义的结果
+	
+	
+	
+	\section{NovaSeq\texttrademark}
+	
+	\href{https://www.illumina.com/systems/sequencing-platforms/novaseq/specifications.html}{https://www.illumina.com/systems/sequencing-platforms/novaseq/specifications.html}
+	
+\begin{center}
+		\begin{longtable}{|c|c|c|c|c|}
+		\hline
+		& \multicolumn{2}{c|}{NovaSeq 5000 and 6000 Systems} & \multicolumn{2}{c|}{NovaSeq 6000 System} \endhead \hline
+		
+		Flow Cell类型 & S1 & S2 & S3 & S4 \\ \hline
+		$ 2 \times 50$ bp & $ \approx 167 $ Gb & $ 280 \sim  333 $ Gb & NA\footnotemark  & NA \\ \hline
+		$ 2 \times 100$ bp & $ \approx 333 $ Gb & $ 560 \sim  667 $ Gb & NA & NA \\ \hline
+		$ 2 \times 150$ bp & $ \approx 500$ Gb & $ 850 \sim  1000 $ Gb & $ \approx 2000$ Gb & $ \approx 3000$ Gb \\ \hline
+		
+		\caption[Sequencing Output per Flow Cell]{NovaSeq\texttrademark 通量}
+	\end{longtable}
+\end{center}
+\footnotetext{NA：Not Applicable}	
+
+\begin{center}
+	\begin{longtable}{|c|c|c|c|c|}
+		\hline
+		& \multicolumn{2}{c|}{NovaSeq 5000 and 6000 Systems} & \multicolumn{2}{c|}{NovaSeq 6000 System} \endhead \hline
+		
+		\multirow{2}{*}{Flow Cell类型} & S1 & S2 & S3 & S4 \\ \cline{2-5}
+		& $ \approx 1.6 $ B & $ 2.8 \sim  3.3 $ B & $ \approx 6.6 $ B & $ \approx 10 $ B  \\ \hline
+		
+		\caption[Reads Passing Filter]{NovaSeq\texttrademark 通过筛选标准的Reads数目}
+	\end{longtable}
+\end{center}
+
+\begin{center}
+	\begin{longtable}{|c|c|c|c|}
+		\hline
+		& \multicolumn{3}{c|}{NovaSeq 6000 System} \endhead \hline
+		
+		Flow Cell类型 & \multicolumn{3}{c|}{S2} \\ \hline
+		读长 & $ 2 \times 50 $ bp & $ 2 \times 100 $ bp & $ 2 \times 150 $ bp  \\ \hline
+		Q30 & $ \ge 85\% $ bp & $ \ge 80\% $ bp & $ \ge 75\% $ bp  \\ \hline
+		运行时间 & 19h & 29h & 40h  \\ \hline
+		\caption[Quality Scores and Run Time]{NovaSeq\texttrademark 测序质量和运行时间}
+	\end{longtable}
+\end{center}
+
+\begin{center}
+	\begin{longtable}{|c|c|c|c|c|}
+		\hline
+		& \multicolumn{2}{c|}{NovaSeq 5000 and 6000 Systems} & \multicolumn{2}{c|}{NovaSeq 6000 System} \endhead \hline
+		
+		Flow Cell类型 & S1 & S2 & S3 & S4 \\ \hline
+		人类全基因组\footnote{全基因组测序每样本测序数据量 $ \ge 120 $ Gb，测序深度 $ 30 \times $。 } & $ \approx 8 $ & $ \approx 16 $ & $ \approx 32 $ & $ \approx 48 $ \\ \hline
+		人类全外显子组\footnote{全外显子组测序每样本采用 $ 2 \times 75 $bp 测序，数据量 $ \ge 50 $ M。 } & $ \approx 66 $ & $ \approx 132 $ & NA & NA \\ \hline
+		转录组\footnote{转录组测序每样本采用 $ 2 \times 50 $bp 测序，数据量 $ \ge 50 $ M。 } & $ \approx 66 $ & $ \approx 132 $ & NA & NA \\ \hline
+		
+		\caption{NovaSeq\texttrademark 不同用途的最大支撑样本量}
+	\end{longtable}
+\end{center}

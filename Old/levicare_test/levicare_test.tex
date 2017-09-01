@@ -1,0 +1,279 @@
+\documentclass{ctexart}
+\usepackage[left=1cm,right=1cm,bottom=1.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb} 
+\usepackage{array}
+
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{fontenc} 
+\usepackage{graphicx,calc}
+
+\usepackage{ifthen}
+\usepackage{inputenc} 
+\usepackage{lastpage}
+\usepackage{lipsum}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+
+\usepackage{hyperref}
+
+\newcommand{\productName}{\uline{``乐孕安''优生优育产品}}
+\newcommand{\DocumentTitle}{\kaishu{\huge 乐土精准医疗 \\ \Large 2017年7月18日\productName 培训测试题}}
+\newcommand{\doumentAuthor}{张洋}
+
+\hypersetup{
+	pdftitle= {\DocumentTitle} ,
+	pdfauthor= {\doumentAuthor}, 
+	pdfkeywords = {乐孕安, 测试题}, 
+	pdfcreator={\doumentAuthor},
+	pdfproducer={\doumentAuthor},
+	pdfstartview={FitH},
+	hidelinks
+} 
+
+
+\newlength{\lengthOptionA}
+\newlength{\lengthOptionB}
+\newlength{\lengthOptionC}
+\newlength{\lengthOptionD}
+\newlength{\lhalf}
+\newlength{\lquarter}
+\newlength{\lmax}
+\setlength{\lhalf}{0.5\linewidth}
+\setlength{\lquarter}{0.25\linewidth}
+
+\newcommand{\choiceOptions}[4]
+{
+	\hfill \\[.5pt]%
+	\settowidth{\lengthOptionA}{A.~#1~~~}
+	\settowidth{\lengthOptionB}{B.~#2~~~}
+	\settowidth{\lengthOptionC}{C.~#3~~~}
+	\settowidth{\lengthOptionD}{D.~#4~~~}
+	
+	\ifthenelse{\lengthtest{\lengthOptionA>\lengthOptionB}}
+		{\setlength{\lmax}{\lengthOptionA}}
+		{\setlength{\lmax}{\lengthOptionB}}
+	\ifthenelse{\lengthtest{\lengthOptionC>\lmax}}
+		{\setlength{\lmax}{\lengthOptionC}}{}
+	\ifthenelse{\lengthtest{\lengthOptionD>\lmax}}
+		{\setlength{\lmax}{\lengthOptionD}}{}
+	
+	\ifthenelse{\lengthtest{\lmax>\lhalf}}
+		{\noindent{}A.~#1 \\ B.~#2 \\ C.~#3 \\ D.~#4}
+		{
+			\ifthenelse{\lengthtest{\lmax>\lquarter}}
+				{\noindent\makebox[\lhalf][l]{A.~#1~~~}%
+					\makebox[\lhalf][l]{B.~#2~~~}\\\noindent%
+					\makebox[\lhalf][l]{C.~#3~~~}%
+					\makebox[\lhalf][l]{D.~#4~~~}
+				}%
+				{\noindent\makebox[\lquarter][l]{A.~#1~~~}%
+					\makebox[\lquarter][l]{B.~#2~~~}%
+					\makebox[\lquarter][l]{C.~#3~~~}%
+					\makebox[\lquarter][l]{D.~#4~~~}
+				}
+			}
+}
+
+\newcommand{\zongfenlana}
+{%☆总分栏
+	\begin{center}
+		\setlength{\tabcolsep}{4mm}%列宽
+		\renewcommand{\arraystretch}{1.5}%行高
+		\begin{tabular}{*{12}{|c}|}%格式化列样式
+			\hline
+			题号&一&二&三&四&总分&总分人&复核人\\ \hline
+			分数&&&&&&&\\
+			\hline
+		\end{tabular}
+	\end{center}
+\vskip-3mm
+}
+
+\newcommand{\examineeInfo}
+{
+	\ifthenelse{\isodd{\value{page}}}
+	{
+		\begin{tikzpicture}[remember picture,overlay]
+		\path 	(current page.south east) coordinate (a0);
+		\path 	(current page.north) coordinate (a0);
+		\draw 	(a0)[shift={(0,-2)}] node (a1) [rotate=0,fill=gray!0,minimum height=1cm,minimum width=1cm]
+		{\kaishu{}\zihao{4}
+			区域\raisebox{-2pt}{\rule{35mm}{0.4pt}}%
+			部门\raisebox{-2pt}{\rule{35mm}{0.4pt}}%
+			姓名\raisebox{-2pt}{\rule{35mm}{0.4pt}}%
+			工号\raisebox{-2pt}{\rule{35mm}{0.4pt}}}
+		(a1)[shift={(0,-1.5)}] node [rotate=0,fill=gray!0,minimum height=1cm,minimum width=1cm]
+		{\kaishu{}\zihao{4}...........................................%
+			\raisebox{-0.6ex}{装}............................................%
+			\raisebox{-0.6ex}{订}............................................%
+			\raisebox{-0.6ex}{线}...........................................};
+		\end{tikzpicture}
+	}
+	{
+		\begin{tikzpicture}[remember picture,overlay]
+		\path 	(current page.south east) coordinate (a0);
+		\path 	(current page.north) coordinate (a0);
+		\draw 	(a0)[shift={(0,-2)}] node (a1) [rotate=0,fill=gray!0,minimum height=1cm,minimum width=1cm]
+		{\kaishu{}\zihao{4}
+			区域\raisebox{-2pt}{\rule{35mm}{0.4pt}}%
+			部门\raisebox{-2pt}{\rule{35mm}{0.4pt}}%
+			姓名\raisebox{-2pt}{\rule{35mm}{0.4pt}}%
+			工号\raisebox{-2pt}{\rule{35mm}{0.4pt}}}
+		(a1)[shift={(0,-1.5)}] node [rotate=0,fill=gray!0,minimum height=1cm,minimum width=1cm]
+		{\kaishu{}\zihao{4}...........................................%
+			\raisebox{-0.6ex}{装}............................................%
+			\raisebox{-0.6ex}{订}............................................%
+			\raisebox{-0.6ex}{线}...........................................};
+		\end{tikzpicture}
+	}
+}
+
+\newcommand{\markArea}
+{
+	\setlength{\tabcolsep}{4mm}%列宽
+	\renewcommand{\arraystretch}{1}%行高
+	\begin{tabular}[c]{*{2}{|c}|}
+		\hline
+		评卷人&得分\\\hline
+		&\\[2mm]
+		\hline
+	\end{tabular}
+}
+
+\pagestyle{fancy}
+
+\lhead{\setlength{\unitlength}{1em}
+	\begin{picture}(0,0)
+	\put(0,0){\includegraphics[width=6em]{./figures/logo.pdf}}
+	\end{picture}}
+\chead{\textbf{\productName 培训测试题}} 
+\rhead{\textbf{姓名：\TextField[name=name,width=5em,charsize=0pt,align=1]{\mbox{}}}}
+
+\begin{document}
+	\begin{Form}[action=mailto:zhangyang@cheerlandgroup.com, encoding=html]
+
+	
+	%\examineeInfo
+	
+	\begin{center}
+		{\DocumentTitle}
+	\end{center}
+
+	\zongfenlana
+	
+	\begin{center}
+		\begin{tabular}{p{15em}p{15em}p{15em}}
+			\multicolumn{1}{c}{ \Submit[name=Submit]{\large 提\qquad 交}} & & \multicolumn{1}{c}{\Reset[name=Reset]{\large 重\qquad  置}}
+		\end{tabular}
+	\end{center}
+	
+	\newcommand{\answerField}[1]{\uline{\TextField[name=#1,charsize=0pt,width=4em,align=1]{\mbox{}}}}
+	
+	\newcommand{\blockAnswer}[1]{答：
+		
+		\TextField[name=#1,charsize=0pt, height=5cm, width=0.9\textwidth, multiline=true]{\ }}
+	
+	\newcommand{\glossaryDefinitionAnswer}[1]{
+		\TextField[name=#1,width=0.9\textwidth,charsize=0pt,multiline=true]{}}
+	
+	\newcommand{\fillBlankField}[1]{\TextField[name=#1,width=0.3\textwidth,charsize=0pt]{}}
+	
+	\begin{enumerate}
+		\item[\kaishu{一}]{\makebox[2mm][r]{、}\kaishu{}\markArea{ }选择题（单选、多选）}
+		
+		\item \productName 所采用的方法是\answerField{1} 。
+			\choiceOptions{高深度全集因组测序}{高深度全外显子组测序}{低深度全基因组测序}{低深度全外显子组测序}
+			
+		\item \productName 测序深度约为\answerField{2} 。
+			\choiceOptions{$ 1\times $}{$ 5\times $}{$ 15\times $}{$ 30\times $}
+			
+		\item \productName 测序数据量至少为\answerField{3} 。
+			\choiceOptions{5 Gb}{15 Gb}{45 Gb}{90 Gb}
+			
+		\item \productName 所针对的人群为\answerField{4} 。
+			\choiceOptions{不明原因不孕不育的夫妻}{有反复流产史的夫妻}{出生缺陷儿童家庭}{激素水平异常的夫妻}
+			
+		\item \productName 目前拥有的营销资料包括\answerField{5} 。
+			\choiceOptions{产品宣传册}{示例报告}{演讲PPT}{宣传用易拉宝等}
+			
+		\item \productName 在查因阶段有下列哪些技术有可比性\answerField{6} 。
+			\choiceOptions{核型分析}{FISH}{Array-CGH}{PCR}
+		
+		\item \productName 在查因阶段可检测（报告）的最小片段长度为\answerField{7} 。
+			\choiceOptions{1 Kb}{10 Kb}{100 Kb}{1000 Kb（1M）}
+			
+		\item \productName 在查因阶段断点精度为\answerField{8} 。
+			\choiceOptions{1 bp}{10 bp}{100 bp}{1 kb}
+			
+		\item \productName 在查因阶段，所采用的测序类型是\answerField{9} 。
+			\choiceOptions{Mate Pair Sequencing}{Paired-End Sequencing}{Single-Read Sequencing}{以上都不对}
+			
+		\item 客户于2017年6月30日（周五）寄出两个需要进行\productName 检测的样本，我司于2017年7月3日（周一）收到样本，实验部门于2017年7月5日（周三）完成质检，则我司必须在\answerField{10} 之前向客户提交``查因''阶段的报告。
+			\choiceOptions{2017年8月24日}{2017年8月25日}{2017年8月29日}{2017年9月5日}
+			
+		\item 相较于市面上\productName 的类似产品，\productName 的优势包括\answerField{11} 。
+			\choiceOptions{检测精度高}{可以检测罗氏易位}{更多的关注外显子区域}{可以检测倒位、易位}
+			
+		
+		\item[\kaishu{二}]{\makebox[2mm][r]{、}\kaishu{\markArea{}填空题（请根据实际情况作答，空格无需全部填写）}}
+		
+		\item 客户进行\productName 查因阶段检测后可以获得的结果包括：
+		
+		\uline{\fillBlankField{b11}}、\uline{\fillBlankField{b12}}、\uline{\fillBlankField{b13}}。
+		
+		\item 市面上现有的\productName 类似产品包括有（公司，产品名）：
+				
+		\uline{\fillBlankField{b21}}、\uline{\fillBlankField{b22}}、\uline{\fillBlankField{b23}}。
+		
+		\item 市面上现有的\productName 类似产品的报价为（产品名，报价）：
+		
+		\uline{\fillBlankField{b31}}、\uline{\fillBlankField{b32}}、\uline{\fillBlankField{b33}}。
+		
+		
+		
+		
+		\item[\kaishu{三}]{\makebox[2mm][r]{、}\kaishu{}\markArea{名词解释（每小题3分）}}
+		
+		\item 非整倍体：
+		
+		\glossaryDefinitionAnswer{aneuploid}
+		
+		\item 整倍体：
+		
+		\glossaryDefinitionAnswer{polyploid}
+		
+		\item 染色体非平衡易位：
+		
+		\glossaryDefinitionAnswer{unbalancedTranslocation}
+		
+		\item 染色体平衡易位：
+		
+		\glossaryDefinitionAnswer{balancedTranslocation}
+		
+		\item 罗氏易位（罗伯逊易位）：
+		
+		\glossaryDefinitionAnswer{RobertsonianTranslocation }
+		
+		\newpage
+		\item[\kaishu{四}]{\makebox[2mm][r]{、}\kaishu{\markArea{}问答题（每小题10分）}}
+		
+		\item 在营销过程中，关于\productName 可能遇到的问题有哪些？
+		
+		\blockAnswer{wendaone}
+		
+		\item 有关\productName ，在营销过程中，仍需要需要产品团队提供的支持有哪些？
+		
+		\blockAnswer{wendatwo}
+		
+		\item 您认为\productName ，需要明确、改进、完善的地方有哪些？
+		
+		\blockAnswer{wendathree}
+		
+	\end{enumerate}
+\end{Form}
+\end{document}

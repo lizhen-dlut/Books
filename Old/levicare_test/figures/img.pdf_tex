@@ -1,0 +1,122 @@
+%% Creator: Inkscape inkscape 0.92.1, www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'img.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{885bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,0.64395478)%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{img.pdf}}%
+    \put(0.01313559,0.05802556){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{1}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{img.pdf}}%
+    \put(0.0809322,0.05802556){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{2}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{img.pdf}}%
+    \put(0.14872881,0.05802556){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{3}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=4]{img.pdf}}%
+    \put(0.21652542,0.05802556){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{4}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=5]{img.pdf}}%
+    \put(0.28432203,0.05802556){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{5}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=6]{img.pdf}}%
+    \put(0.35211864,0.05802556){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{6}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=7]{img.pdf}}%
+    \put(0.41991525,0.05802556){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{7}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=8]{img.pdf}}%
+    \put(0.48771186,0.05802556){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{8}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=9]{img.pdf}}%
+    \put(0.55550847,0.05802556){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{9}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=10]{img.pdf}}%
+    \put(0.62330508,0.05802556){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{10}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=11]{img.pdf}}%
+    \put(0.69110169,0.05802556){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{11}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=12]{img.pdf}}%
+    \put(0.75889831,0.05802556){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{12}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=13]{img.pdf}}%
+    \put(0.82669492,0.05802556){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{13}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=14]{img.pdf}}%
+    \put(0.89449153,0.05802556){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{14}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=15]{img.pdf}}%
+    \put(0.96228814,0.05802556){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{15}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=16]{img.pdf}}%
+    \put(0.88516949,0.56650013){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{16}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=17]{img.pdf}}%
+    \put(0.81737288,0.56650013){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{17}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=18]{img.pdf}}%
+    \put(0.74957627,0.56650013){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{18}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=19]{img.pdf}}%
+    \put(0.68177966,0.56650013){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{19}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=20]{img.pdf}}%
+    \put(0.61398305,0.56650013){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{20}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=21]{img.pdf}}%
+    \put(0.54618644,0.56650013){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{21}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=22]{img.pdf}}%
+    \put(0.47838983,0.56650013){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{22}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=23]{img.pdf}}%
+    \put(0.94449153,0.56650013){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{X}}}%
+    \put(0.97415254,0.56650013){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{X}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=24]{img.pdf}}%
+    \put(0.15042373,0.62582217){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{Del}}}%
+    \put(0.20127119,0.62582217){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{Dup}}}%
+    \put(0.25211864,0.62582217){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{Inv}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=25]{img.pdf}}%
+    \put(0.29872881,0.62582217){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{Ins}}}%
+    \put(0.34957627,0.62582217){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{Tra}}}%
+    \put(0.15042373,0.60887301){\makebox(0,0)[lb]{\smash{delY(q12,q12);}}}%
+    \put(0.15042373,0.59192386){\makebox(0,0)[lb]{\smash{del1(p36.12,p34.2);}}}%
+    \put(0.15042373,0.57497471){\makebox(0,0)[lb]{\smash{del5(p13.2,p12);}}}%
+    \put(0.15042373,0.55802556){\makebox(0,0)[lb]{\smash{dup7(q11.23,q21.11);}}}%
+    \put(0.15042373,0.5410764){\makebox(0,0)[lb]{\smash{dup11(q23.3,q23.3);}}}%
+    \put(0.15042373,0.52412725){\makebox(0,0)[lb]{\smash{dup11(q24.1,q24.1);}}}%
+    \put(0.15042373,0.5071781){\makebox(0,0)[lb]{\smash{dup18(p11.31,p11.21);}}}%
+    \put(0.15042373,0.49022895){\makebox(0,0)[lb]{\smash{dupX(p22.33,p22.2);}}}%
+    \put(0.15042373,0.47327979){\makebox(0,0)[lb]{\smash{inv3(p12.3,p12.1);}}}%
+    \put(0.29449153,0.60887301){\makebox(0,0)[lb]{\smash{ins(13;16)(q22.3;q23.1,q24.1);}}}%
+    \put(0.29449153,0.59192386){\makebox(0,0)[lb]{\smash{t(X;Y)(q21.33,q25;p11.2,p11.2);}}}%
+    \put(0.29449153,0.57497471){\makebox(0,0)[lb]{\smash{t(19;1)(p13.12,p12;q12,q31.3);}}}%
+    \put(0.29449153,0.55802556){\makebox(0,0)[lb]{\smash{t(12;18)(q22,q24.31;q11.2,q23);}}}%
+    \put(0.29449153,0.5410764){\makebox(0,0)[lb]{\smash{t(2;10)(p25.3,p11.2;q22.1,q25.2);}}}%
+    \put(0.00635593,0.63429674){\makebox(0,0)[lb]{\smash{Sample ID:}}}%
+  \end{picture}%
+\endgroup%

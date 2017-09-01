@@ -1,0 +1,1388 @@
+\documentclass[9pt]{ctexbook}
+
+\usepackage{tikz}
+\usepackage{hyperref}
+\usetikzlibrary{shapes}
+\usepackage{lscape}
+
+\thispagestyle{empty}
+\begin{document}
+\setcounter{equation}{0}
+\begin{tikzpicture}
+[scale=\textheight/2.3cm/20, transform shape, rotate=90]
+ 
+ \tikzstyle{KeyBox} =  [draw=black, minimum width=2.4cm, minimum height=2.4cm, node distance=2.4cm, inner sep=0pt]
+ 
+ \tikzstyle{Element} = [draw=black, minimum width=2.4cm, minimum height=2.4cm, node distance=2.4cm, inner sep=0pt]
+ 
+ \tikzstyle{Offsetter} = [draw=white, minimum width=2.4cm, minimum height=2.4cm, node distance=2.4cm, inner sep=0pt]
+ 
+ \tikzstyle{TitleLabel} = [font={\Huge\bfseries}]
+ 
+ \tikzstyle{KeysLabel} = [minimum height = 2.5cm, inner sep=0pt, text width = 10cm]
+ 
+ \tikzstyle{DetailsLabel} = [minimum height = 2.5cm, node distance = 2.5cm, inner sep=0pt]
+ 
+   \node[name=Blank2, Offsetter] {};  \node[name=H, below of=Blank2, SBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{1}\hfill \underline{{2.20}} \hfill {1}\textit{{s}}}   \\[0.1cm]
+   {\LARGE \textbf{{H} {氢}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Hydrogen} }
+   \linebreak
+   {\tiny {1.00784--1.00811}} 
+  \end{minipage}
+ };
+ \node[name=Li,  below of=H,  SBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{3}\hfill \underline{{0.98}} \hfill {2}\textit{{s}}}   \\[0.1cm]
+   {\LARGE \textbf{{Li} {锂}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Lithium} }
+   \linebreak
+   {\tiny {6.938--6.997}} 
+  \end{minipage}
+ };
+ \node[name=Na,  below of=Li, SBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{11}\hfill \underline{{0.93}} \hfill {3}\textit{{s}}}   \\[0.1cm]
+   {\LARGE \textbf{{Na} {钠}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Sodium} }
+   \linebreak
+   {\tiny {22.98976928(2)}} 
+  \end{minipage}
+ };
+ \node[name=K,  below of=Na, SBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{19}\hfill \underline{{0.82}} \hfill {4}\textit{{s}}}   \\[0.1cm]
+   {\LARGE \textbf{{K} {钾}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Potassium} }
+   \linebreak
+   {\tiny {39.0983(1)}} 
+  \end{minipage}
+ };
+ \node[name=Rb,  below of=K,  SBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{37}\hfill \underline{{0.82}} \hfill {5}\textit{{s}}}   \\[0.1cm]
+   {\LARGE \textbf{{Rb} {铷}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Rubidium} }
+   \linebreak
+   {\tiny {85.4678(3)}} 
+  \end{minipage}
+ };
+ \node[name=Cs,  below of=Rb, SBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{55}\hfill \underline{{0.79}} \hfill {6}\textit{{s}}}   \\[0.1cm]
+   {\LARGE \textbf{{Cs} {铯}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Cesium} }
+   \linebreak
+   {\tiny {132.90545196(6)}} 
+  \end{minipage}
+ };
+ \node[name=Fr,  below of=Cs, SBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{87}\hfill \underline{{0.7}} \hfill {7}\textit{{s}}}   \\[0.1cm]
+   {\LARGE \textbf{{Fr} {钫}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Francium} }
+   \linebreak
+   {\tiny {(223)}} 
+  \end{minipage}
+ };
+ 
+  \node[name=Be, right of=Li, SBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{4}\hfill \underline{{1.57}} \hfill {2}\textit{{s}}}   \\[0.1cm]
+   {\LARGE \textbf{{Be} {铍}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Beryllium} }
+   \linebreak
+   {\tiny {9.0121831(5)}} 
+  \end{minipage}
+ };
+ \node[name=Mg, below of=Be, SBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{12}\hfill \underline{{1.31}} \hfill {3}\textit{{s}}}   \\[0.1cm]
+   {\LARGE \textbf{{Mg} {镁}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Magnesium} }
+   \linebreak
+   {\tiny {24.304--24.307}} 
+  \end{minipage}
+ };
+ \node[name=Ca, below of=Mg, SBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{20}\hfill \underline{{1.00}} \hfill {4}\textit{{s}}}   \\[0.1cm]
+   {\LARGE \textbf{{Ca} {钙}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Calcium} }
+   \linebreak
+   {\tiny {40.078(4)}} 
+  \end{minipage}
+ };
+ \node[name=Sr, below of=Ca, SBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{38}\hfill \underline{{0.95}} \hfill {5}\textit{{s}}}   \\[0.1cm]
+   {\LARGE \textbf{{Sr} {锶}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Strontium} }
+   \linebreak
+   {\tiny {87.62(1)}} 
+  \end{minipage}
+ };
+ \node[name=Ba, below of=Sr, SBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{56}\hfill \underline{{0.89}} \hfill {6}\textit{{s}}}   \\[0.1cm]
+   {\LARGE \textbf{{Ba} {钡}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Barium} }
+   \linebreak
+   {\tiny {137.327(7)}} 
+  \end{minipage}
+ };
+ \node[name=Ra, below of=Ba, SBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{88}\hfill \underline{{0.9}} \hfill {7}\textit{{s}}}   \\[0.1cm]
+   {\LARGE \textbf{{Ra} {镭}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Radium} }
+   \linebreak
+   {\tiny {(226)}} 
+  \end{minipage}
+ };
+ 
+  \node[name=Sc,  right of=Ca,  DBlock,  Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{21}\hfill \underline{{1.36}} \hfill {3}\textit{{d}}}   \\[0.1cm]
+   {\LARGE \textbf{{Sc} {钪}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Scandium} }
+   \linebreak
+   {\tiny {44.955908(5)}} 
+  \end{minipage}
+ };
+ \node[name=Y,  below of=Sc,  DBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{39}\hfill \underline{{1.22}} \hfill {4}\textit{{d}}}   \\[0.1cm]
+   {\LARGE \textbf{{Y} {钇}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Yttrium} }
+   \linebreak
+   {\tiny {88.90584(2)}} 
+  \end{minipage}
+ };
+ \node[name=LaLu,  below of=Y,  Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{57-71}\hfill \underline{{}} \hfill {}\textit{{}}}   \\[0.1cm]
+   {\LARGE \textbf{{} {镧系}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Lanthanides} }
+   \linebreak
+   {\tiny {}} 
+  \end{minipage}
+ };
+ \node[name=AcLr,  below of=LaLu,  Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{89-103}\hfill \underline{{}} \hfill {}\textit{{}}}   \\[0.1cm]
+   {\LARGE \textbf{{} {锕系}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Actinides} }
+   \linebreak
+   {\tiny {}} 
+  \end{minipage}
+ };
+ 
+  \node[name=Ti, right of=Sc, DBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{22}\hfill \underline{{1.54}} \hfill {3}\textit{{d}}}   \\[0.1cm]
+   {\LARGE \textbf{{Ti} {钛}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Titanium} }
+   \linebreak
+   {\tiny {47.867(1)}} 
+  \end{minipage}
+ };
+ \node[name=Zr, below of=Ti,DBlock,  Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{40}\hfill \underline{{1.33}} \hfill {4}\textit{{d}}}   \\[0.1cm]
+   {\LARGE \textbf{{Zr} {锆}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Zirconium} }
+   \linebreak
+   {\tiny {91.224(2)}} 
+  \end{minipage}
+ };
+ \node[name=Hf, below of=Zr,DBlock,  Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{72}\hfill \underline{{1.3}} \hfill {5}\textit{{d}}}   \\[0.1cm]
+   {\LARGE \textbf{{Hf} {铪}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Halfnium} }
+   \linebreak
+   {\tiny {178.49(2)}} 
+  \end{minipage}
+ };
+ \node[name=Rf, below of=Hf, DBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{104}\hfill \underline{{}} \hfill {6}\textit{{d}}}   \\[0.1cm]
+   {\LARGE \textbf{{Rf} {鑪}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Rutherfordium} }
+   \linebreak
+   {\tiny {(261)}} 
+  \end{minipage}
+ };
+ 
+  \node[name=V, right of=Ti, DBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{23}\hfill \underline{{1.63}} \hfill {3}\textit{{d}}}   \\[0.1cm]
+   {\LARGE \textbf{{V} {钒}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Vanadium} }
+   \linebreak
+   {\tiny {50.9415(1)}} 
+  \end{minipage}
+ };
+ \node[name=Nb, below of=V, DBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{41}\hfill \underline{{1.6}} \hfill {4}\textit{{d*}}}   \\[0.1cm]
+   {\LARGE \textbf{{Nb} {铌}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Niobium} }
+   \linebreak
+   {\tiny {92.90637(2)}} 
+  \end{minipage}
+ };
+ \node[name=Ta, below of=Nb, DBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{73}\hfill \underline{{1.5}} \hfill {5}\textit{{d}}}   \\[0.1cm]
+   {\LARGE \textbf{{Ta} {钽}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Tantalum} }
+   \linebreak
+   {\tiny {180.94788(2)}} 
+  \end{minipage}
+ };
+ \node[name=Db, below of=Ta, DBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{105}\hfill \underline{{}} \hfill {6}\textit{{d}}}   \\[0.1cm]
+   {\LARGE \textbf{{Db} {𨧀}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Dubnium} }
+   \linebreak
+   {\tiny {(268)}} 
+  \end{minipage}
+ };
+ 
+  \node[name=Cr, right of=V, DBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{24}\hfill \underline{{1.66}} \hfill {3}\textit{{d*}}}   \\[0.1cm]
+   {\LARGE \textbf{{Cr} {铬}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Chromium} }
+   \linebreak
+   {\tiny {51.9961(6)}} 
+  \end{minipage}
+ };
+ \node[name=Mo, below of=Cr,DBlock,  Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{42}\hfill \underline{{2.16}} \hfill {4}\textit{{d*}}}   \\[0.1cm]
+   {\LARGE \textbf{{Mo} {钼}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Molybdenum} }
+   \linebreak
+   {\tiny {95.95(1)}} 
+  \end{minipage}
+ };
+ \node[name=W, below of=Mo,DBlock,  Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{74}\hfill \underline{{2.36}} \hfill {5}\textit{{d}}}   \\[0.1cm]
+   {\LARGE \textbf{{W} {钨}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Tungsten} }
+   \linebreak
+   {\tiny {183.84(1)}} 
+  \end{minipage}
+ };
+ \node[name=Sg, below of=W, DBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{106}\hfill \underline{{}} \hfill {6}\textit{{d}}}   \\[0.1cm]
+   {\LARGE \textbf{{Sg} {𨭎}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Seaborgium} }
+   \linebreak
+   {\tiny {(269)}} 
+  \end{minipage}
+ };
+ 
+  \node[name=Mn, right of=Cr, DBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{25}\hfill \underline{{1.55}} \hfill {3}\textit{{d}}}   \\[0.1cm]
+   {\LARGE \textbf{{Mn} {锰}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Manganese} }
+   \linebreak
+   {\tiny {54.938044(3)}} 
+  \end{minipage}
+ };
+ \node[name=Tc, below of=Mn, DBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{43}\hfill \underline{{1.9}} \hfill {4}\textit{{d}}}   \\[0.1cm]
+   {\LARGE \textbf{{Tc} {锝}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Technetium} }
+   \linebreak
+   {\tiny {(98)}} 
+  \end{minipage}
+ };
+ \node[name=Re, below of=Tc, DBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{75}\hfill \underline{{1.9}} \hfill {5}\textit{{d}}}   \\[0.1cm]
+   {\LARGE \textbf{{Re} {铼}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Rhenium} }
+   \linebreak
+   {\tiny {186.207(1)}} 
+  \end{minipage}
+ };
+ \node[name=Bh, below of=Re, DBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{107}\hfill \underline{{}} \hfill {6}\textit{{d}}}   \\[0.1cm]
+   {\LARGE \textbf{{Bh} {𨨏}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Bohrium} }
+   \linebreak
+   {\tiny {(270)}} 
+  \end{minipage}
+ };
+ 
+  \node[name=Fe, right of=Mn, DBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{26}\hfill \underline{{1.83}} \hfill {3}\textit{{d}}}   \\[0.1cm]
+   {\LARGE \textbf{{Fe} {铁}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Iron} }
+   \linebreak
+   {\tiny {55.845(2)}} 
+  \end{minipage}
+ };
+ \node[name=Ru, below of=Fe, DBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{44}\hfill \underline{{2.2}} \hfill {4}\textit{{d*}}}   \\[0.1cm]
+   {\LARGE \textbf{{Ru} {钌}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Ruthenium} }
+   \linebreak
+   {\tiny {101.07(2)}} 
+  \end{minipage}
+ };
+ \node[name=Os, below of=Ru, DBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{76}\hfill \underline{{2.2}} \hfill {5}\textit{{d}}}   \\[0.1cm]
+   {\LARGE \textbf{{Os} {锇}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Osmium} }
+   \linebreak
+   {\tiny {190.23(3)}} 
+  \end{minipage}
+ };
+ \node[name=Hs, below of=Os, DBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{108}\hfill \underline{{}} \hfill {6}\textit{{d}}}   \\[0.1cm]
+   {\LARGE \textbf{{Hs} {𨭆}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Hassium} }
+   \linebreak
+   {\tiny {(269)}} 
+  \end{minipage}
+ };
+ 
+  \node[name=Co, right of=Fe,DBlock,  Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{27}\hfill \underline{{1.88}} \hfill {3}\textit{{d}}}   \\[0.1cm]
+   {\LARGE \textbf{{Co} {钴}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Cobalt} }
+   \linebreak
+   {\tiny {58.933194(4)}} 
+  \end{minipage}
+ };
+ \node[name=Rh, below of=Co, DBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{45}\hfill \underline{{2.28}} \hfill {4}\textit{{d*}}}   \\[0.1cm]
+   {\LARGE \textbf{{Rh} {铑}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Rhodium} }
+   \linebreak
+   {\tiny {102.90550(2)}} 
+  \end{minipage}
+ };
+ \node[name=Ir, below of=Rh, DBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{77}\hfill \underline{{2.20}} \hfill {5}\textit{{d}}}   \\[0.1cm]
+   {\LARGE \textbf{{Ir} {铱}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Iridium} }
+   \linebreak
+   {\tiny {192.217(3)}} 
+  \end{minipage}
+ };
+ \node[name=Mt, below of=Ir, DBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{109}\hfill \underline{{}} \hfill {6}\textit{{d}}}   \\[0.1cm]
+   {\LARGE \textbf{{Mt} {䥑}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Meitnerium} }
+   \linebreak
+   {\tiny {(278)}} 
+  \end{minipage}
+ };
+ 
+  \node[name=Ni, right of=Co, DBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{28}\hfill \underline{{1.91}} \hfill {3}\textit{{d}}}   \\[0.1cm]
+   {\LARGE \textbf{{Ni} {镍}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Nickel} }
+   \linebreak
+   {\tiny {58.6934(4)}} 
+  \end{minipage}
+ };
+ \node[name=Pd, below of=Ni, DBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{46}\hfill \underline{{2.20}} \hfill {4}\textit{{d*}}}   \\[0.1cm]
+   {\LARGE \textbf{{Pd} {钯}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Palladium} }
+   \linebreak
+   {\tiny {106.42(1)}} 
+  \end{minipage}
+ };
+ \node[name=Pt, below of=Pd, DBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{78}\hfill \underline{{2.28}} \hfill {5}\textit{{d*}}}   \\[0.1cm]
+   {\LARGE \textbf{{Pt} {铂}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Platinum} }
+   \linebreak
+   {\tiny {195.084(9)}} 
+  \end{minipage}
+ };
+ \node[name=Ds, below of=Pt, DBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{110}\hfill \underline{{}} \hfill {6}\textit{{d}}}   \\[0.1cm]
+   {\LARGE \textbf{{Ds} {鐽}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Darmstadtium} }
+   \linebreak
+   {\tiny {(281)}} 
+  \end{minipage}
+ };
+ 
+  \node[name=Cu, right of=Ni, DBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{29}\hfill \underline{{1.90}} \hfill {3}\textit{{d*}}}   \\[0.1cm]
+   {\LARGE \textbf{{Cu} {铜}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Copper} }
+   \linebreak
+   {\tiny {63.546(3)}} 
+  \end{minipage}
+ };
+ \node[name=Ag, below of=Cu, DBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{47}\hfill \underline{{1.93}} \hfill {4}\textit{{d*}}}   \\[0.1cm]
+   {\LARGE \textbf{{Ag} {银}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Silver} }
+   \linebreak
+   {\tiny {107.8682(2)}} 
+  \end{minipage}
+ };
+ \node[name=Au, below of=Ag, DBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{79}\hfill \underline{{2.54}} \hfill {5}\textit{{d*}}}   \\[0.1cm]
+   {\LARGE \textbf{{Au} {金}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Gold} }
+   \linebreak
+   {\tiny {196.966569(5)}} 
+  \end{minipage}
+ };
+ \node[name=Rg, below of=Au,DBlock,  Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{111}\hfill \underline{{}} \hfill {6}\textit{{d}}}   \\[0.1cm]
+   {\LARGE \textbf{{Rg} {錀}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Roentgenium} }
+   \linebreak
+   {\tiny {(282)}} 
+  \end{minipage}
+ };
+ 
+  \node[name=Zn, right of=Cu, DBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{30}\hfill \underline{{1.65}} \hfill {3}\textit{{d}}}   \\[0.1cm]
+   {\LARGE \textbf{{Zn} {锌}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Zinc} }
+   \linebreak
+   {\tiny {65.38(2)}} 
+  \end{minipage}
+ };
+ \node[name=Cd, below of=Zn, DBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{48}\hfill \underline{{1.69}} \hfill {4}\textit{{d}}}   \\[0.1cm]
+   {\LARGE \textbf{{Cd} {镉}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Cadmium} }
+   \linebreak
+   {\tiny {112.414(4)}} 
+  \end{minipage}
+ };
+ \node[name=Hg, below of=Cd, DBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{80}\hfill \underline{{2.00}} \hfill {5}\textit{{d}}}   \\[0.1cm]
+   {\LARGE \textbf{{Hg} {汞}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Mercury} }
+   \linebreak
+   {\tiny {200.592(3)}} 
+  \end{minipage}
+ };
+ \node[name=Uub, below of=Hg, DBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{112}\hfill \underline{{}} \hfill {6}\textit{{d}}}   \\[0.1cm]
+   {\LARGE \textbf{{Cn} {鎶}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Copernicium} }
+   \linebreak
+   {\tiny {(285)}} 
+  \end{minipage}
+ };
+ 
+  \node[name=Ga, right of=Zn, PBlock,  Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{31}\hfill \underline{{1.81}} \hfill {4}\textit{{p}}}   \\[0.1cm]
+   {\LARGE \textbf{{Ga} {镓}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Gallium} }
+   \linebreak
+   {\tiny {69.723(1)}} 
+  \end{minipage}
+ };
+ \node[name=Al, above of=Ga, PBlock,  Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{13}\hfill \underline{{1.61}} \hfill {3}\textit{{p}}}   \\[0.1cm]
+   {\LARGE \textbf{{Al} {铝}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Aluminium} }
+   \linebreak
+   {\tiny {26.9815385(7)}} 
+  \end{minipage}
+ };
+ \node[name=B, above of=Al, PBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{5}\hfill \underline{{2.04}} \hfill {2}\textit{{p}}}   \\[0.1cm]
+   {\LARGE \textbf{{B} {硼}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Boron} }
+   \linebreak
+   {\tiny {10.806--10.821}} 
+  \end{minipage}
+ };
+ \node[name=In, below of=Ga, PBlock,  Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{49}\hfill \underline{{1.78}} \hfill {5}\textit{{p}}}   \\[0.1cm]
+   {\LARGE \textbf{{In} {铟}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Indium} }
+   \linebreak
+   {\tiny {114.818(1)}} 
+  \end{minipage}
+ };
+ \node[name=Tl, below of=In, PBlock,  Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{81}\hfill \underline{{1.62}} \hfill {6}\textit{{p}}}   \\[0.1cm]
+   {\LARGE \textbf{{Tl} {铊}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Thallium} }
+   \linebreak
+   {\tiny {204.382--204.385}} 
+  \end{minipage}
+ };
+ \node[name=Uut, below of=Tl, PBlock,  Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{113}\hfill \underline{{}} \hfill {7}\textit{{p}}}   \\[0.1cm]
+   {\LARGE \textbf{{Nh} {鉨}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Nihonium} }
+   \linebreak
+   {\tiny {(286)}} 
+  \end{minipage}
+ };
+ 
+  \node[name=C, right of=B, PBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{6}\hfill \underline{{2.55}} \hfill {2}\textit{{p}}}   \\[0.1cm]
+   {\LARGE \textbf{{C} {碳}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Carbon} }
+   \linebreak
+   {\tiny {12.0096--12.0116}} 
+  \end{minipage}
+ };
+ \node[name=Si, below of=C,PBlock,  Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{14}\hfill \underline{{1.90}} \hfill {3}\textit{{p}}}   \\[0.1cm]
+   {\LARGE \textbf{{Si} {硅}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Silicon} }
+   \linebreak
+   {\tiny {28.084--28.086}} 
+  \end{minipage}
+ };
+ \node[name=Ge, below of=Si, PBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{32}\hfill \underline{{2.01}} \hfill {4}\textit{{p}}}   \\[0.1cm]
+   {\LARGE \textbf{{Ge} {锗}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Germanium} }
+   \linebreak
+   {\tiny {72.630(8)}} 
+  \end{minipage}
+ };
+ \node[name=Sn, below of=Ge,PBlock,  Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{50}\hfill \underline{{1.96}} \hfill {5}\textit{{p}}}   \\[0.1cm]
+   {\LARGE \textbf{{Sn} {锡}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Tin} }
+   \linebreak
+   {\tiny {118.710(7)}} 
+  \end{minipage}
+ };
+ \node[name=Pb, below of=Sn, PBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{82}\hfill \underline{{1.87}} \hfill {6}\textit{{p}}}   \\[0.1cm]
+   {\LARGE \textbf{{Pb} {铅}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Lead} }
+   \linebreak
+   {\tiny {207.2(1)}} 
+  \end{minipage}
+ };
+ \node[name=Uuq, below of=Pb,PBlock,  Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{114}\hfill \underline{{}} \hfill {7}\textit{{p}}}   \\[0.1cm]
+   {\LARGE \textbf{{Fl} {鈇}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Flerovium} }
+   \linebreak
+   {\tiny {(289)}} 
+  \end{minipage}
+ };
+ 
+  \node[name=N, right of=C, PBlock,  Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{7}\hfill \underline{{3.04}} \hfill {2}\textit{{p}}}   \\[0.1cm]
+   {\LARGE \textbf{{N} {氮}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Nitrogen} }
+   \linebreak
+   {\tiny {14.00643--14.00728}} 
+  \end{minipage}
+ };
+ \node[name=P, below of=N, PBlock,  Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{15}\hfill \underline{{2.19}} \hfill {3}\textit{{p}}}   \\[0.1cm]
+   {\LARGE \textbf{{P} {磷}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Phosphorus} }
+   \linebreak
+   {\tiny {30.973761998(5)}} 
+  \end{minipage}
+ };
+ \node[name=As, below of=P,PBlock,   Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{33}\hfill \underline{{2.18}} \hfill {4}\textit{{p}}}   \\[0.1cm]
+   {\LARGE \textbf{{As} {砷}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Arsenic} }
+   \linebreak
+   {\tiny {74.921595(6)}} 
+  \end{minipage}
+ };
+ \node[name=Sb, below of=As, PBlock,  Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{51}\hfill \underline{{2.05}} \hfill {5}\textit{{p}}}   \\[0.1cm]
+   {\LARGE \textbf{{Sb} {锑}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Antimony} }
+   \linebreak
+   {\tiny {121.760(1)}} 
+  \end{minipage}
+ };
+ \node[name=Bi, below of=Sb, PBlock,  Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{83}\hfill \underline{{2.02}} \hfill {6}\textit{{p}}}   \\[0.1cm]
+   {\LARGE \textbf{{Bi} {铋}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Bismuth} }
+   \linebreak
+   {\tiny {208.98040(1)}} 
+  \end{minipage}
+ };
+ \node[name=Uup, below of=Bi,PBlock,   Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{115}\hfill \underline{{}} \hfill {7}\textit{{p}}}   \\[0.1cm]
+   {\LARGE \textbf{{Mc} {镆}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Moscovium} }
+   \linebreak
+   {\tiny {(289)}} 
+  \end{minipage}
+ };
+ 
+  \node[name=O, right of=N,PBlock,   Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{8}\hfill \underline{{3.44}} \hfill {2}\textit{{p}}}   \\[0.1cm]
+   {\LARGE \textbf{{O} {氧}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Oxygen} }
+   \linebreak
+   {\tiny {15.99903--15.99977}} 
+  \end{minipage}
+ };
+ \node[name=S, below of=O, PBlock,  Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{16}\hfill \underline{{2.58}} \hfill {3}\textit{{p}}}   \\[0.1cm]
+   {\LARGE \textbf{{S} {硫}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Sulphur} }
+   \linebreak
+   {\tiny {32.059--32.076}} 
+  \end{minipage}
+ };
+ \node[name=Se, below of=S, PBlock,  Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{34}\hfill \underline{{2.55}} \hfill {4}\textit{{p}}}   \\[0.1cm]
+   {\LARGE \textbf{{Se} {硒}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Selenium} }
+   \linebreak
+   {\tiny {78.971(8)}} 
+  \end{minipage}
+ };
+ \node[name=Te, below of=Se, PBlock,  Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{52}\hfill \underline{{2.1}} \hfill {5}\textit{{p}}}   \\[0.1cm]
+   {\LARGE \textbf{{Te} {碲}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Tellurium} }
+   \linebreak
+   {\tiny {127.60(3)}} 
+  \end{minipage}
+ };
+ \node[name=Po, below of=Te, PBlock,  Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{84}\hfill \underline{{2.0}} \hfill {6}\textit{{p}}}   \\[0.1cm]
+   {\LARGE \textbf{{Po} {钋}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Polonium} }
+   \linebreak
+   {\tiny {(209)}} 
+  \end{minipage}
+ };
+ \node[name=Uuh, below of=Po, PBlock,  Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{116}\hfill \underline{{}} \hfill {7}\textit{{p}}}   \\[0.1cm]
+   {\LARGE \textbf{{Lv} {鉝}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Livermorium} }
+   \linebreak
+   {\tiny {(293)}} 
+  \end{minipage}
+ };
+ 
+  \node[name=F, right of=O, PBlock,  Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{9}\hfill \underline{{3.98}} \hfill {2}\textit{{p}}}   \\[0.1cm]
+   {\LARGE \textbf{{F} {氟}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Fluorine} }
+   \linebreak
+   {\tiny {18.998403163(6)}} 
+  \end{minipage}
+ };
+ \node[name=Cl, below of=F, PBlock,  Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{17}\hfill \underline{{3.16}} \hfill {3}\textit{{p}}}   \\[0.1cm]
+   {\LARGE \textbf{{Cl} {氯}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Chlorine} }
+   \linebreak
+   {\tiny {35.446--35.457}} 
+  \end{minipage}
+ };
+ \node[name=Br, below of=Cl, PBlock,  Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{35}\hfill \underline{{2.96}} \hfill {4}\textit{{p}}}   \\[0.1cm]
+   {\LARGE \textbf{{Br} {溴}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Bromine} }
+   \linebreak
+   {\tiny {79.901--79.907}} 
+  \end{minipage}
+ };
+ \node[name=I, below of=Br, PBlock,  Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{53}\hfill \underline{{2.66}} \hfill {5}\textit{{p}}}   \\[0.1cm]
+   {\LARGE \textbf{{I} {碘}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Iodine} }
+   \linebreak
+   {\tiny {126.90447(3)}} 
+  \end{minipage}
+ };
+ \node[name=At, below of=I,PBlock,   Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{85}\hfill \underline{{2.2}} \hfill {6}\textit{{p}}}   \\[0.1cm]
+   {\LARGE \textbf{{At} {砹}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Astatine} }
+   \linebreak
+   {\tiny {(210)}} 
+  \end{minipage}
+ };
+ \node[name=Uus, below of=At, PBlock,  Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{117}\hfill \underline{{}} \hfill {7}\textit{{p}}}   \\[0.1cm]
+   {\LARGE \textbf{{Ts} {}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Tennessine} }
+   \linebreak
+   {\tiny {(294)}} 
+  \end{minipage}
+ }; 
+ 
+  \node[name=Ne, right of=F, PBlock,  Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{10}\hfill \underline{{}} \hfill {2}\textit{{p}}}   \\[0.1cm]
+   {\LARGE \textbf{{Ne} {氦}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Neon} }
+   \linebreak
+   {\tiny {20.1797(6)}} 
+  \end{minipage}
+ };
+ \node[name=He, above of=Ne,SBlock,  Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{2}\hfill \underline{{}} \hfill {1}\textit{{s}}}   \\[0.1cm]
+   {\LARGE \textbf{{He} {氖}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Helium} }
+   \linebreak
+   {\tiny {4.002602(2)}} 
+  \end{minipage}
+ };
+ \node[name=Ar, below of=Ne, PBlock,  Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{18}\hfill \underline{{}} \hfill {3}\textit{{p}}}   \\[0.1cm]
+   {\LARGE \textbf{{Ar} {氩}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Argon} }
+   \linebreak
+   {\tiny {39.948(1)}} 
+  \end{minipage}
+ };
+ \node[name=Kr, below of=Ar, PBlock,  Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{36}\hfill \underline{{3.00}} \hfill {4}\textit{{p}}}   \\[0.1cm]
+   {\LARGE \textbf{{Kr} {氪}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Krypton} }
+   \linebreak
+   {\tiny {83.798(2)}} 
+  \end{minipage}
+ };
+ \node[name=Xe, below of=Kr, PBlock,  Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{54}\hfill \underline{{2.60}} \hfill {5}\textit{{p}}}   \\[0.1cm]
+   {\LARGE \textbf{{Xe} {氙}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Xenon} }
+   \linebreak
+   {\tiny {131.293(6)}} 
+  \end{minipage}
+ };
+ \node[name=Rn, below of=Xe, PBlock,  Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{86}\hfill \underline{{2.2}} \hfill {6}\textit{{p}}}   \\[0.1cm]
+   {\LARGE \textbf{{Rn} {氡}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Radon} }
+   \linebreak
+   {\tiny {(222)}} 
+  \end{minipage}
+ };
+ \node[name=Uuo, below of=Rn, PBlock,  Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{118}\hfill \underline{{}} \hfill {7}\textit{{p}}}   \\[0.1cm]
+   {\LARGE \textbf{{Og} {}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Oganesson} }
+   \linebreak
+   {\tiny {(294)}} 
+  \end{minipage}
+ }; 
+ 
+ 
+  \node[name=La, below of=AcLr, DBlock, Element, yshift=-0.6cm] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{57}\hfill \underline{{1.1}} \hfill {5}\textit{{d*}}}   \\[0.1cm]
+   {\LARGE \textbf{{La} {镧}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Lanthanum} }
+   \linebreak
+   {\tiny {138.90547(7)}} 
+  \end{minipage}
+ };
+ \node[name=Ce, right of=La, FBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{58}\hfill \underline{{1.12}} \hfill {4}\textit{{f*}}}   \\[0.1cm]
+   {\LARGE \textbf{{Ce} {铈}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Cerium} }
+   \linebreak
+   {\tiny {140.116(1)}} 
+  \end{minipage}
+ };
+ \node[name=Pr, right of=Ce, FBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{59}\hfill \underline{{1.13}} \hfill {4}\textit{{f}}}   \\[0.1cm]
+   {\LARGE \textbf{{Pr} {镨}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Praseodymium} }
+   \linebreak
+   {\tiny {140.90766(2)}} 
+  \end{minipage}
+ };
+ \node[name=Nd, right of=Pr, FBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{60}\hfill \underline{{1.14}} \hfill {4}\textit{{f}}}   \\[0.1cm]
+   {\LARGE \textbf{{Nd} {钕}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Neodymium} }
+   \linebreak
+   {\tiny {144.242(3)}} 
+  \end{minipage}
+ };
+ \node[name=Pm, right of=Nd, FBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{61}\hfill \underline{{1.13}} \hfill {4}\textit{{f}}}   \\[0.1cm]
+   {\LARGE \textbf{{Pm} {钷}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Promethium} }
+   \linebreak
+   {\tiny {(145)}} 
+  \end{minipage}
+ };
+ \node[name=Sm, right of=Pm, FBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{62}\hfill \underline{{1.17}} \hfill {4}\textit{{f}}}   \\[0.1cm]
+   {\LARGE \textbf{{Sm} {钐}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Samarium} }
+   \linebreak
+   {\tiny {150.36(2)}} 
+  \end{minipage}
+ };
+ \node[name=Eu, right of=Sm, FBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{63}\hfill \underline{{1.2}} \hfill {4}\textit{{f}}}   \\[0.1cm]
+   {\LARGE \textbf{{Eu} {铕}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Europium} }
+   \linebreak
+   {\tiny {151.964(1)}} 
+  \end{minipage}
+ };
+ \node[name=Gd, right of=Eu, FBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{64}\hfill \underline{{1.2}} \hfill {4}\textit{{f*}}}   \\[0.1cm]
+   {\LARGE \textbf{{Gd} {钆}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Gadolinium} }
+   \linebreak
+   {\tiny {157.25(3)}} 
+  \end{minipage}
+ };
+ \node[name=Tb, right of=Gd, FBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{65}\hfill \underline{{1.1}} \hfill {4}\textit{{f}}}   \\[0.1cm]
+   {\LARGE \textbf{{Tb} {铽}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Terbium} }
+   \linebreak
+   {\tiny {158.92535(2)}} 
+  \end{minipage}
+ };
+ \node[name=Dy, right of=Tb, FBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{66}\hfill \underline{{1.22}} \hfill {4}\textit{{f}}}   \\[0.1cm]
+   {\LARGE \textbf{{Dy} {镝}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Dysprosium} }
+   \linebreak
+   {\tiny {162.500(1)}} 
+  \end{minipage}
+ };
+ \node[name=Ho, right of=Dy, FBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{67}\hfill \underline{{1.23}} \hfill {4}\textit{{f}}}   \\[0.1cm]
+   {\LARGE \textbf{{Ho} {钬}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Holmium} }
+   \linebreak
+   {\tiny {164.93033(2)}} 
+  \end{minipage}
+ };
+ \node[name=Er, right of=Ho, FBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{68}\hfill \underline{{1.24}} \hfill {4}\textit{{f}}}   \\[0.1cm]
+   {\LARGE \textbf{{Er} {铒}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Erbium} }
+   \linebreak
+   {\tiny {167.259(3)}} 
+  \end{minipage}
+ };
+ \node[name=Tm, right of=Er, FBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{69}\hfill \underline{{1.25}} \hfill {4}\textit{{f}}}   \\[0.1cm]
+   {\LARGE \textbf{{Tm} {铥}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Thulium} }
+   \linebreak
+   {\tiny {168.93422(2)}} 
+  \end{minipage}
+ };
+ \node[name=Yb, right of=Tm, FBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{70}\hfill \underline{{1.1}} \hfill {4}\textit{{f}}}   \\[0.1cm]
+   {\LARGE \textbf{{Yb} {镱}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Ytterbium} }
+   \linebreak
+   {\tiny {173.045(10)}} 
+  \end{minipage}
+ };
+ \node[name=Lu, right of=Yb, FBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{71}\hfill \underline{{1.27}} \hfill {4}\textit{{f}}}   \\[0.1cm]
+   {\LARGE \textbf{{Lu} {镥}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Lutetium} }
+   \linebreak
+   {\tiny {174.9668(1)}} 
+  \end{minipage}
+ };
+ 
+  \node[name=Ac, below of=La, DBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{89}\hfill \underline{{1.1}} \hfill {6}\textit{{d*}}}   \\[0.1cm]
+   {\LARGE \textbf{{Ac} {锕}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Actinium} }
+   \linebreak
+   {\tiny {(227)}} 
+  \end{minipage}
+ };
+ \node[name=Th, right of=Ac, FBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{90}\hfill \underline{{1.3}} \hfill {5}\textit{{f*}}}   \\[0.1cm]
+   {\LARGE \textbf{{Th} {钍}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Thorium} }
+   \linebreak
+   {\tiny {232.0377(4)}} 
+  \end{minipage}
+ };
+ \node[name=Pa, right of=Th, FBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{91}\hfill \underline{{1.5}} \hfill {5}\textit{{f*}}}   \\[0.1cm]
+   {\LARGE \textbf{{Pa} {镤}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Protactinium} }
+   \linebreak
+   {\tiny {231.03588(2)}} 
+  \end{minipage}
+ };
+ \node[name=U, right of=Pa, FBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{92}\hfill \underline{{1.38}} \hfill {5}\textit{{f*}}}   \\[0.1cm]
+   {\LARGE \textbf{{U} {铀}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Uranium} }
+   \linebreak
+   {\tiny {238.02891(3)}} 
+  \end{minipage}
+ };
+ \node[name=Np, right of=U, FBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{93}\hfill \underline{{1.36}} \hfill {5}\textit{{f*}}}   \\[0.1cm]
+   {\LARGE \textbf{{Np} {镎}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Neptunium} }
+   \linebreak
+   {\tiny {(237)}} 
+  \end{minipage}
+ };
+ \node[name=Pu, right of=Np, FBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{94}\hfill \underline{{1.28}} \hfill {5}\textit{{f}}}   \\[0.1cm]
+   {\LARGE \textbf{{Pu} {钚}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Plutonium} }
+   \linebreak
+   {\tiny {(244)}} 
+  \end{minipage}
+ };
+ \node[name=Am, right of=Pu, FBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{95}\hfill \underline{{1.13}} \hfill {5}\textit{{f}}}   \\[0.1cm]
+   {\LARGE \textbf{{Am} {镅}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Americium} }
+   \linebreak
+   {\tiny {(243)}} 
+  \end{minipage}
+ };
+ \node[name=Cm, right of=Am, FBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{96}\hfill \underline{{1.28}} \hfill {5}\textit{{f*}}}   \\[0.1cm]
+   {\LARGE \textbf{{Cm} {锔}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Curium} }
+   \linebreak
+   {\tiny {(247)}} 
+  \end{minipage}
+ };
+ \node[name=Bk, right of=Cm, FBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{97}\hfill \underline{{1.3}} \hfill {5}\textit{{f}}}   \\[0.1cm]
+   {\LARGE \textbf{{Bk} {锫}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Berkelium} }
+   \linebreak
+   {\tiny {(247)}} 
+  \end{minipage}
+ };
+ \node[name=Cf, right of=Bk, FBlock,  Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{98}\hfill \underline{{1.3}} \hfill {5}\textit{{f}}}   \\[0.1cm]
+   {\LARGE \textbf{{Cf} {锎}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Californium} }
+   \linebreak
+   {\tiny {(251)}} 
+  \end{minipage}
+ };
+ \node[name=Es, right of=Cf, FBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{99}\hfill \underline{{1.3}} \hfill {5}\textit{{f}}}   \\[0.1cm]
+   {\LARGE \textbf{{Es} {锿}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Einsteinium} }
+   \linebreak
+   {\tiny {(252)}} 
+  \end{minipage}
+ };
+ \node[name=Fm, right of=Es, FBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{100}\hfill \underline{{1.3}} \hfill {5}\textit{{f}}}   \\[0.1cm]
+   {\LARGE \textbf{{Fm} {镄}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Fermium} }
+   \linebreak
+   {\tiny {(257)}} 
+  \end{minipage}
+ };
+ \node[name=Md, right of=Fm, FBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{101}\hfill \underline{{1.3}} \hfill {5}\textit{{f}}}   \\[0.1cm]
+   {\LARGE \textbf{{Md} {钔}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Mendelevium} }
+   \linebreak
+   {\tiny {(258)}} 
+  \end{minipage}
+ };
+ \node[name=No, right of=Md, FBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{102}\hfill \underline{{1.3}} \hfill {5}\textit{{f}}}   \\[0.1cm]
+   {\LARGE \textbf{{No} {锘}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Nobelium} }
+   \linebreak
+   {\tiny {(259)}} 
+  \end{minipage}
+ };
+ \node[name=Lr, right of=No, FBlock, Element] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{103}\hfill \underline{{1.3}} \hfill {5}\textit{{f}}}   \\[0.1cm]
+   {\LARGE \textbf{{Lr} {铹}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Lawrencium} }
+   \linebreak
+   {\tiny {(266)}} 
+  \end{minipage}
+ };
+ \node[name=Star, left of=La, Offsetter, xshift=-0.1cm] {{\textbf{\Huge 镧系}}};
+ \node[name=DoubleStar, below of=Star, Offsetter] {{\textbf{\Huge 锕系}}};
+ 
+ \node[name=Key, above of=Ti, Element, yshift=2.3cm] {
+  \begin{minipage}{2.21cm}
+   \centering
+   {\textbf{Z}\hfill \underline{{eneg}} \hfill {ss}\textit{{}}}   \\[0.1cm]
+   {\LARGE \textbf{{Sy} {}}}
+   \linebreak
+   {\fontsize{8}{8}\selectfont {Name} }
+   \linebreak
+   {\tiny {saw}} 
+  \end{minipage}
+ };
+ \node[above of=Mn, name=keyvalues, KeysLabel, yshift=3.8cm]{Z = atomic number; eneg = electronegativity; ss = subshell; Sy = Symbol, Name = element name, saw = standard atomic weight};
+  
+ \node at (Blank2.west -| Co.north) [name=diagramTitle, TitleLabel]
+ {Periodic Table of the Elements};
+ 
+ \node[below of=Cm, name=details, DetailsLabel]{Standard atomic weights taken from the Commission on Isotopic Abundances and Atomic Weights (\url{http://ciaaw.org/atomic-weights.htm}). Adapted from Ivan Griffin's \LaTeX\space Periodic Table. \textcopyright\space \the\year\space Paul Danese};
+ \node[below of=details, DetailsLabel, yshift=1.6cm]{An asterisk (*) next to a subshell indicates an anomalous (Aufbau rule-breaking) ground state electron configuration.};
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,201 @@
+\section{C++17 in details: Attributes}
+
+\url{http://www.bfilipek.com/2017/07/cpp17-in-details-attributes.html}
+
+“C++ Attributes… what?”
+There were almost 40% votes like that in my recent Twitter survey. Maybe It would be good to introduce that little-known feature? 
+There’s even a good occasion, as in C++17 we’ll get even more useful stuff connected with attributes.
+Interested?
+
+Intro
+Have you ever used __declspec, __attribute or #pragma directives in your code? 
+For example:
+struct S { short f[3]; } __attribute__ ((aligned (8)));
+
+void fatal () __attribute__ ((noreturn));
+Or for DLL import/export in MSVC:
+#if COMPILING_DLL
+    #define DLLEXPORT __declspec(dllexport)
+#else
+    #define DLLEXPORT __declspec(dllimport)
+#endif
+Those are existing forms of compiler specific attributes/annotations. 
+So what’s an attribute?
+An attribute is additional information that can be used by the compiler to produce code. It might be utilized for optimization or some specific code generation (like DLL stuff, OpenMP, etc.).
+Contrary to other languages as C#, in C++ that meta information is fixed by the compiler, you cannot add user-defined attributes. In C# you can just ‘derive’ from System.Attribute.
+Here’s the deal about C++11 attributes:
+With the modern C++, we get more and more standardized attributes that will work with other compilers. So we’re moving a bit from compiler specific annotation to standard forms.
+The Series
+This post is the fourth in the series about C++17 features details.
+The plan for the series
+Fixes and deprecation
+Language clarification
+Templates
+Attributes (today)
+Simplification
+Library changes - Filesystem
+Library changes 2 (soon)
+Library changes 3 (soon + 1)
+Wrap up, Bonus
+Documents & Links
+Just to recall:
+First of all, if you want to dig into the standard on your own, you can read the latest draft here: 
+N4659, 2017-03-21, Working Draft, Standard for Programming Language C++ - the link also appears on the isocpp.org.
+Compiler support: C++ compiler support
+And you can also grab my list of concise descriptions of all of the C++17 language features:
+Download a free copy of my C++17 Cheat Sheet! 
+It’s a one-page reference card, PDF.
+There’s also a talk from Bryce Lelbach: C++Now 2017: C++17 Features
+And have a look at my master C++17 features post: C++17 Features
+OK, let's go back to the main topic of this article...
+Before C++11
+In short: it was (and still is) a mess :)
+#pragma, _declspec, __attribute… a lot of variations and compiler specific keywords.
+GCC specific attributes
+Attribute Syntax - Using the GNU Compiler Collection (GCC)
+Using the GNU Compiler Collection (GCC): Common Function Attributes
+MSVC specific attributes
+__declspec | Microsoft Docs
+Clang specific attributes
+Attributes in Clang — Clang 5 documentation
+The document lists also what syntax is supported, so a lot of those attributes can be already used in modern C++11 form.
+Attributes in C++11 and C++14
+C++11 did one step to minimize the need to use vendor specific syntax. As I see, the target is to move as much as compiler specific into standardized forms.
+The First thing:
+With C++11 we got a nicer form of specifying annotations over our code.
+The basic syntax is just [[attr]] or [[namespace::attr]].
+You can use [[att]] over almost anything: types, functions, enums, etc., etc.
+For example:
+[[abc]] void foo() 
+{
+
+}
+In C++11 we have the following attributes:
+[[noreturn]] 
+for example [[noreturn]] void terminate() noexcept;
+[[carries_dependency]] 
+mostly to help optimizing multi-threaded code and when using different memory models
+good answer: What does the carries_dependency attribute mean? - Stack Overflow 
+C++14 added:
+[[deprecated]] and [[deprecated("reason")]] 
+Marking as deprecated in C++14 – Joseph Mansfield
+Note: there no need to use attributes for alignment as there’s alignas separate keyword for that. Before C++11 in GCC you would use __attribute__ ((aligned (N))).
+Have a look at also this article Modern C++ Features - Attributes - at Simplify C++.
+You know a bit about the old approach, C++11/14… so what the deal about C++17?
+C++17 additions
+With C++17 we get three more standard attributes
+[[fallthrough]]
+[[nodiscard]]
+[[maybe_unused]]
+Plus three supporting features.
+[[fallthrough]] attribute
+Indicates that a fall-through in a switch statement is intentional and a warning should not be issued for it.
+switch (c) {
+case 'a':
+    f(); // Warning! fallthrough is perhaps a programmer error
+case 'b':
+    g();
+[[fallthrough]]; // Warning suppressed, fallthrough is ok
+case 'c':
+    h();
+}
+More details in: P0188R1 and P0068R0 - reasoning. 
+GCC: 7.0, Clang: 3.9, MSVC: 15.0
+[[nodiscard]] attribute
+[[nodiscard]] is used to stress that the return value of a function is not to be discarded, on pain of a compiler warning. 
+[[nodiscard]] int foo();
+void bar() {
+    foo(); // Warning! return value of a
+           // nodiscard function is discarded
+}
+This attribute can also be applied to types in order to mark all functions which return that type as [[nodiscard]]:
+[[nodiscard]] struct DoNotThrowMeAway{};
+DoNotThrowMeAway i_promise();
+void oops() {
+    i_promise(); // Warning emitted, return value of a   
+                 // nodiscard function is discarded
+}
+More details:
+P0189R1 (Wording), 
+P0068R0 - reasoning.
+nodiscard in Jason Turner’s C++ Weekly
+GCC: 7.0, Clang: 3.9, MSVC: not yet
+[[maybe_unused]] attribute
+Suppresses compiler warnings about unused entities when they are declared with [[maybe_unused]].
+static void impl1() { ... } // Compilers may warn about this
+[[maybe_unused]] static void impl2() { ... } // Warning suppressed
+
+
+void foo() {
+   int x = 42; // Compilers may warn about this
+   [[maybe_unused]] int y = 42; // Warning suppressed
+}
+More details:
+P0212R1, 
+P0068R0 - reasoning.
+maybe_unused in Jason Turner’s C++ Weekly
+GCC: 7.0, Clang: 3.9, MSVC: not yet
+For more examples of those C++17 attributes you can see Simon Brand's recent article: C++17 attributes - maybe_unused, fallthrough and nodiscard.
+Attributes for namespaces and enumerators
+Permits attributes on enumerators and namespaces.
+enum E {
+  foobar = 0,
+  foobat [[deprecated]] = foobar
+};
+
+E e = foobat; // Emits warning
+
+namespace [[deprecated]] old_stuff{
+    void legacy();
+}
+
+old_stuff::legacy(); // Emits warning
+More details in: 
+N4266, 
+N4196 (reasoning)
+GCC: 4.9 (namespaces)/ 6 (enums), Clang: 3.4, MSVC: 14.0
+Ignore unknown attributes
+That's mostly for clarification. 
+Before C++17 if you tried to use some compiler specific attribute, you might even get an error when compiling in another compiler that doesn’t support it. Now, the compiler simply omits the attribute specification and won’t report anything (or just a warning). This wasn't mentioned in the standard, so needed a clarification.
+// compilers which don't 
+// support MyCompilerSpecificNamespace will ignore this attribute
+[[MyCompilerSpecificNamespace::do_special_thing]] 
+void foo();
+For example in GCC 7.1 there’s a warnings:
+warning: 'MyCompilerSpecificNamespace::do_special_thing'
+scoped attribute directive ignored [-Wattributes]
+void foo(); 
+More details in:
+P0283R2 - Standard and non-standard attributes - wording
+P0283R1 - Standard and non-standard attributes - more description
+MSVC not yet, GCC: Yes, Clang: 3.9.
+Using attribute namespaces without repetition
+Other name for this feature was “Using non-standard attributes” in P0028R3 and PDF: P0028R2 (rationale, examples).
+Simplifies the case where you want to use multiple attributes, like:
+void f() {
+    [[rpr::kernel, rpr::target(cpu,gpu)]] // repetition
+    do-task();
+}
+Proposed change:
+void f() {
+    [[using rpr: kernel, target(cpu,gpu)]]
+    do-task();
+}
+That simplification might help when building tools that automatically translate annotated such code into different programming models.
+@cppreference.com 
+Attributes available in C++17
+[[noreturn]]
+[[carries_dependency]]
+[[deprecated]]
+[[deprecated("msg")]]
+[[fallthrough]]
+[[nodiscard]]
+[[maybe_unused]]
+More details in: P0028R4 
+GCC: 7.0, Clang: 3.9, MSVC: not yet
+Summary
+I hope that after reading you understood the need of attributes: what are they and when are they useful. Previously each compiler could specify each own syntax and list of available attributes, but in modern C++ the committee tried to standardize this: there are some extracted, common parts. Plus each compiler is not blocked to add it’s own extensions. Maybe at some point, we’ll move away from __attribute or _declspec or `#pragma’?
+There’s also quite important quote from Bjarne Stroustrup’s C++11 FAQ/Attributes:
+There is a reasonable fear that attributes will be used to create language dialects. The recommendation is to use attributes to only control things that do not affect the meaning of a program but might help detect errors (e.g. [[noreturn]]) or help optimizers (e.g. [[carries_dependency]]). 
+How about you?
+What’s your experience with attributes? Do you use them? Or try to keep your code without the need to do any annotations?

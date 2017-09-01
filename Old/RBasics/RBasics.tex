@@ -1,0 +1,80 @@
+\input{./chapters/settings}
+
+\usepackage{minted}
+
+\newcommand{\doctitle}{R语言基础学习}
+\newcommand{\docauthor}{Roger Young}
+
+\hypersetup{
+	hidelinks,
+	pdftitle=\doctitle,
+	pdfauthor=\docauthor,
+	pdfsubject={学习笔记, R},
+	pdfkeywords={学习笔记, R},
+	pdfstartview=FitH
+}
+
+\title{\doctitle}
+\author{\docauthor}
+
+\begin{document}
+	\frontmatter
+	
+	\maketitle
+	
+	\include{./chapters/preface}
+	
+	\tableofcontents
+	
+	% 正文部分
+	\mainmatter
+	
+	\begin{itemize}
+		\item R语言开发环境设置
+		\item R语言基本语法
+		\item R的帮助系统
+		\item 基本数据类型及其操作
+		\item 内置函数
+		\item 面向对象编程
+	\end{itemize}
+
+	\chapter{R语言简介}
+	\section{R编程环境的安装}
+	
+	\section{R的帮助系统}
+	扎实地掌握R的帮助系统可以在很大程度上简化R使用者的编程工作。R的内置帮助系统提供了很多函数，来协助用户了解R函数的实现细节、使用方法、参考文献以及使用示例等。同时R也提供函数，协助用户了解R包的细节。
+	
+	\subsection{R函数的帮助系统}
+	
+	R中的一切基本上都是基于函数的。我们首先来看一下R有关函数的帮助系统。毋庸置疑，最重要的函数当然是\mintinline{R}|help()| 函数了。
+	
+\begin{minted}{R}
+help(topic, package = NULL, lib.loc = NULL,
+	verbose = getOption("verbose"),
+	try.all.packages = getOption("help.try.all.packages"),
+	help_type = getOption("help_type")
+)
+\end{minted}
+
+	
+	
+	
+	\subsection{R包的帮助系统}
+	
+	
+	
+	
+	\appendix
+	
+	\backmatter
+	
+	\include{./chapters/prologue}
+	
+	
+	% 利用BibTex工具生成参考文献
+	\bibliography{./chapters/references}
+	
+	% 利用makeindex工具生成索引
+	\printindex
+\end{document}
+

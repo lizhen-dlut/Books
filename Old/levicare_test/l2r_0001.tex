@@ -1,0 +1,138 @@
+\documentclass{ctexart}
+\usepackage[left=1cm,right=1cm,bottom=1.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb} 
+\usepackage{array}
+
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{fontenc} 
+\usepackage{graphicx,calc}
+
+\usepackage{ifthen}
+\usepackage{inputenc} 
+\usepackage{lastpage}
+\usepackage{lipsum}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+
+\usepackage{hyperref}
+
+\newcommand{\productName}{\uline{``乐孕安''优生优育产品}}
+\newcommand{\DocumentTitle}{\kaishu{\huge 乐土精准医疗 \\ \Large 2017年7月18日\productName 培训测试题}}
+\newcommand{\doumentAuthor}{张洋}
+
+\hypersetup{
+ pdftitle= {\DocumentTitle} ,
+ pdfauthor= {\doumentAuthor}, 
+ pdfkeywords = {乐孕安, 测试题}, 
+ pdfcreator={\doumentAuthor},
+ pdfproducer={\doumentAuthor},
+ pdfstartview={FitH},
+ hidelinks
+} 
+
+
+\newlength{\lengthOptionA}
+\newlength{\lengthOptionB}
+\newlength{\lengthOptionC}
+\newlength{\lengthOptionD}
+\newlength{\lhalf}
+\newlength{\lquarter}
+\newlength{\lmax}
+\setlength{\lhalf}{0.5\linewidth}
+\setlength{\lquarter}{0.25\linewidth}
+
+\newcommand{\choiceOptions}[4]
+{
+ \hfill \\[.5pt] \settowidth{\lengthOptionA}{A.~#1~~~}
+ \settowidth{\lengthOptionB}{B.~#2~~~}
+ \settowidth{\lengthOptionC}{C.~#3~~~}
+ \settowidth{\lengthOptionD}{D.~#4~~~}
+ 
+ \ifthenelse{\lengthtest{\lengthOptionA>\lengthOptionB}}
+  {\setlength{\lmax}{\lengthOptionA}}
+  {\setlength{\lmax}{\lengthOptionB}}
+ \ifthenelse{\lengthtest{\lengthOptionC>\lmax}}
+  {\setlength{\lmax}{\lengthOptionC}}{}
+ \ifthenelse{\lengthtest{\lengthOptionD>\lmax}}
+  {\setlength{\lmax}{\lengthOptionD}}{}
+ 
+ \ifthenelse{\lengthtest{\lmax>\lhalf}}
+  {\noindent{}A.~#1 \\ B.~#2 \\ C.~#3 \\ D.~#4}
+  {
+   \ifthenelse{\lengthtest{\lmax>\lquarter}}
+    {\noindent\makebox[\lhalf][l]{A.~#1~~~}     \makebox[\lhalf][l]{B.~#2~~~}\\\noindent     \makebox[\lhalf][l]{C.~#3~~~}     \makebox[\lhalf][l]{D.~#4~~~}
+    }    {\noindent\makebox[\lquarter][l]{A.~#1~~~}     \makebox[\lquarter][l]{B.~#2~~~}     \makebox[\lquarter][l]{C.~#3~~~}     \makebox[\lquarter][l]{D.~#4~~~}
+    }
+   }
+}
+
+\newcommand{\zongfenlana}
+{ \begin{center}
+  \setlength{\tabcolsep}{4mm}  \renewcommand{\arraystretch}{1.5}  \begin{tabular}{*{12}{|c}|}   \hline
+   题号&一&二&三&四&总分&总分人&复核人\\ \hline
+   分数&&&&&&&\\
+   \hline
+  \end{tabular}
+ \end{center}
+\vskip-3mm
+}
+
+\newcommand{\examineeInfo}
+{
+ \ifthenelse{\isodd{\value{page}}}
+ {
+  \begin{tikzpicture}[remember picture,overlay]
+  \path  (current page.south east) coordinate (a0);
+  \path  (current page.north) coordinate (a0);
+  \draw  (a0)[shift={(0,-2)}] node (a1) [rotate=0,fill=gray!0,minimum height=1cm,minimum width=1cm]
+  {\kaishu{}\zihao{4}
+   区域\raisebox{-2pt}{\rule{35mm}{0.4pt}}   部门\raisebox{-2pt}{\rule{35mm}{0.4pt}}   姓名\raisebox{-2pt}{\rule{35mm}{0.4pt}}   工号\raisebox{-2pt}{\rule{35mm}{0.4pt}}}
+  (a1)[shift={(0,-1.5)}] node [rotate=0,fill=gray!0,minimum height=1cm,minimum width=1cm]
+  {\kaishu{}\zihao{4}...........................................   \raisebox{-0.6ex}{装}............................................   \raisebox{-0.6ex}{订}............................................   \raisebox{-0.6ex}{线}...........................................};
+  \end{tikzpicture}
+ }
+ {
+  \begin{tikzpicture}[remember picture,overlay]
+  \path  (current page.south east) coordinate (a0);
+  \path  (current page.north) coordinate (a0);
+  \draw  (a0)[shift={(0,-2)}] node (a1) [rotate=0,fill=gray!0,minimum height=1cm,minimum width=1cm]
+  {\kaishu{}\zihao{4}
+   区域\raisebox{-2pt}{\rule{35mm}{0.4pt}}   部门\raisebox{-2pt}{\rule{35mm}{0.4pt}}   姓名\raisebox{-2pt}{\rule{35mm}{0.4pt}}   工号\raisebox{-2pt}{\rule{35mm}{0.4pt}}}
+  (a1)[shift={(0,-1.5)}] node [rotate=0,fill=gray!0,minimum height=1cm,minimum width=1cm]
+  {\kaishu{}\zihao{4}...........................................   \raisebox{-0.6ex}{装}............................................   \raisebox{-0.6ex}{订}............................................   \raisebox{-0.6ex}{线}...........................................};
+  \end{tikzpicture}
+ }
+}
+
+\newcommand{\markArea}
+{
+ \setlength{\tabcolsep}{4mm} \renewcommand{\arraystretch}{1} \begin{tabular}[c]{*{2}{|c}|}
+  \hline
+  评卷人&得分\\\hline
+  &\\[2mm]
+  \hline
+ \end{tabular}
+}
+
+\pagestyle{fancy}
+
+\lhead{\setlength{\unitlength}{1em}
+ \begin{picture}(0,0)
+ \put(0,0){\includegraphics[width=6em]{./figures/logo.pdf}}
+ \end{picture}}
+\chead{\textbf{\productName 培训测试题}} 
+\rhead{\textbf{姓名：\TextField[name=name,width=5em,charsize=0pt,align=1]{\mbox{}}}}
+
+\thispagestyle{empty}
+\begin{document}
+\setcounter{equation}{0}
+\begin{picture}
+(0,0)
+ \put(0,0){\includegraphics[width=6em]{./figures/logo.pdf}}
+\end{picture}
+\end{document}

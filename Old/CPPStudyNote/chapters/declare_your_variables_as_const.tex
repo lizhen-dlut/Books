@@ -1,0 +1,148 @@
+\section{declare your variables as const}
+\url{http://www.bfilipek.com/2016/12/please-declare-your-variables-as-const.html}
+
+I need to confess that for the last few years I’ve been a bit obsessed with the idea of making all variables const. Whenever I declare a variable in a function body, I try to think if I can make it constant. Let me explain why I think you should be doing the same.
+
+\subsection{What’s wrong?}
+
+What’s wrong with the following code?
+
+\begin{minted}{c++}
+int myVariable = 0;
+
+// some code...
+
+myVariable = ComputeFactor(params...);
+\end{minted}
+Versus:
+\begin{minted}{c++}
+// some code...
+
+const int myVariable = ComputeFactor(params...);
+\end{minted}
+
+In the first sample, we’re just changing the value of some variable, and that’s typical thing in the code… isn’t it?
+
+Let’s go through the list of benefits of the second approach.
+
+Please note that I’ll focus only on variables used in function bodies, not parameters of functions, or class members. 
+
+\subsection{Why it helps}
+
+\subsubsection{Performance?}
+
+Several years ago, my colleague suggested using const for variables. I though the only reason for this was optimization and performance. Later, I understood that’s it’s not that obvious, and there are far more important reasons for using const.
+
+In fact, a good C++ compiler can do the same kind of optimization no matter you use const or not. The compiler will deduce if a variable is changed or just initialized once at the start. So, is there any performance benefit here?
+
+It’s hard to show the real numbers here. Ideally, we could get a C++ project (let say minimum 10k LOC) and then use const whenever possible, and compare it against the same project without const.
+
+In a synthetic, small examples like:
+\begin{minted}{c++}
+string str;
+str = "Hello World";
+\end{minted}
+VS
+\begin{minted}{c++}
+const string str = "Hello World";
+\end{minted}
+
+There can be a performance increase of even 30\%! Numbers from J. Turner talk “Practical Performance Practices”. As one commenter noticed: the gain comes not from the const itself, but from the fact that we're not reassigning the value.
+
+As we can see, there’s a potential in getting some performance, but I wouldn’t expect much across the whole project. It depends on the context. Maybe something like 1…or 2\% max. As usual: measure measure measure! :)
+
+Still, why not making life much easier for the compiler and have better code.
+
+So, it seems that the "performance" is not the strongest reason for using const, read below for far more important aspects:
+
+\subsubsection{Variables are declared local to their use}
+
+If you want to declare a constant variable, you need to have all the required data available. That means you cannot just declare it at the beginning of a function (like in standard old C-way). Thus, it’s a higher chance to have variables quite local to their actual usage.
+
+\begin{minted}{c++}
+void foo(int param)
+{
+    const int otherVariable = Compute(param);
+    // code...
+
+    // myVar cannot be declared before 'otherVariable'
+    const int myVar = param * otherVariable; 
+}
+\end{minted}
+
+Declaring variables local to their use is not only a good practice but can result in less memory usage (since not all variables might be allocated) and even safer code. 
+
+\subsubsection{Clear Intent}
+
+When you declare something as constant you make it clear “I won’t change the value of that variable.” 
+
+Such practice is vital when you read the code. For example:
+
+\begin{minted}{c++}
+int myVar = 0;
+
+// code...
+
+// code...
+\end{minted}
+
+When you see such a thing, you’re not sure if myVar will change or not. It might not be a problem in small functions, but what about longer, complex methods?
+
+While having:
+
+\begin{minted}{c++}
+const int myVar = ...;
+
+// code...
+\end{minted}
+
+You’re at least sure that nothing happens with myVar. You get one parameter less to track.
+
+\subsubsection{Clean Code}
+
+Sometimes the initialization of a variable won’t be just a simple assignment. Several lines (or more) might be used to give a proper value. In that case making the variable const will force you to move such initialization to a separate place.
+
+As I described in IIFE for Complex Initialization you might enclose the initialization in IIFE or a different method. Anyway, you’ll avoid code looking like that:
+
+\begin{minted}{c++}
+int myVariable = 0;
+
+// code... 
+
+// complex initialization of 'myVariable'
+if (bCondition)
+    myVariable = bCond ? computeFunc(inputParam) : 0;
+else
+    myVariable = inputParam * 2;
+
+// more code of the current function...
+\end{minted}
+
+No matter what you use, you’ll end up with only one place where the variable gets its value.
+
+\subsubsection{Fewer bugs}
+
+When a variable is const you cannot change it, so some unwanted bugs are less likely to happen.
+
+Accidental problems might easily happen when there’s some long function and variables tend to be reused in some cases. You change the value of a variable, and it works for your case, but the old case where it was used now stops working. Again, declaring a variable as const will at least protect you from such stupid bugs. Not to mention that debugging such errors might be a real pain.
+
+BTW: for an example please see this blog posts from Andrzej Krzemienski: More const---fewer bugs
+
+\subsubsection{Moving towards functional languages}
+
+Functional style is probably a topic worth a separate article, but in general having immutable objects is an essential thing in functional languages. 
+
+Immutable objects are thread safe by their nature. When a thread processes that kind of objects, we can be sure that no other threads are changing the objects. Lots of data races can be avoided. That opens many ways to parallelize the algorithm relatively easy. 
+
+
+\subsection{Exceptions}
+
+‘A constant variable’ isn’t that an oxymoron?
+
+Of course, there are situations where a variable need to be a ‘normal.’ In fact, you might argue that most of the cases involve the need to modify a value. So unless you’re trying to write functional code (that likes immutability), you’ll end up with tons of examples when you need to change a value (or just part of an object).
+
+Simple examples: calculating a sum of an array, iterators, small functions, changing health param in GameActor, setting a part of GPU pipeline.
+
+Still, bear in mind that the most of the above examples could be rewritten into an ‘immutable’ version as well. For example, you can use higher-order functions like Fold/Reduce, and recursion to implement many ‘standard’ algorithms. But that’s going into functional languages area.
+
+One remark: while I was writing this article I realized I make a distinction here: variables vs. larger objects. In theory, those are the same, but for practical reasons, it’s easier to use const on smaller, ‘atomic’ types. So, I try to use const for smaller types: like numerics, strings, Vector2d, etc… but when I have some large custom class, I just skip const and allow to mutate its state (if needed). Maybe in my next iteration of my ‘const correctness’ I’ll try to apply that rule also on larger objects… so this would be a more functional style of programming.

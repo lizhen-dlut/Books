@@ -1,0 +1,162 @@
+\chapter{数据库的使用}
+	
+	\section{使用SQLite}
+	SQLite是开源的独立数据库，其优势在于可以完全独立工作，不需要太多设置。自Windows 10 Anniversary Update (Build 14393)开始，Windows 10 SDK内置了SQLite。
+	
+	在开发时，出于以下几方面的原因，建议直接采用系统内置的SQLite SDK：
+	\begin{itemize}
+		\item 可以减小程序的安装包的大小。
+		\item 可以加快程序的启动时间，因为SDK版的SQLite很有可能已经在内存中了。
+		\item 无需关心SQLite的更新，因为Windows系统会完成该工作。
+	\end{itemize}
+	
+	关于SQLite更多的知识，可以参考：	\url{http://sqlite.org/}
+	\subsection{通过\Cpp 使用SQLite}
+	在UWP开发的过程中，通过\Cpp 使用SQLite，目前由三种方法（\href{https://docs.microsoft.com/en-us/windows/uwp/data-access/sqlite-databases}{针对于使用\Cpp 的程序，非我的重点！}）：
+	\begin{enumerate}
+		\item 使用SDK中的SQLite。
+		\begin{enumerate}
+		\item 首先需要引入库：
+\begin{minted}{c++}
+#include <winsqlite/winsqlite3.h>
+\end{minted}
+\item 设置项目链接到“winsqlite3.lib”。
+\end{enumerate}	
+\item 通过App Package来包含SQLite。
+\item 在Visual Studio中直接编译SQLite源代码。
+	\end{enumerate}
+
+\subsection{通过\csharp 使用SQLite}
+\subsubsection{安装SQLite的\csharp 包装器}
+SQLite采用C语言开发，在通过\csharp 使用SQLite时需要安装\csharp 包装器。推荐使用“\uline{\textbf{Microsoft.Data.Sqlite}}”：
+
+\begin{enumerate}
+	\item 在“Solution Explorer”中右键单击“Reference”，选择“Manage NuGet Packages”。
+	\item 在“Installed”选项卡中，确保“Microsoft.NETCore.UniversalWindowsPlatform ”的版本大于5.2.2。
+	\item 在“Browse”选项卡中，搜索“Microsoft.Data.Sqlite”，点击“Install”。
+\end{enumerate}
+
+当然，更简单的安装方法时：
+\begin{minted}[linenos=true,frame=single, bgcolor=bg]{csharp}
+Install-Package Microsoft.Data.SQLite
+\end{minted}
+
+\subsubsection{引入SQLite命名空间}
+
+在需要使用SQLite的\csharp 代码中需要引入命名空间：
+\begin{minted}[linenos=true,frame=single, bgcolor=bg]{csharp}
+using Microsoft.Data.Sqlite;
+using Microsoft.Data.Sqlite.Internal;
+\end{minted}
+
+在App的Constructor中，使用SQLite之前，需要使用：
+\begin{minted}[linenos=true,frame=single, bgcolor=bg]{csharp}
+SqliteEngine.UseWinSqlite3();
+\end{minted}
+来确保程序使用SDK版的SQLite。
+
+\subsubsection{创建SQLite数据库}
+
+示例代码如下：
+
+\begin{minted}[linenos=true,frame=single, bgcolor=bg]{csharp}
+string conn_string = "Filename=sqliteSample.db"
+string create_table_sql = @"
+    CREATE TABLE IF NOT EXISTS book (
+        id    INTEGER PRIMARY KEY AUTOINCREMENT,
+        title TEXT    NOT NULL,
+        isbn  TEXT    NOT NULL UNIQUE);
+    ";
+using (SqliteConnection db_conn = new SqliteConnection(conn_string))
+{
+    db.Open();
+    SqliteCommand createTable = new SqliteCommand(create_table_sql, db_conn);
+    try
+    {
+        createTable.ExecuteReader();
+    }
+    catch (SqliteException e)
+    {
+        //Do nothing
+    }
+    db.Close()
+}
+\end{minted}
+
+\subsubsection{插入数据}
+
+\begin{minted}[showspaces=false]{csharp}
+string conn_string = "Filename=sqliteSample.db"
+string book_title = "Molecular Cloning: A Laboratory Manual"
+string book_isbn = "978-1-936113-42-2"
+
+using (SqliteConnection db_conn = new SqliteConnection(conn_string))
+{
+    db.Open();
+    SqliteCommand insert_cmd = new SqliteCommand(
+        @"INSERT INTO TABLE book (title, isbn) VALUES (@title, @isbn)",
+        db_conn);
+    insert_cmd.Parameters.AddWithValue("@title", book_title);
+    insert_cmd.Parameters.AddWithValue("@isbn", book_isbn);
+    try
+    {
+        insert_cmd.ExecuteReader();
+    }
+    catch (SqliteException e)
+    {
+        //Do nothing
+    }
+    db.Close()
+}
+\end{minted}
+
+\subsubsection{查询数据}
+
+\begin{minted}[showspaces=false]{csharp}
+public class Book {
+    public int Id;
+    public string Title;
+    public string Isbn;
+}
+
+List<Book> books = new List<Book>();
+
+string conn_string = "Filename=sqliteSample.db"
+string book_title = "Molecular Cloning: A Laboratory Manual"
+
+using (SqliteConnection db_conn = new SqliteConnection(conn_string))
+{
+    db.Open();
+    SqliteCommand select_cmd = new SqliteCommand(
+        @"SELECT id, title, isbn FROM book WHERE title = @title",
+        db_conn);
+    select_cmd.Parameters.AddWithValue("@title", book_title);
+    SqliteDataReader query;
+    try
+    {
+        query = select_cmd.ExecuteReader();
+    }
+    catch (SqliteException e)
+    {
+        //Do nothing
+    }
+    while (query.Read())
+    {
+        books.Add(new Book(
+            Id = query.GetInt(0),
+            Title = query.GetString(1),
+            Isbn = query.GetString(2)
+        ));
+    }
+    db.Close()
+}
+\end{minted}
+
+
+
+
+\section{Entity Framework Core}
+\url{https://docs.microsoft.com/en-us/ef/core/get-started/uwp/getting-started}
+
+
+\section{MySQL}

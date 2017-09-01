@@ -1,0 +1,61 @@
+\documentclass[11pt,a4paper]{ctexbook}
+
+\input{./chapters/settings}
+\input{./chapters/terminology.tex}
+
+%\setCJKmainfont[AutoFakeBold=true]{Microsoft YaHei UI}
+\setCJKsansfont{Microsoft YaHei UI}
+\setCJKmonofont{Microsoft YaHei UI}
+
+\renewcommand{\underline}{\uline}
+
+\setcounter{secnumdepth}{4}
+
+\newcommand{\documentTitle}{
+    \texorpdfstring{}
+    {}
+}
+
+\newcommand{\documentAuthor}{张洋}
+
+
+
+\hypersetup{
+	%hidelinks,
+	pdftitle={\documentTitle},
+	pdfauthor={\documentAuthor},
+	pdfsubject={},
+	pdfkeywords={},
+	pdfstartview=FitH,
+	pdfproducer = {\documentAuthor},
+	pdfcreator = {\documentAuthor},
+	pdfcopyright = {\documentAuthor},
+	pdflicenseurl = {https://github.com/hiatcg}
+}
+
+\begin{document}
+
+\title{\documentTitle}
+\author{\kaishu{\documentAuthor}}
+\date{\kaishu{\today}}
+
+\maketitle
+
+\tableofcontents
+
+\begin{minted}{c++}
+\end{minted}
+
+\mintinline{c++}{}
+
+\input{./chapters/FutureRuminations.tex}
+\input{./chapters/carries_dependency_mean.tex}
+\input{./chapters/declare_your_variables_as_const.tex}
+\input{./chapters/Cpp17_Features.tex}
+
+%\input{./chapters/Cpp17_in_details_Templates.tex}
+%\input{./chapters/Cpp17_in_details_Filesystem.tex}
+%\input{./chapters/Cpp17_in_details_Attributes.tex}
+%\input{./chapters/Cpp17_in_details_Code_Simplification .tex}
+% 
+\end{document}

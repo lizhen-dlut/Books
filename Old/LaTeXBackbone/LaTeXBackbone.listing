@@ -1,0 +1,12 @@
+unsafe static int* Max(int* first, int* second, int* third)
+{
+    int* max = *first > *second ? first : second;
+    return *max > *third ? max : third;
+}
+....
+int a = 1, b = 2, c = 3;
+unsafe
+{
+    int* max = Max(&a, &b, &c);
+    *max = 4; // c == 4
+}
