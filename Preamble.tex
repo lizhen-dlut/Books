@@ -44,6 +44,40 @@
 \usepackage{lettrine} % 首字下沉
 \usepackage{lineno}% 行号
 \usepackage{listings}% 代码环境
+
+\lstdefinestyle{CSharpStyle}{
+	belowcaptionskip=1\baselineskip,
+	breaklines=true,
+	tabsize=4,
+	numbers=left,numberstyle=\tiny, numbersep=10pt,
+	frame=single,
+	xleftmargin=\parindent,
+	language=C,
+	showstringspaces=false,
+	basicstyle=\footnotesize\ttfamily,
+	keywordstyle=\bfseries\color{green!40!black},
+	commentstyle=\itshape\color{purple!40!black},
+	identifierstyle=\color{blue},
+	stringstyle=\color{orange},
+}
+
+\lstdefinestyle{HtmlStyle}{
+	belowcaptionskip=1\baselineskip,
+	breaklines=true,
+	tabsize=4,
+	numbers=left,numberstyle=\tiny, numbersep=10pt,
+	frame=single,
+	xleftmargin=\parindent,
+	language=C,
+	showstringspaces=false,
+	basicstyle=\footnotesize\ttfamily,
+	keywordstyle=\bfseries\color{green!40!black},
+	commentstyle=\itshape\color{purple!40!black},
+	identifierstyle=\color{blue},
+	stringstyle=\color{orange},
+}
+
+
 \usepackage{longtable}%处理跨页表格
 \usepackage{ltxtable}
 \usepackage{makecell}%单独控制表格单元

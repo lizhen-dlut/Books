@@ -1,0 +1,40 @@
+\documentclass{ctexbook}
+
+\input{../preamble}
+\input{../commands}
+\input{../terminology}
+\bibliographystyle{plain} %推荐JabRef工具
+
+\newcommand{\documentTitle}
+    {\texorpdfstring{Universal Windows Platform编程学习笔记}{Universal Windows Platform编程学习笔记}}
+\newcommand{\documentAuthor}{Roger Young}
+\newcommand{\documentKeywords}{Universal Windows Platform, UWP}
+\newcommand{\documentSubject}{Universal Windows Platform编程学习笔记}
+
+\hypersetup{
+	pdftitle=\documentTitle,
+	pdfauthor=\documentAuthor,
+	pdfsubject= \documentSubject,
+	pdfkeywords= \documentKeywords,
+	pdfstartview=FitH,
+	pdfproducer = \documentAuthor,
+	pdfcreator = \documentAuthor, 
+	pdfcopyright = \documentAuthor, 
+	pdflicenseurl = {https://github.com/hiatcg}
+}
+
+\begin{document}
+\title{\documentTitle}
+\author{\documentAuthor}
+
+\maketitle
+\tableofcontents
+
+\input{./chapters/数据库编程}
+
+
+
+\chapter*{附录}
+\printindex
+\printglossaries
+\end{document}
