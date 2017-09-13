@@ -15,6 +15,13 @@
 \usepackage{changepage}
 \usepackage{chemformula}
 \usepackage{color}%颜色
+\usepackage{xcolor} % 颜色
+
+\definecolor{KeywordColor}{HTML}{00000f}
+\definecolor{StringColor}{HTML}{a31515}
+\definecolor{CommentColor}{HTML}{008000}
+\definecolor{VariableColor}{HTML}{008000}
+
 \usepackage{colortbl}%彩色表格
 
 \usepackage{ctexcap}
@@ -45,31 +52,45 @@
 \usepackage{lineno}% 行号
 \usepackage{listings}% 代码环境
 
-\lstdefinestyle{CSharpStyle}{
+\lstdefinestyle{CppStyle}{
+	language=C++,
 	belowcaptionskip=1\baselineskip,
 	breaklines=true,
 	tabsize=4,
 	numbers=left,numberstyle=\tiny, numbersep=10pt,
 	frame=single,
 	xleftmargin=\parindent,
-	language=C,
 	showstringspaces=false,
 	basicstyle=\footnotesize\ttfamily,
 	keywordstyle=\bfseries\color{green!40!black},
-	commentstyle=\itshape\color[rgb]{0.13,0.54,0.13},
+	commentstyle=\itshape\color[rgb]{57,A6,4A},
 	identifierstyle=\color{blue},
-	stringstyle=\color{orange},
+	stringstyle=\color{red},
 	backgroundcolor=\color{yellow!10},
+}
+
+\lstdefinestyle{CSharpStyle}{
+	language=CIL,
+	belowcaptionskip=1\baselineskip,
+	breaklines=true,
+	tabsize=4,
+	numbers=left,numberstyle=\tiny, numbersep=10pt,
+	frame=single,
+	xleftmargin=\parindent,
+	showstringspaces=false,
+	basicstyle=\footnotesize\ttfamily, identifierstyle=\color{VariableColor}, commentstyle=\itshape\color{CommentColor}, stringstyle=\color{StringColor}, keywordstyle=\bfseries\color{KeywordColor},  
+	backgroundcolor=\color{yellow!10},
+	morekeywords={try, catch}
 }
 
 \lstdefinestyle{HtmlStyle}{
+	language=HTML,
 	belowcaptionskip=1\baselineskip,
 	breaklines=true,
 	tabsize=4,
 	numbers=left,numberstyle=\tiny, numbersep=10pt,
 	frame=single,
 	xleftmargin=\parindent,
-	language=C,
 	showstringspaces=false,
 	basicstyle=\footnotesize\ttfamily,
 	keywordstyle=\bfseries\color{green!40!black},
@@ -79,6 +100,90 @@
 	backgroundcolor=\color{yellow!10},
 }
 
+\lstdefinestyle{XamlStyle}{
+	language=HTML,
+	belowcaptionskip=1\baselineskip,
+	breaklines=true,
+	tabsize=4,
+	numbers=left,numberstyle=\tiny, numbersep=10pt,
+	frame=single,
+	xleftmargin=\parindent,	
+	showstringspaces=false,
+	basicstyle=\footnotesize\ttfamily,
+	keywordstyle=\bfseries\color{green!40!black},
+	commentstyle=\itshape\color[rgb]{0.13,0.54,0.13},
+	identifierstyle=\color{blue},
+	stringstyle=\color{orange},
+	backgroundcolor=\color{yellow!10},
+}
+
+\lstdefinestyle{PythonStyle}{
+	language=Python,
+	belowcaptionskip=1\baselineskip,
+	breaklines=true,
+	tabsize=4,
+	numbers=left,numberstyle=\tiny, numbersep=10pt,
+	frame=single,
+	xleftmargin=\parindent,
+	showstringspaces=false,
+	basicstyle=\footnotesize\ttfamily,
+	keywordstyle=\bfseries\color{green!40!black},
+	commentstyle=\itshape\color[rgb]{0.13,0.54,0.13},
+	identifierstyle=\color{blue},
+	stringstyle=\color{orange},
+	backgroundcolor=\color{yellow!10},
+}
+
+\lstdefinestyle{PerlStyle}{
+	language=Perl,
+	belowcaptionskip=1\baselineskip,
+	breaklines=true,
+	tabsize=4,
+	numbers=left,numberstyle=\tiny, numbersep=10pt,
+	frame=single,
+	xleftmargin=\parindent,
+	showstringspaces=false,
+	basicstyle=\footnotesize\ttfamily,
+	keywordstyle=\bfseries\color{green!40!black},
+	commentstyle=\itshape\color[rgb]{0.13,0.54,0.13},
+	identifierstyle=\color{blue},
+	stringstyle=\color{orange},
+	backgroundcolor=\color{yellow!10},
+}
+
+\lstdefinestyle{RStyle}{
+	language=R,
+	belowcaptionskip=1\baselineskip,
+	breaklines=true,
+	tabsize=4,
+	numbers=left,numberstyle=\tiny, numbersep=10pt,
+	frame=single,
+	xleftmargin=\parindent,
+	showstringspaces=false,
+	basicstyle=\footnotesize\ttfamily,
+	keywordstyle=\bfseries\color{green!40!black},
+	commentstyle=\itshape\color[rgb]{0.13,0.54,0.13},
+	identifierstyle=\color{blue},
+	stringstyle=\color{orange},
+	backgroundcolor=\color{yellow!10},
+}
+
+\lstdefinestyle{TeXStyle}{
+	language=TeX,
+	belowcaptionskip=1\baselineskip,
+	breaklines=true,
+	tabsize=4,
+	numbers=left,numberstyle=\tiny, numbersep=10pt,
+	frame=single,
+	xleftmargin=\parindent,
+	showstringspaces=false,
+	basicstyle=\footnotesize\ttfamily,
+	keywordstyle=\bfseries\color{green!40!black},
+	commentstyle=\itshape\color[rgb]{0.13,0.54,0.13},
+	identifierstyle=\color{blue},
+	stringstyle=\color{orange},
+	backgroundcolor=\color{yellow!10},
+}
 
 \usepackage{longtable}%处理跨页表格
 \usepackage{ltxtable}
@@ -118,7 +223,7 @@
 \usepackage{verbatim}%原文输出功能
 \usepackage{wasysym}
 \usepackage{wrapfig}%图文绕排
-\usepackage{xcolor} % 颜色
+
 %\usepackage{xtab} % 长表格处理
 \usepackage{xunicode}%Unicode处理
 \usepackage{yhmath}

@@ -1,0 +1,39 @@
+\chapter{文件和数据}
+
+\section{XML数据处理}
+
+\subsection{XML格式简介}
+
+\subsection{读写XML}
+
+\ProgrammingLanguageNamespace{Windows.Data.Xml.Dom}命名空间下提供了若干类型，可以帮助开发者对XML文档进行读取、写入、筛选等操作。其中\ProgrammingLanguageClass{XmlDocument}类是比较核心的类型，它表示一个XML文档的实例，使用该类可以通过代码来构建XML文档。
+
+在读取XML数据时，可以调用\ProgrammingLanguageFunction{LoadFromUriAsync}（从URI加载）方法或\ProgrammingLanguageFunction{LoadFromFileAsync}（从文件加载）两个静态成员，直接返回\ProgrammingLanguageClass{XmlDocument}对象实例，随后，就可以对XML文档进行读取或编辑操作。如果要创建全新的XML文档，可在实例化\ProgrammingLanguageClass{XmlDocument}类后，调用相应的方法来为文档创建各种类型的节点：
+
+\begin{itemize}
+	\item \ProgrammingLanguageFunction{CreateComment}方法：创建XML注释节点，返回类型为\ProgrammingLanguageClass{XmlComment}；
+	\item \ProgrammingLanguageFunction{CreateElement}方法：创建XML元素，返回类型为\ProgrammingLanguageClass{XmlElement}；
+	\item \ProgrammingLanguageFunction{CreateTextNode}方法：创建纯文本节点；
+	\item \ProgrammingLanguageFunction{CreateAttribute}方法：创建XML元素属性的\doubleQuote{$ name = value $}对，返回类型为\ProgrammingLanguageClass{XmlAttribute}；
+	\item \ProgrammingLanguageFunction{CreateCDataSection}方法：创建CData节点，可以存储不被XML解析器分析的文本；
+\end{itemize}
+
+不管是\ProgrammingLanguageClass{XmlDocument}，还是\ProgrammingLanguageClass{XmlComment}、\ProgrammingLanguageClass{XmlElement}等类型的节点，它们都实现了同一个接口\ProgrammingLanguageInterface{IXmlNode}，所以只需要调用\ProgrammingLanguageVariable{A}节点的\ProgrammingLanguageFunction{AppendChild}方法，并将\ProgrammingLanguageVariable{B}节点作为参数，就可以将\ProgrammingLanguageVariable{B}节点添加到\ProgrammingLanguageVariable{A}节点的子节点集合中。要从\ProgrammingLanguageVariable{A}节点的子节点集合中删除\ProgrammingLanguageVariable{B}节点，调用\ProgrammingLanguageFunction{RemoveChild}方法即可。
+
+下面通过一个实例来展示如何创建一个XML文档和读取XML文档。
+
+\begin{lstlisting}[style=XamlStyle]
+<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+	<Grid.RowDefinitions>
+		<RowDefinition Height="*"/>
+		<RowDefinition Height="auto"/>
+	</Grid.RowDefinitions>
+
+	<CommandBar Grid.Row="1">
+		<AppBarButton Icon="Save" Label="创建"/>
+		<AppBarButton Icon="Read" Label="读取"/>
+	</CommandBar>
+
+	<TextBlock Name="XmlTextBlock" TextWrapping="Wrap" Margin="5"/>
+</Grid>
+\end{lstlisting}
