@@ -1,5 +1,41 @@
 \chapter{文件和数据}
 
+在应用程序的开发过程中，数据的读写操作是一项基本、必备的操作。需要熟练掌握相关的技术。
+
+\section{文件与目录}
+
+UWP提供了对文件/目录操作的支持，使用UWP提供的API，可以实现最常见的文件读写操作。
+
+文件读写相关的主要类型，主要分布在\ProgrammingLanguageNamespace{Windows.Storage}命名空间及该命名空间的子命名空间中。
+
+\begin{longtable}{|c|l|}
+	\caption{文件/目录操作相关的重要类型} \label{tab:文件/目录操作相关的重要类型}\\
+	\hline 
+	类型名 & 说明 \\
+	\hline 
+	\endfirsthead
+	\multicolumn{2}{l}{（续表\ref{tab:文件/目录操作相关的重要类型}）}\\
+	\hline 
+	类型名 & 说明 \\
+	\hline
+	\endhead
+	\hline
+	\multicolumn{2}{c}{\itshape 接下页$ \dots \dots $}\\
+	\endfoot
+	\hline
+	\endlastfoot
+	\ProgrammingLanguageClass{StorageFile} & 表示一个文件实例。 \\ 
+	\hline 
+	\ProgrammingLanguageClass{StorageFolder} & 表示一个目录。 \\ 
+	\hline 
+	\ProgrammingLanguageClass{KnownFolders} & 静态类型，可访问几个特殊的目录。 \\ 
+	\hline 
+	\ProgrammingLanguageClass{FileIO} & 针对StorageFile实例而设计，通过一系列静态方法来实现对文件的读写。 \\ 
+	\hline 
+	\ProgrammingLanguageClass{PathIO} & 针对表示文件（夹）的字符串而设计，通过一系列静态方法来实现对文件的读写。 \\ 
+	\hline 
+\end{longtable} 
+
 \section{XML数据处理}
 
 \subsection{XML格式简介}
@@ -22,6 +58,8 @@
 
 下面通过一个实例来展示如何创建一个XML文档和读取XML文档。
 
+XmlSample页面的XAML代码如下：
+
 \begin{lstlisting}[style=XamlStyle]
 <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 	<Grid.RowDefinitions>
@@ -30,10 +68,128 @@
 	</Grid.RowDefinitions>
 
 	<CommandBar Grid.Row="1">
-		<AppBarButton Icon="Save" Label="创建"/>
-		<AppBarButton Icon="Read" Label="读取"/>
+		<AppBarButton x:Name="SaveXml"  Icon="Save" Label="创建" Click="SaveXml_Click"/>
+		<AppBarButton x:Name="LoadXml" Icon="Read" Label="读取" Click="LoadXml_Click"/>
 	</CommandBar>
 
-	<TextBlock Name="XmlTextBlock" TextWrapping="Wrap" Margin="5"/>
+	s<TextBlock Name="XmlTextBlock" TextWrapping="Wrap" Margin="5"/>
 </Grid>
+\end{lstlisting}
+
+可用下面的代码创建并保存XML文档（函数\ProgrammingLanguageFunction{SaveXml\_Click}）：
+
+\begin{lstlisting}[style=CSharpStyle]
+private async void SaveXml_Click(System.Object sender, RoutedEventArgs e)
+{
+	//创建XmlDocument实例
+	XmlDocument doc = new XmlDocument();
+	XmlElement root = doc.CreateElement("Books");
+	doc.AppendChild(root);
+
+	XmlElement book = doc.CreateElement("book");
+	// 设置属性
+	book.SetAttribute("ISBN", "978-0321563842");
+	book.SetAttribute("Version", "4th Edition");
+	XmlText text = doc.CreateTextNode("The C++ Programming Language");
+	book.AppendChild(text);
+
+	root.AppendChild(book);
+	// 保持到文件
+	StorageFolder local = ApplicationData.Current.LocalFolder;
+	StorageFile xmlFile = await local.CreateFileAsync("sample.xml", CreationCollisionOption.ReplaceExisting);
+	if (xmlFile != null)
+	{
+		await doc.SaveToFileAsync(xmlFile);
+		await new MessageDialog("File Saved!").ShowAsync();
+	}
+}
+\end{lstlisting}
+
+可用下面的代码读取XML文档（函数\ProgrammingLanguageFunction{LoadXml\_Click}）：
+
+\begin{lstlisting}[style=CSharpStyle]
+private async void LoadXml_Click(System.Object sender, RoutedEventArgs e)
+{
+	// 从本地文件中加载XML
+	StorageFolder local = ApplicationData.Current.LocalFolder;
+	StorageFile xmlFile = await local.GetFileAsync("sample.xml");
+	if (xmlFile != null)
+	{
+		XmlDocument doc = await XmlDocument.LoadFromFileAsync(xmlFile);
+		XmlTextBlock.Text = doc.GetXml();
+	}
+}
+\end{lstlisting}
+
+\subsection{相关类简介}
+
+\section{JSON数据处理}
+
+JSON（JavaScript Object Notation）即JavaScript对象表示方法。可用简单的文本来描述JavaScript语言所能识别的对象。
+
+\ProgrammingLanguageNamespace{Windows.Data.Json}命名空间下包含一些让开发者能够轻松访问和处理JSON格式数据的类型。
+
+\begin{itemize}
+	\item \ProgrammingLanguageInterface{IjsonValue}接口：对封装JSON值的类型进行界定规范。其中\ProgrammingLanguageFunction{Stringify}方法可以返回某个JSON值的字符串表示形式；
+	\item \ProgrammingLanguageClass{JsonValue}类：表示一个简单的JSON值，如字符串、数值等。
+	\item \ProgrammingLanguageClass{JsonArray}类：表示JSON中的数值；
+	\item \ProgrammingLanguageClass{JsonObject}类：表示一个单独的JSON对象。
+\end{itemize}
+
+下面通过一个实例来展示如何创建一个JSON文档和读取JSON文档。
+
+JsonSample页面的XAML代码如下：
+
+\begin{lstlisting}[style=XamlStyle]
+<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+	<Grid.RowDefinitions>
+		<RowDefinition Height="*"/>
+		<RowDefinition Height="*"/>
+		<RowDefinition Height="auto"/>
+	</Grid.RowDefinitions>
+
+	<CommandBar Grid.Row="2">
+		<AppBarButton x:Name="SaveJson"  Icon="Save" Label="创建" Click="SaveJson_Click"/>
+		<AppBarButton x:Name="LoadJson" Icon="Read" Label="读取" Click="LoadJson_Click"/>
+	</CommandBar>
+
+	<TextBlock Name="SaveJsonTextBlock" Grid.Row="0" TextWrapping="Wrap" Margin="5"/>
+	<TextBlock Name="LoadJsonTextBlock" Grid.Row="1" TextWrapping="Wrap" Margin="5"/>
+</Grid>
+\end{lstlisting}
+
+可用下面的代码创建并保存JSON（函数\ProgrammingLanguageFunction{SaveJson\_Click}）
+
+\begin{lstlisting}[style=CSharpStyle]
+private async void SaveJson_Click(object sender, RoutedEventArgs e)
+{
+	JsonObject obj = new JsonObject();
+	obj["Title"] = JsonValue.CreateStringValue("The C++ Programming Language");
+	obj["ISBN"] = JsonValue.CreateStringValue("978-0321563842");
+	obj["Version"] = JsonValue.CreateStringValue("4th Edition");
+	
+	SaveJsonTextBlock.Text = obj.Stringify();
+	
+	var local = ApplicationData.Current.LocalFolder;
+	var jsonFile = await local.CreateFileAsync("sample.json", CreationCollisionOption.ReplaceExisting);
+	if (jsonFile != null)
+	{
+		await FileIO.WriteTextAsync(jsonFile, obj.Stringify());
+		await new MessageDialog("File Saved!").ShowAsync();
+	}
+}
+\end{lstlisting}
+
+可用下面的代码读取JSON文档（函数\ProgrammingLanguageFunction{LoadJson\_Click}）：
+
+\begin{lstlisting}[style=CSharpStyle]
+private async void LoadJson_Click(object sender, RoutedEventArgs e)
+{
+	var local = ApplicationData.Current.LocalFolder;
+	var jsonFile = await local.GetFileAsync("sample.json");
+	if (jsonFile != null)
+	{
+		LoadJsonTextBlock.Text = await FileIO.ReadTextAsync(jsonFile);
+	}
+}
 \end{lstlisting}
