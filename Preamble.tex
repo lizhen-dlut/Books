@@ -69,6 +69,23 @@
 	backgroundcolor=\color{yellow!10},
 }
 
+\lstdefinestyle{CppStyleInline}{
+	language=C++,
+	belowcaptionskip=1\baselineskip,
+	breaklines=true,
+	tabsize=4,
+	numbers=left,numberstyle=\tiny, numbersep=10pt,
+	frame=single,
+	xleftmargin=\parindent,
+	showstringspaces=false,
+	basicstyle=\ttfamily,
+	keywordstyle=\bfseries\color{green!40!black},
+	commentstyle=\itshape\color[rgb]{57,A6,4A},
+	identifierstyle=\color{blue},
+	stringstyle=\color{red},
+	backgroundcolor=\color{red!10},
+}
+
 \lstdefinestyle{CSharpStyle}{
 	language=CIL,
 	belowcaptionskip=1\baselineskip,
@@ -416,8 +433,6 @@
 \setCJKsansfont{Microsoft YaHei UI}
 \setCJKmonofont{Microsoft YaHei UI}
 
-\newcommand{\doubleQuote}[1]{``#1''}
-
 \newcommand{\firstgls}[1]{\textbf{\,\gls{#1}}（\glsdesc{#1}）}
 \newcommand{\firstacr}[1]{\textbf{\,\gls{#1}}（\glssymbol{#1}）}
 \newcommand{\glsacr}[1]{\gls{#1}（\glssymbol{#1}）}
@@ -427,12 +442,6 @@
 
 \newcommand{\proteinName}[1]{\textcolor{red}{#1}}
 \newcommand{\lifeSpan}[2]{ $ #1 \sim #2 $ }
-
-\newcommand{\myHumanGene}[1]{\textbf{\textcolor{blue}{\textit{#1}}}}
-
-\newcommand{\mykeyword}[1]{\textbf{\textcolor{blue}{#1}}}
-\newcommand{\myImportantPoint}[1]{\textbf{\uline{#1}}}
-\newcommand{\myInlineGlossary}[1]{\textbf{\uline{#1}}}
 
 \newcommand{\myFigurePlaceholder}{
 	\vspace{2ex}
@@ -444,8 +453,6 @@
 
 
 \newcommand{\terminologyItem}[1]{\textbf{\uwave{#1}}}
-
-\newcommand{\myKeypoint}[1]{\textbf{\uline{#1}}}
 
 \newcommand{\Bioconductor}{\href{http://www.bioconductor.org/}{Bioconductor}}
 
@@ -463,3 +470,18 @@
 \newcommand{\ProgrammingLanguageFunction}[1]{\textit{\textbf{#1}}}
 \newcommand{\ProgrammingLanguageInterface}[1]{\textit{\textbf{#1}}}
 \newcommand{\ProgrammingLanguageVariable}[1]{\textit{\textbf{#1}}}
+
+\newcommand{\doubleQuote}[1]{``#1''}
+\newcommand{\myDoubleQuoteEnglish}[1]{\lq\lq#1\rq\rq}
+\newcommand{\myDoubleQuoteChinese}[1]{"#1"}
+\newcommand{\myHumanGene}[1]{\textbf{\textcolor{blue}{\textit{#1}}}}
+\newcommand{\mykeyword}[1]{\textbf{\textcolor{blue}{#1}}}
+\newcommand{\myImportantPoint}[1]{\textbf{\uline{#1}}}
+\newcommand{\myKeyPoint}[1]{\textbf{\uline{#1}}}
+\newcommand{\myWarningPoint}[1]{\textbf{\uline{#1}}}
+\newcommand{\mySuggestion}[1]{\textbf{\uline{#1}}}
+\newcommand{\myInlineGlossary}[1]{\textbf{\uline{#1}}}
+\newcommand{\myProteinName}[1]{\textcolor{red}{#1}}
+\newcommand{\myLifeSpan}[2]{ $ #1 \sim #2 $ }
+
+\newcommand{\myStructureVariation}[1]{\texttt{\detokenize{#1}}}

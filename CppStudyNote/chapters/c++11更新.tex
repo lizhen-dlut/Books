@@ -1,0 +1,48 @@
+\chapter{C++ 11更新}
+
+\section{auto}
+
+For variables, specifies that the type of the variable that is being declared will be automatically deduced from its initializer. For functions, specifies that the return type is a trailing return type or will be deduced from its return statements (since C++14). for non-type template parameters, specifies that the type will be deduced from the argument (since C++17) 
+
+\subsection{基本语法}
+
+\begin{lstlisting}[style=CppStyle]
+auto variable initializer;
+auto function -> return type;
+auto function;
+decltype(auto) variable initializer;
+decltype(auto) function;
+auto :: ;
+cv(optional) auto ref(optional) parameter;
+template < auto Parameter >;
+cv(optional) auto ref(optional) [ identifier-list ] initializer;
+\end{lstlisting}
+
+\subsection{解释}
+
+\begin{enumerate}
+	\item When declaring variables in block scope, in namespace scope, in initialization statements of for loops, etc., the keyword \lstinline[style=CppStyleInline]|auto| may be used as the type specifier.
+	
+	Once the type of the initializer has been determined, the compiler determines the type that will replace the keyword \lstinline[style=CppStyleInline]|auto| using the rules for template argument deduction from a function call (see template argument deduction\#Other contexts for details). The keyword \lstinline[style=CppStyleInline]|auto| may be accompanied by modifiers, such as \lstinline[style=CppStyleInline]|const| or \lstinline[style=CppStyleInline]|&|, which will participate in the type deduction. For example, given \lstinline[style=CppStyleInline]|const auto& i = expr;|, the type of i is exactly the type of the argument u in an imaginary template \lstinline[style=CppStyleInline]|template<class U> void f(const U& u)| if the function call f(expr) was compiled. Therefore, \lstinline[style=CppStyleInline]|auto&&| may be deduced either as an lvalue reference or rvalue reference according to the initializer, which is used in range-based for loop.
+	
+	If \lstinline[style=CppStyleInline]|auto| is used to declare multiple variables, the deduced types must match. For example, the declaration \lstinline[style=CppStyleInline]|auto i = 0, d = 0.0;| is ill-formed, while the declaration \lstinline[style=CppStyleInline]|auto i = 0, *p = &i;| is well-formed and the auto is deduced as int.
+	
+	\item In a function declaration that uses the trailing return type syntax, the keyword \lstinline[style=CppStyleInline]|auto| does not perform automatic type detection. It only serves as a part of the syntax.
+	
+	\item In a function declaration that does not use the trailing return type syntax, the keyword auto indicates that the return type will be deduced from the operand of its return statement using the rules for template argument deduction.
+	
+	\item If the declared type of the variable is \lstinline[style=CppStyleInline]|decltype(auto)|, the keyword \lstinline[style=CppStyleInline]|auto| is replaced with the expression (or expression list) of its initializer, and the actual type is deduced using the rules for \lstinline[style=CppStyleInline]|decltype|.
+	
+	\item If the return type of the function is declared \lstinline[style=CppStyleInline]|decltype(auto)|, the keyword \lstinline[style=CppStyleInline]|auto| is replaced with the operand of its return statement, and the actual return type is deduced using the rules for \lstinline[style=CppStyleInline]|decltype|.
+	
+	\item A nested-name-specifier of the form \lstinline[style=CppStyleInline]|auto::| is a placeholder that is replaced by a class or enumeration type following the rules for constrained type placeholder deduction.
+	
+	\item A parameter declaration in a \hyperref[lambdaExpression]{lambda expression}. (since C++14) A function parameter declaration. (concepts TS)
+	
+	\item If a template parameter is declared auto, its type is deduced from the corresponding argument.
+	
+	\item A structured binding declaration
+\end{enumerate}
+
+\section{decltype}\label{decltype}
+\section{lambda expression}\label{lambdaExpression}

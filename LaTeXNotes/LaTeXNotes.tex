@@ -6,10 +6,10 @@
 \bibliographystyle{plain} %推荐JabRef工具
 
 \newcommand{\documentTitle}
-    {\texorpdfstring{\LaTeX 项目模板}{LaTeX项目模板}}
+    {\texorpdfstring{\LaTeX 学习笔记}{LaTeX 学习笔记}}
 \newcommand{\documentAuthor}{Roger Young}
-\newcommand{\documentKeywords}{LaTeX,模板}
-\newcommand{\documentSubject}{LaTeX,模板}
+\newcommand{\documentKeywords}{LaTeX, 学习笔记}
+\newcommand{\documentSubject}{LaTeX, 学习笔记}
 
 \hypersetup{
 	pdftitle=\documentTitle,
@@ -30,9 +30,13 @@
 \maketitle
 \tableofcontents
 
+\input{./chapters/简介}
+
+\input{./chapters/入门}
 
 
-\chapter*{附录}
+
+\part{附录}
 \input{../Appendices/元素周期表}
 
 \printindex

@@ -1,0 +1,81 @@
+\chapter{General}
+
+Since references to web sites are not yet acknowledged as citations, please mention \href{http://onlinelibrary.wiley.com/doi/10.1002/humu.22981/pdf}{Den Dunnen et al. (2016) HGVS recommendations for the description of sequence variants: 2016 update. Hum.Mutat. 25: 37: 564-569} when referring to these pages. Note that although the examples on these pages mainly give examples for human (Homo sapiens), the recommendations can be applied to all species.
+
+\section{General recommendations}
+
+\begin{enumerate}
+	\item all variants should be described at the most basic level, \myKeyPoint{the DNA level}. Descriptions at the RNA and/or protein level may be given in addition. 
+	
+	\begin{itemize}
+		\item descriptions should make clear whether the change was \myKeyPoint{experimentally determined or theoretically deduced} by giving predicted consequences in parentheses
+		\item descriptions at RNA/protein level should describe the changes observed on that level (RNA/protein) and not try to incorporate any knowledge regarding the change at DNA-level (see Questions below)
+	\end{itemize}
+	
+	\item all variants should be described in relation to an \myKeyPoint{accepted reference sequence} (see Reference Sequences). 
+	
+	\begin{itemize}
+		\item the reference sequence file used should be \myKeyPoint{public} and \myKeyPoint{clearly described}, e.g. \verb|NC_000023.10|, \verb|LRG_199|, \verb|NG_012232.1|, ENST00000357033, \verb|NM_004006.2|, \verb|NR_002196.1|, \verb|NP_003997.1|, etc. 
+		\begin{itemize}
+			\item when variants are not reported in relation to a genomic reference sequence from a recent genome build, the preferred reference sequence is a \myKeyPoint{Locus Reference Genomic sequence (LRG)}
+			\item when no LRG is available, one should be requested (see Reference Sequences).
+			\item the reference sequence used must contain the residue(s) described to be changed.
+		\end{itemize}
+	
+		\item a letter prefix should be used to indicate the type of reference sequence used. Accepted prefixes are; 
+		\begin{itemize}
+			\item \myDoubleQuoteEnglish{g.} for a \myKeyPoint{genomic reference sequence}
+			\item \myDoubleQuoteEnglish{c.} for a \myKeyPoint{coding DNA reference sequence}
+			\item \myDoubleQuoteEnglish{n.} for a \myKeyPoint{non-coding DNA reference sequence}
+			\item \myDoubleQuoteEnglish{r.} for an \myKeyPoint{RNA reference sequence (transcript)}
+			\item \myDoubleQuoteEnglish{p.} for a \myKeyPoint{protein reference sequence}
+		\end{itemize}
+	
+		\item numbering of the residues (nucleotide or amino acid) in relation to the reference sequence used should follow the approved scheme (see Numbering)
+	\end{itemize}
+
+	
+	\item 3’rule: for all descriptions the most 3’ position possible of the reference sequence is arbitrarily assigned to have been changed 
+	\begin{itemize}
+		\item the 3’rule also applies for changes in single residue stretches and tandem repeats (nucleotide or amino acid)
+		\item the 3’rule applies to ALL descriptions (genome, gene, transcript and protein) of a given variant
+	\end{itemize}
+
+	\item descriptions at DNA, RNA and protein level are clearly different: 
+	\begin{itemize}
+		\item \myKeyPoint{DNA-level} 123456A>T (see Details): number(s) referring to the nucleotide(s) affected, nucleotides in \myKeyPoint{CAPITALS} using \myKeyPoint{IUPAC-IUBMB assigned nucleotide symbols}
+		\item \myKeyPoint{RNA-level} 76a>u (see Details): number(s) referring to the nucleotide(s) affected, nucleotides in \myKeyPoint{lower case} using \myKeyPoint{IUPAC-IUBMB assigned nucleotide symbols}
+		\item \myKeyPoint{protein level} Lys76Asn (see Details): the amino acid(s) affected in \myKeyPoint{3- or 1-letter} followed by a number IUPAC-IUBMB assigned amino acid symbols * \myKeyPoint{three-letter amino acid code is preferred} (\href{http://varnomen.hgvs.org/bg-material/standards/#aacode}{see Standards})
+	\end{itemize}
+
+	\item prioritisation: when a description is possible according to several types, the preferred description is: (1) deletion, (2) inversion, (3) duplication, (4) conversion, (5) insertion 
+	\begin{itemize}
+		\item when a variant can be described as a duplication or an insertion, prioritisation determines it should be described as a duplication
+	\end{itemize}
+	
+	\item only approved \myKeyPoint{\href{http://www.genenames.org/}{HGNC gene symbols}} should be used to describe genes or proteins
+	
+\end{enumerate}
+
+\section{Characters Used}
+
+In HGVS nomenclature some characters have a specific meaning
+\begin{itemize}
+	\item \myDoubleQuoteEnglish{+} (plus) is used in nucleotide numbering; c.123+45A>G
+	\item \myDoubleQuoteEnglish{-} (minus) is used in nucleotide numbering; c.124-56C>T
+	\item \myDoubleQuoteEnglish{*} (asterisk) is used in nucleotide numbering and to \myKeyPoint{indicate a translation termination (stop) codon} (see Standards); c.*32G>A and P.Trp41*
+	\item \myDoubleQuoteEnglish{\_} (underscore) is used to \myKeyPoint{indicate a range}; \verb|g.12345_12678del|
+	\item \myDoubleQuoteEnglish{[ ]} (angled brackets) are used for \myKeyPoint{alleles} (see DNA, RNA, protein) 
+	\item \myDoubleQuoteEnglish{;} (semi colon) is used to \myKeyPoint{separate variants and alleles}; g.[123456A>G;345678G>C] or g.[123456A>G];[345678G>C]
+	\item \myDoubleQuoteEnglish{,} (comma) is used to separate different transcripts/proteins derived from one allele; r.[123a>t, 122_154del]
+	\item \myDoubleQuoteEnglish{:} (colon) is used to separate the reference sequence file identifier (accession.version_number) from the actual description of a variant; NC_000011.9:g.12345611G>A
+	\item \myDoubleQuoteEnglish{( )} (parentheses) are used to indicate uncertainties and predicted consequences; NC_000023.9:g.(123456_234567)_(345678_456789)del, p.(Ser123Arg)
+	NOTE: the range of the uncertainty should be described as precisely as possible (see below)
+	\item \myDoubleQuoteEnglish{?} (question mark) is used to indicate unknown positions (nucleotide or amino acid); g.(?_234567)_(345678_?)del
+	\item \myDoubleQuoteEnglish{^} (caret) is used as “or”; c.(370A>C^372C>R) as back translation of p.Ser124Arg
+	\item \myDoubleQuoteEnglish{>} (greater than) is used to describe substitution variants (DNA and RNA level); g.12345A>T, r.123a>u (see DNA, RNA)
+	\item \myDoubleQuoteEnglish{{ }} (curly braces) suggested for the description of variants in otherwise perfect copy sequences (see Open Issues); g.24_65dup{46G>T}
+	\item \myDoubleQuoteEnglish{=} (equals) is used to indicate a sequence was tested but found unchanged; p.(Arg234=)
+	\item \myDoubleQuoteEnglish{/} (forward slash) is used to indicate mosaicism (see Complex (HGVS/ISCN))
+	\item \myDoubleQuoteEnglish{//} (double forward slash) is used to indicate chimerism (see Complex (HGVS/ISCN))
+\end{itemize}
