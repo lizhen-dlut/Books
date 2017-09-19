@@ -60,22 +60,39 @@ Since references to web sites are not yet acknowledged as citations, please ment
 \section{Characters Used}
 
 In HGVS nomenclature some characters have a specific meaning
+
 \begin{itemize}
 	\item \myDoubleQuoteEnglish{+} (plus) is used in nucleotide numbering; c.123+45A>G
+	
 	\item \myDoubleQuoteEnglish{-} (minus) is used in nucleotide numbering; c.124-56C>T
+	
 	\item \myDoubleQuoteEnglish{*} (asterisk) is used in nucleotide numbering and to \myKeyPoint{indicate a translation termination (stop) codon} (see Standards); c.*32G>A and P.Trp41*
+	
 	\item \myDoubleQuoteEnglish{\_} (underscore) is used to \myKeyPoint{indicate a range}; \verb|g.12345_12678del|
+	
 	\item \myDoubleQuoteEnglish{[ ]} (angled brackets) are used for \myKeyPoint{alleles} (see DNA, RNA, protein) 
+	
 	\item \myDoubleQuoteEnglish{;} (semi colon) is used to \myKeyPoint{separate variants and alleles}; g.[123456A>G;345678G>C] or g.[123456A>G];[345678G>C]
-	\item \myDoubleQuoteEnglish{,} (comma) is used to separate different transcripts/proteins derived from one allele; r.[123a>t, 122_154del]
-	\item \myDoubleQuoteEnglish{:} (colon) is used to separate the reference sequence file identifier (accession.version_number) from the actual description of a variant; NC_000011.9:g.12345611G>A
-	\item \myDoubleQuoteEnglish{( )} (parentheses) are used to indicate uncertainties and predicted consequences; NC_000023.9:g.(123456_234567)_(345678_456789)del, p.(Ser123Arg)
+	
+	\item \myDoubleQuoteEnglish{,} (comma) is used to separate different transcripts/proteins derived from one allele; \myStructureVariation{r.[123a>t, 122_154del]}
+	
+	\item \myDoubleQuoteEnglish{:} (colon) is used to separate the reference sequence file identifier (accession.version\_number) from the actual description of a variant; \myStructureVariation{NC_000011.9:g.12345611G>A}
+	
+	\item \myDoubleQuoteEnglish{( )} (parentheses) are used to indicate uncertainties and predicted consequences; \myStructureVariation{NC_000023.9:g.(123456_234567)_(345678_456789)del}, \myStructureVariation{p.(Ser123Arg)}
+	
 	NOTE: the range of the uncertainty should be described as precisely as possible (see below)
-	\item \myDoubleQuoteEnglish{?} (question mark) is used to indicate unknown positions (nucleotide or amino acid); g.(?_234567)_(345678_?)del
-	\item \myDoubleQuoteEnglish{^} (caret) is used as “or”; c.(370A>C^372C>R) as back translation of p.Ser124Arg
-	\item \myDoubleQuoteEnglish{>} (greater than) is used to describe substitution variants (DNA and RNA level); g.12345A>T, r.123a>u (see DNA, RNA)
-	\item \myDoubleQuoteEnglish{{ }} (curly braces) suggested for the description of variants in otherwise perfect copy sequences (see Open Issues); g.24_65dup{46G>T}
-	\item \myDoubleQuoteEnglish{=} (equals) is used to indicate a sequence was tested but found unchanged; p.(Arg234=)
+	
+	\item \myDoubleQuoteEnglish{?} (question mark) is used to indicate unknown positions (nucleotide or amino acid); \myStructureVariation{g.(?_234567)_(345678_?)del}
+	
+	\item \myDoubleQuoteEnglish{ \^ } (caret) is used as “or”; \myStructureVariation{c.(370A>C^372C>R)} as back translation of p.Ser124Arg
+	
+	\item \myDoubleQuoteEnglish{>} (greater than) is used to describe substitution variants (DNA and RNA level); \myStructureVariation{g.12345A>T}, \myStructureVariation{r.123a>u} (see DNA, RNA)
+	
+	\item \myDoubleQuoteEnglish{\{ \}} (curly braces) suggested for the description of variants in otherwise perfect copy sequences (see Open Issues); \myStructureVariation{g.24_65dup{46G>T}}
+	
+	\item \myDoubleQuoteEnglish{=} (equals) is used to indicate a sequence was tested but found unchanged; \myStructureVariation{p.(Arg234=)}
+	
 	\item \myDoubleQuoteEnglish{/} (forward slash) is used to indicate mosaicism (see Complex (HGVS/ISCN))
+	
 	\item \myDoubleQuoteEnglish{//} (double forward slash) is used to indicate chimerism (see Complex (HGVS/ISCN))
 \end{itemize}
