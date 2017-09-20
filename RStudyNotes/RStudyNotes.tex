@@ -1,0 +1,43 @@
+\documentclass{ctexbook}
+
+\input{../Preamble}
+\input{../Terminology}
+
+\bibliographystyle{plain} %推荐JabRef工具
+
+\newcommand{\documentTitle}
+    {\texorpdfstring{R学习笔记}{R学习笔记}}
+\newcommand{\documentAuthor}{Roger Young}
+\newcommand{\documentKeywords}{R,Programming}
+\newcommand{\documentSubject}{\documentKeywords}
+
+\hypersetup{
+	pdftitle=\documentTitle,
+	pdfauthor=\documentAuthor,
+	pdfsubject= \documentSubject,
+	pdfkeywords= \documentKeywords,
+	pdfstartview=FitH,
+	pdfproducer = \documentAuthor,
+	pdfcreator = \documentAuthor, 
+	pdfcopyright = \documentAuthor, 
+	pdflicenseurl = {https://github.com/hiatcg}
+}
+
+\begin{document}
+\title{\documentTitle}
+\author{\documentAuthor}
+
+\maketitle
+\tableofcontents
+
+\input{./chapters/Introduction}
+
+\input{./chapters/R绘制中国地图}
+
+
+\part{附录}
+\input{../Appendices/元素周期表}
+
+\printindex
+\printglossaries
+\end{document}
