@@ -1,0 +1,888 @@
+\section{Working with Brushes and Content – XAML and Visual Layer Interop}
+\url{https://blogs.windows.com/buildingapps/2017/07/19/new-lights-propertyset-interop-xaml-visual-layer-interop-part-two/amp/}
+
+The Composition APIs empower Universal Windows Platform (UWP) developers to do beautiful and powerful things when they access the Visual Layer. In the Windows 10 Creators Update, we made working with the Visual Layer much easier with new, powerful APIs.
+
+In this blog series, we’ll cover some of these improvements in the Creators Update and take a look at the following APIs:
+
+\begin{itemize}
+	\item XamlCompositionBrushBase – easily paint a XAML UIElement with a CompositionBrush
+	\item LoadedImageSurface – load an image easily and use with Composition APIs
+	\item XamlLights – apply lights to your XAML UI with a single line of XAML
+	\item PointerPositionPropertySet – create 60 FPS animations using pointer position, off the UI thread!
+	\item Enabling the Translation property – animate a XAML UI Element using Composition animation
+\end{itemize}
+
+If you’d like to review the previously available ElementCompositionPreview APIs, for example working with “hand-in” and “hand-out” Visuals, you can quickly catch up here.
+
+\subsection{Using XamlCompositionBrushBase}
+One of the benefits of the new Composition and XAML interop APIs is the ability to use a CompositionBrush to directly paint a XAML UIElement rather than being limited to XAML brushes only. For example, you can create a CompositionEffectBrush that applies a tinted blur to the content beneath and use the brush to paint a XAML rectangle that can be included in the XAML markup
+
+This is accomplished by using the new abstract class XamlCompositionBrushBase available in the Creators Update. To use it, you subclass XamlCompositionBrushBase to create your own XAML Brush that can be used in your markup. As seen the example code below, the XamlCompositionBrushBase exposes a CompositionBrush property that you set with your effect (or any CompositionBrush) and it will be applied to the XAML element.
+
+This effectively replaces the need to manually create SpriteVisuals with SetElementChild for most effect scenarios. In addition to needing less code to create and add an effect to the UI, using a Brush means you get the following added benefits for free:
+
+\begin{itemize}
+	\item Theming and Styling
+	\item Binding
+	\item Resource and Lifetime management
+	\item Layout aware
+	\item PointerEvents
+	\item HitTesting and other XAML-based advantages
+\end{itemize}
+
+Microsoft, as part of the Fluent Design System, has included a few Brushes in the Creators Update that leverage the features of XamlCompositionBrushBase:
+
+\begin{itemize}
+	\item AcrylicBrush
+	\item RevealBrush
+	\item RevealBorderBrush
+	\item RevealBackgroundBrush
+\end{itemize}
+
+\subsection{Building a Custom Composition Brush}
+
+Let’s create a XamlCompositionBrush of our own to see how simple this can be.  Here’s what we’ll create:
+
+
+To start, let’s create a very simple Brush that applies an InvertEffect to content under it. First, we’ll need to make a public sealed class that inherits from XamlCompositionBrushBase and override two methods:
+
+\begin{itemize}
+	\item OnConnected
+	\item OnDisconnected
+\end{itemize}
+
+Let’s dive into the code. First, create your Brush class, which inherits from XamlCompositionBrushBase:
+
+\begin{lstlisting}[style=CSharpStyle]
+public class InvertBrush : XamlCompositionBrushBase
+
+{
+	
+	protected override void OnConnected()
+	
+	{
+		
+		if (CompositionBrush == null)
+		
+		{
+			
+			// 1 - Get the BackdropBrush, this gets what is behind the UI element
+			
+			var backdrop = Window.Current.Compositor.CreateBackdropBrush();
+			
+			
+			
+			// CompositionCapabilities: Are effects supported? If not, return.
+			
+			if (!CompositionCapabilities.GetForCurrentView().AreEffectsSupported())
+			
+			{ 
+				
+				return;
+				
+			}
+			
+			
+			
+			// 2 - Create your Effect
+			
+			// New-up a Win2D InvertEffect and use the BackdropBrush as its Source
+			
+			// Note – To use InvertEffect, you'll need to add the Win2D NuGet package to your project (search NuGet for &quot;Win2D.uwp&quot;)
+			
+			var invertEffect = new InvertEffect
+			
+			{
+				
+				Source = new CompositionEffectSourceParameter(&quot;backdrop&quot;)
+				
+			};
+			
+			
+			
+			// 3 - Set up the EffectFactory
+			
+			var effectFactory = Window.Current.Compositor.CreateEffectFactory(invertEffect);
+			
+			
+			
+			// 4 - Finally, instantiate the CompositionEffectBrush
+			
+			var effectBrush = effectFactory.CreateBrush();
+			
+			
+			
+			// and set the backdrop as the original source 
+			
+			effectBrush.SetSourceParameter(&quot;backdrop&quot;, backdrop);
+			
+			
+			
+			// 5 - Finally, assign your CompositionEffectBrush to the XCBB's CompositionBrush property
+			
+			CompositionBrush = effectBrush;
+			
+		}
+		
+	}
+	
+	
+	
+	protected override void OnDisconnected()
+	
+	{
+		
+		// Clean up
+		
+		CompositionBrush?.Dispose();
+		
+		CompositionBrush = null;
+		
+	}
+	
+}
+\end{lstlisting}
+
+There are a few things to call out in the code above.
+
+\begin{itemize}
+	\item In the OnConnected method, we get a CompositionBackdropBrush. This allows you to easily get the pixels behind the UIElement.
+	\item We use fallback protection. If the user’s device doesn’t have support for the effect(s), then just return.
+	\item Next, we create the InvertEffect and use the backdropBrush for the Effect’s Source.
+	\item Then, we pass the finished InvertEffect to the CompositionEffectFactory.
+	\item Finally, we get an EffectBrush from the factory and set the XamlCompositionBrushBase.CompositionBrush property with our newly created effectBrush.
+\end{itemize}
+
+Now you can use it in your XAML. For example, let’s apply it to a Grid on top of another Grid with a background image:
+
+
+\begin{lstlisting}[style=XamlStyle]
+
+<Grid>
+
+<Grid.Background>
+
+<ImageBrush ImageSource="ms-appx:///Images/Background.png"/>
+
+</Grid.Background>
+
+<Grid Width="300" Height="300" 
+
+HorizontalAlignment="Center"
+
+VerticalAlignment="Center">
+
+<Grid.Background>
+
+<brushes:InvertBrush />
+
+</Grid.Background>
+
+</Grid>
+
+</Grid>
+\end{lstlisting}
+
+
+Now that you know the basics of creating a brush, let’s build an animated effect brush next.
+Creating a Brush with Animating Effects
+Now that you see how simple it is to create a CompositionBrush, let’s create a brush that applies a TemeratureAndTint effect to an image and animate the Temperature value:
+
+We start the same way we did with the simple InvertBrush, but this time we’ll add a DependencyProperty,  ImageUriString, so that we can load an image using LoadedImageSurface in the OnConnected method.
+
+
+
+\begin{lstlisting}[style=CSharpStyle]
+public sealed class ImageEffectBrush : XamlCompositionBrushBase
+
+{
+	
+	private LoadedImageSurface _surface;
+	
+	private CompositionSurfaceBrush _surfaceBrush;
+	
+	
+	
+	public static readonly DependencyProperty ImageUriStringProperty = DependencyProperty.Register(
+	
+	&quot;ImageUri&quot;,
+	
+	typeof(string),
+	
+	typeof(ImageEffectBrush),
+	
+	new PropertyMetadata(string.Empty, OnImageUriStringChanged)
+	
+	);
+	
+	
+	
+	public string ImageUriString
+	
+	{
+		
+		get =&gt; (String)GetValue(ImageUriStringProperty);
+		
+		set =&gt; SetValue(ImageUriStringProperty, value);
+		
+	}
+	
+	
+	
+	private static void OnImageUriStringChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+	
+	{
+		
+		var brush = (ImageEffectBrush)d;
+		
+		// Unbox and update surface if CompositionBrush exists     
+		
+		if (brush._surfaceBrush != null)
+		
+		{
+			
+			var newSurface = LoadedImageSurface.StartLoadFromUri(new Uri((String)e.NewValue));
+			
+			brush._surface = newSurface;
+			
+			brush._surfaceBrush.Surface = newSurface;
+			
+		}
+		
+	}
+	
+	
+	
+	protected override void OnConnected()
+	
+	{
+		
+		// return if Uri String is null or empty
+		
+		if (string.IsNullOrEmpty(ImageUriString))
+		
+		return;
+		
+		
+		
+		// Get a reference to the Compositor
+		
+		Compositor compositor = Window.Current.Compositor;
+		
+		
+		
+		// Use LoadedImageSurface API to get ICompositionSurface from image uri provided
+		
+		_surface = LoadedImageSurface.StartLoadFromUri(new Uri(ImageUriString));
+		
+		
+		
+		// Load Surface onto SurfaceBrush
+		
+		_surfaceBrush = compositor.CreateSurfaceBrush(_surface);
+		
+		_surfaceBrush.Stretch = CompositionStretch.UniformToFill;
+		
+		
+		
+		// CompositionCapabilities: Are Tint+Temperature and Saturation supported?
+		
+		bool usingFallback = !CompositionCapabilities.GetForCurrentView().AreEffectsSupported();
+		
+		if (usingFallback)
+		
+		{
+			
+			// If Effects are not supported, Fallback to image without effects
+			
+			CompositionBrush = _surfaceBrush;
+			
+			return;
+			
+		}
+		
+		
+		
+		// Define Effect graph (add the Win2D.uwp NuGet package to get this effect)
+		
+		IGraphicsEffect graphicsEffect = new SaturationEffect
+		
+		{
+			
+			Name = &quot;Saturation&quot;,
+			
+			Saturation = 0.3f,
+			
+			Source = new TemperatureAndTintEffect
+			
+			{
+				
+				Name = &quot;TempAndTint&quot;,
+				
+				Temperature = 0,
+				
+				Source = new CompositionEffectSourceParameter(&quot;Surface&quot;),
+				
+			}
+			
+		};
+		
+		
+		
+		// Create EffectFactory and EffectBrush 
+		
+		CompositionEffectFactory effectFactory = compositor.CreateEffectFactory(graphicsEffect, new[] { &quot;TempAndTint.Temperature&quot; });
+		
+		CompositionEffectBrush effectBrush = effectFactory.CreateBrush();
+		
+		effectBrush.SetSourceParameter(&quot;Surface&quot;, _surfaceBrush);
+		
+		
+		
+		// Set EffectBrush to paint Xaml UIElement
+		
+		CompositionBrush = effectBrush;
+		
+		
+		
+		// Trivial looping animation to demonstrate animated effect
+		
+		ScalarKeyFrameAnimation tempAnim = compositor.CreateScalarKeyFrameAnimation();
+		
+		tempAnim.InsertKeyFrame(0, 0);
+		
+		tempAnim.InsertKeyFrame(0.5f, 1f);
+		
+		tempAnim.InsertKeyFrame(1, 0);
+		
+		tempAnim.Duration = TimeSpan.FromSeconds(5);
+		
+		tempAnim.IterationBehavior = AnimationIterationBehavior.Count;
+		
+		tempAnim.IterationCount = 10;
+		
+		effectBrush.Properties.StartAnimation(&quot;TempAndTint.Temperature&quot;, tempAnim);
+		
+	}
+	
+	
+	
+	protected override void OnDisconnected()
+	
+	{
+		
+		// Dispose Surface and CompositionBrushes if XamlCompBrushBase is removed from tree
+		
+		_surface?.Dispose();
+		
+		_surface = null;
+		
+		
+		
+		CompositionBrush?.Dispose();
+		
+		CompositionBrush = null;
+		
+	}
+	
+}
+\end{lstlisting}
+
+
+
+There are some new things here to call out that are different from the InvertBrush:
+We use the new LoadedImageSurface API to easily load an image in the OnConnected method, but also when the ImageUriString value changes. Prior to Creators Update, this required a hand-in Visual (a SpriteVisual, painted with an EffectBrush, which was handed back into the XAML Visual Tree). See the LoadedImageSurface section later in this article for more details.
+
+Notice that we gave the effects a Name value. In particular, TemperatureAndTintEffect, uses the name “TempAndTint.” This is required to animate properties as it is used for the reference to the effect in the AnimatableProperties array that is passed to the effect factory. Otherwise, you’ll encounter a “Malformed animated property name” error.
+After we assign the CompositionBrush property, we created a simple looping animation to oscillate the value of the TempAndTint from 0 to 1 and back every 5 seconds.
+Let’s take a look at an instance of this Brush in markup:
+
+
+
+\begin{lstlisting}[style=XamlStyle]
+<Grid>
+
+<Grid.Background>
+
+<brushes:ImageEffectBrush ImageUriString="ms-appx:///Images/Background.png"/>
+
+</Grid.Background>
+
+</Grid>
+
+\end{lstlisting}
+
+For more information on using XamlCompositionBrushBase, see here. Now, let’s take a closer look at how easy it is now to bring in images to the Visual layer using LoadedImageSurface
+
+\subsection{Loading images with LoadedImageSurface}
+
+With the new LoadedImageSurface class, it’s never been easier to load an image and work with it in the visual layer. The class has the same codec support that Windows 10 has via the Windows Imaging Component (see full list here), thus it supports the following image file types:
+\begin{itemize}
+	\item Joint Photographic Experts Group (JPEG)
+	\item Portable Network Graphics (PNG)
+	\item Bitmap (BMP)
+	\item Graphics Interchange Format (GIF)
+	\item Tagged Image File Format (TIFF)
+	\item JPEG XR
+	\item Icons (ICO)
+\end{itemize}
+
+NOTE: When using an animated GIF, only the first frame will be used for the Visual, as animation is not supported in this scenario.
+
+To load in an image, you can use one of the four factory methods:
+
+\begin{itemize}
+	\item StartLoadFromUri(Uri)
+	\item StartLoadFromUri(Uri, Size)
+	\item StartLoadFromStream(IRandomAccessStream)
+	\item StartLoadFromStream(IRandomAccessStream, Size)
+\end{itemize}
+
+As you can see there are two ways to load an image: with a Uri or a Stream. Additionally, you have an option to use an overload to set the size of the image (if you don’t pass in a Size, it will decode to the natural size).
+
+
+
+\begin{lstlisting}[style=CSharpStyle]
+CompositionSurfaceBrush imageBrush = compositor.CreateSurfaceBrush();
+
+LoadedImageSurface loadedSurface = LoadedImageSurface.StartLoadFromUri(new Uri(&quot;ms-appx:///Images/Photo.jpg&quot;), new Size(200.0, 200.0));
+
+imageBrush.Surface = loadedSurface;
+\end{lstlisting}
+
+This is very helpful when you need to load an image that will be used for your CompositionBrush (e.g. CompositionEffectBrush) or SceneLightingEffect (e.g. NormalMap for textures) as you no longer need to manually create a hand-in Visual (a SpriteVisual painted with an EffectBrush). In an upcoming post in this series, we will explore this further using NormalMap images with to create advanced lighting to create unique and compelling materials.
+
+\subsection{Using LoadedImageSurface with a Composition Island}
+
+LoadedImageSurface is also useful when loading an image onto a SpriteVisual inserted in XAML UI using ElementCompositionPreview. For this scenario, you can use the Loaded event to adjust the visual’s properties after the image has finished loading.
+Here is an example of using LoadedImageSurface for a CompositionSurfaceBrush, then updating the SpriteVisual’s size with the image’s DecodedSize when the image is loaded:
+
+\begin{lstlisting}[style=CSharpStyle]
+private SpriteVisual spriteVisual;
+
+private void LoadImage(Uri imageUri)
+
+{
+	
+	CompositionSurfaceBrush surfaceBrush = Window.Current.Compositor.CreateSurfaceBrush();
+	
+	
+	
+	// You can load an image directly and set a SurfaceBrush's Surface property with it
+	
+	var loadedImageSurface = LoadedImageSurface.StartLoadFromUri(imageUri);
+	
+	loadedImageSurface.LoadCompleted += Load_Completed;
+	
+	surfaceBrush.Surface = loadedImageSurface;
+	
+	
+	
+	// We'll use a SpriteVisual for the hand-in visual
+	
+	spriteVisual = Window.Current.Compositor.CreateSpriteVisual();
+	
+	spriteVisual.Brush = surfaceBrush;
+	
+	
+	
+	ElementCompositionPreview.SetElementChildVisual(MyCanvas, spriteVisual);
+	
+}
+
+
+
+private void Load_Completed(LoadedImageSurface sender, LoadedImageSourceLoadCompletedEventArgs args)
+
+{
+	
+	if (args.Status == LoadedImageSourceLoadStatus.Success)
+	
+	{
+		
+		Size decodedSize = sender.DecodedSize;
+		
+		spriteVisual.Size = new Vector2((float)decodedSize.Width, (float)decodedSize.Height);
+		
+	}
+	
+}
+\end{lstlisting}
+
+There are some things you should be aware before getting started with LoadedImageSurface. This class makes working with images a lot easier, however you should understand the lifecycle and when images get decoded/sized. We recommend that you take a couple minutes and read the documentation before getting started.
+
+\subsection{Wrapping up}
+
+Using Composition features in your XAML markup is easier than ever. From painting your UIElements with CompositionBrushes and applying lighting, to smooth off-UIThread animations, the power of the Composition API is more accessible than ever.
+
+In the next post, we’ll explore more new APIs like the new Translation property, using XamlLights in your XAML markup and how to create a custom light using the new PointerPositionPropertySet.
+
+
+\subsection{Lighting UI with XamlLights}
+A powerful new feature in the Creators Update is the ability to set and use a Lighting effect directly in XAML by leveraging the abstract XamlLight class.
+
+Creating a XamlLight starts just like a XamlCompositionBrushBase does, with an OnConnected and OnDisconnected method (see Part One here), but this time you inherit from the XamlLight subclass to create your own unique lighting that can be used directly in XAML. Microsoft uses this with the Reveal effect that comes with the Creators Update.
+
+To see this in action, let’s build a demo that creates the animated GIF you see at the top of this post. It combines everything you learned about XamlCompositionBrushBase and LoadedImageSurface in the last post, but this example has two XamlLights: a HoverLight and an AmbientLight.
+
+Let’s begin with creating the AmbientLight first. To get started, we begin similarly to the XamlCompositionBrushBase with an OnConnected and OnDisconnected method. However, for a XamlLight we set the CompositionLight property of the XamlLight subclass.
+
+
+\begin{lstlisting}[style=CSharpStyle]
+public class AmbLight : XamlLight
+
+{
+
+protected override void OnConnected(UIElement newElement)
+
+{
+
+Compositor compositor = Window.Current.Compositor;
+
+
+
+// Create AmbientLight and set its properties
+
+AmbientLight ambientLight = compositor.CreateAmbientLight();
+
+ambientLight.Color = Colors.White;
+
+
+
+// Associate CompositionLight with XamlLight
+
+CompositionLight = ambientLight;
+
+
+
+// Add UIElement to the Light's Targets
+
+AmbLight.AddTargetElement(GetId(), newElement);
+
+}
+
+
+
+protected override void OnDisconnected(UIElement oldElement)
+
+{
+
+// Dispose Light when it is removed from the tree
+
+AmbLight.RemoveTargetElement(GetId(), oldElement);
+
+CompositionLight.Dispose();
+
+}
+
+
+
+protected override string GetId() => typeof(AmbLight).FullName;
+
+}
+
+
+\end{lstlisting}
+
+With ambient lighting done, let’s build the SpotLight XamlLight. One of the main things we want the SpotLight to do is follow the user’s pointer. To do this, we can now use GetPointerPositionPropertySet method of ElementCompositionPreview to get a CompositionPropertySet we can use with a Composition ExpressionAnimation (PointerPositionPropertySet is explained in more detail in the PropertySets section below).
+
+Here is the finished XamlLight implementation that creates that animated spotlight. Read the code comments to see the main parts of the effects, particularly how the resting position and animated offset position are used to create the lighting.
+
+\begin{lstlisting}[style=CSharpStyle]
+public class HoverLight : XamlLight 
+
+{
+
+private ExpressionAnimation _lightPositionExpression;
+
+private Vector3KeyFrameAnimation _offsetAnimation;
+
+
+
+protected override void OnConnected(UIElement targetElement)
+
+{
+
+Compositor compositor = Window.Current.Compositor;
+
+
+
+// Create SpotLight and set its properties
+
+SpotLight spotLight = compositor.CreateSpotLight();
+
+spotLight.InnerConeAngleInDegrees = 50f;
+
+spotLight.InnerConeColor = Colors.FloralWhite;
+
+spotLight.OuterConeAngleInDegrees = 0f;
+
+spotLight.ConstantAttenuation = 1f;
+
+spotLight.LinearAttenuation = 0.253f;
+
+spotLight.QuadraticAttenuation = 0.58f;
+
+
+
+// Associate CompositionLight with XamlLight
+
+this.CompositionLight = spotLight;
+
+
+
+// Define resting position Animation
+
+Vector3 restingPosition = new Vector3(200, 200, 400);
+
+CubicBezierEasingFunction cbEasing = compositor.CreateCubicBezierEasingFunction( new Vector2(0.3f, 0.7f), new Vector2(0.9f, 0.5f));
+
+_offsetAnimation = compositor.CreateVector3KeyFrameAnimation();
+
+_offsetAnimation.InsertKeyFrame(1, restingPosition, cbEasing);
+
+_offsetAnimation.Duration = TimeSpan.FromSeconds(0.5f);
+
+
+
+spotLight.Offset = restingPosition;
+
+
+
+// Define expression animation that relates light's offset to pointer position 
+
+CompositionPropertySet hoverPosition = ElementCompositionPreview.GetPointerPositionPropertySet(targetElement);
+
+_lightPositionExpression = compositor.CreateExpressionAnimation("Vector3(hover.Position.X, hover.Position.Y, height)");
+
+_lightPositionExpression.SetReferenceParameter("hover", hoverPosition);
+
+_lightPositionExpression.SetScalarParameter("height", 15.0f);
+
+
+
+// Configure pointer entered/ exited events
+
+targetElement.PointerMoved += TargetElement_PointerMoved;
+
+targetElement.PointerExited += TargetElement_PointerExited;
+
+
+
+// Add UIElement to the Light's Targets
+
+HoverLight.AddTargetElement(GetId(), targetElement);
+
+}
+
+
+
+private void MoveToRestingPosition()
+
+{
+
+// Start animation on SpotLight's Offset 
+
+CompositionLight?.StartAnimation("Offset", _offsetAnimation);
+
+}
+
+
+
+private void TargetElement_PointerMoved(object sender, PointerRoutedEventArgs e)
+
+{
+
+if (CompositionLight == null) return;
+
+
+
+// touch input is still UI thread-bound as of the Creators Update
+
+if (e.Pointer.PointerDeviceType == Windows.Devices.Input.PointerDeviceType.Touch)
+
+{
+
+Vector2 offset = e.GetCurrentPoint((UIElement)sender).Position.ToVector2();
+
+(CompositionLight as SpotLight).Offset = new Vector3(offset.X, offset.Y, 15);
+
+}
+
+else
+
+{
+
+// Get the pointer's current position from the property and bind the SpotLight's X-Y Offset
+
+CompositionLight.StartAnimation("Offset", _lightPositionExpression);
+
+}
+
+}
+
+
+
+private void TargetElement_PointerExited(object sender, PointerRoutedEventArgs e)
+
+{
+
+// Move to resting state when pointer leaves targeted UIElement
+
+MoveToRestingPosition();
+
+}
+
+
+
+protected override void OnDisconnected(UIElement oldElement)
+
+{
+
+// Dispose Light and Composition resources when it is removed from the tree
+
+HoverLight.RemoveTargetElement(GetId(), oldElement);
+
+CompositionLight.Dispose();
+
+_lightPositionExpression.Dispose();
+
+_offsetAnimation.Dispose();
+
+}
+
+
+
+protected override string GetId() => typeof(HoverLight).FullName;
+
+}
+
+
+\end{lstlisting}
+
+Now, with the HoverLight class done, we can add both the AmbLight and the HoverLight to previous ImageEffectBrush (find ImageEffectBrush in the last post):
+
+\begin{lstlisting}[style=XamlStyle]
+<Grid>
+
+<Grid.Background>
+
+<brushes:ImageEffectBrush ImageUriString="ms-appx:///Images/Background.png" />
+
+</Grid.Background>
+
+
+
+<Grid.Lights>
+
+<lights:HoverLight/>
+
+<lights:AmbLight/>
+
+</Grid.Lights>
+
+</Grid>
+
+
+\end{lstlisting}
+
+Note: To add a XamlLight in markup, your Min SDK version must be set to Creators Update, otherwise you can set it in the code behind.
+
+For more information, go here to read more about using XamlLight and here to see the Lighting documentation.
+
+\subsection{Using CompositionPropertySets}
+
+When you want to use the values of the ScrollViewer’s Offset or the Pointer’s X and Y position (e.g. mouse cursor) to do things like animate effects, you can use ElementCompositionPreview to retrieve their PropertySets. This allows you to create amazingly smooth, 60 FPS animations that are not tied to the UI thread. These methods let you get the values from user interaction for things like animations and lighting.
+
+\subsection{Using ScrollViewerManipulationPropertySet}
+
+This PropertySet is useful for animating things like Parallax, Translation and Opacity.
+
+\begin{lstlisting}[style=CSharpStyle]
+// Gets the manipulation <ScrollViewer x:Name="MyScrollViewer"/>
+
+CompositionPropertySet scrollViewerManipulationPropertySet = 
+
+ElementCompositionPreview.GetScrollViewerManipulationPropertySet(MyScrollViewer);
+\end{lstlisting}
+
+To see an example, go to the Smooth Interaction and Motion blog post in this series. There is a section devoted to using the ScrollViewerManipulationPropertySet to drive the animation.
+
+\subsection{Using PointerPositionPropertySet (new!)}
+
+New in the Creators Update, is the PointerPositionPropertySet. This PropertySet is useful for creating animations for lighting and tilt. Like ScrollViewerManipulationPropertySet, PointerPositionPropertySet enables fast, smooth and UI thread independent animations.
+
+A great example of this is the animation mechanism behind Fluent Design’s RevealBrush, where you see lighting effects on the edges on the UIElements. This effect is created by a CompositionLight, which has an Offset property animated by an ExpressionAnimation using the values obtained from the PointerPositionPropertySet.
+
+\begin{lstlisting}[style=CSharpStyle]
+// Useful for creating an ExpressionAnimation
+
+CompositionPropertySet pointerPositionPropertySet = ElementCompositionPreview.GetPointerPositionPropertySet(targetElement);
+
+ExpressionAnimation expressionAnimation = compositor.CreateExpressionAnimation("Vector3(param.Position.X, param.Position.Y, height)");
+
+expressionAnimation.SetReferenceParameter("param", pointerPositionPropertySet);
+
+
+\end{lstlisting}
+
+
+To get a better understanding of how you can use this to power animations in your app, let’s explore XamlLights and create a demo that uses the PointerPositionPropertySet to animate a SpotLight.
+
+\subsection{Enabling Translation Property – Animating a XAML Element’s Offset using Composition Animations}
+
+As discussed in our previous blog post, property sharing between the Framework Layer and the Visual Layer used to be tricky prior to the Creators Update. The following Visual properties are shared between UIElements and their backing Visuals:
+
+\begin{itemize}
+	\item Offset
+	\item Scale
+	\item Opacity
+	\item TransformMatrix
+	\item InsetClip
+	\item CompositeMode
+\end{itemize}
+
+Prior to the Creators update, Scale and Offset were especially tricky because, as mentioned before, a UIElement isn’t aware of changes to the property values on the hand-out Visual, even though the hand-out Visual is aware of changes to the UIElement. Consequently, if you change the value of the hand-out Visual’s Offset or Size property and the UIElement’s position changes due to a page resize, the UIElement’s previous position values will stomp all over your hand-out Visual’s values.
+
+Now with the Creators Update, this has become much easier to deal with as you can prevent Scale and Offset stomping by enabling the new Translation property on your element, by way of the ElementCompositionPreview object.
+
+\begin{lstlisting}[style=CSharpStyle]
+ElementCompositionPreview.SetIsTranslationEnabled(Rectangle1, true);
+
+
+
+//Now initialize the value of Translation in the PropertySet to zero for first use to avoid timing issues. This ensures that the property is ready for use immediately.
+
+
+
+var rect1VisualPropertySet = ElementCompositionPreview.GetElementVisual(Rectangle1).Properties;
+
+rect1VisualPropertySet.InsertVector3("Translation", Vector3.Zero);
+
+
+
+
+\end{lstlisting}
+
+Then, animate the visual’s Translation property where previously you would have animated its Offset property.
+
+\begin{lstlisting}[style=CSharpStyle]
+// Old way, subject to property stomping:
+
+visual.StartAnimation("Offset.Y", animation);
+
+// New way, available in the Creators Update
+
+visual.StartAnimation("Translation.Y", animation);
+
+
+\end{lstlisting}
+
+By animating a different property from the one affected during layout passes, you avoid any unwanted offset stomping coming from the XAML layer.
+
+\subsection{Wrapping up}
+
+In the past couple posts, we explored some of the new features of XAML and Composition Interop and how using Composition features in your XAML markup is easier than ever. From painting your UIElements with CompositionBrushes and applying lighting, to smooth off-UIThread animations, the power of the Composition API is more accessible than ever.
+
+In the next post, we’ll dive deeper into how you can chain Composition effects to create amazing materials and help drive the evolution of Fluent Design.

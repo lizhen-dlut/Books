@@ -1,0 +1,145 @@
+\section{How to Restart your App Programmatically}
+
+For some apps (especially games) it is not uncommon for the app to get into a state where it needs to restart – perhaps after a license update, after installing downloadable content, its caches have become corrupt or unwieldy, or for any other reason where the app needs to refresh state from scratch. In earlier releases, your only option would have been to prompt the user to close and relaunch, or to call CoreApplication.Exit – and both options provide sub-optimal user experience. 
+
+We have therefore introduced a new API that enables an app to request immediate termination and restart, and to pass arbitrary arguments into the fresh instance. In this post, we’ll look at how this works and how you can build it into your app. This is available now in Insider builds from Build 16226 onwards, along with the corresponding SDK.
+
+Here’s a sample app, called TestRestart. 
+
+The app provides a ListView of cities on the left, the currently-selected city on the right and a TextBox for providing arguments to the app when it is restarted. When the user taps the Request Restart button, the app will terminate and restart itself, passing in the supplied arguments. The new API, RequestRestartAsync, is exposed as a static method on the CoreApplication object. It takes a string parameter, which can be any string value you like – including input from the user or another external entity. If you do choose to accept input in this way, it is your responsibility to validate it correctly to make sure it conforms to whatever constraints you choose to impose. You should do this validation on input, before passing it to RequestRestartAsync. In this sample app, we’re expecting the user to type in the name of a city.
+
+
+
+\begin{lstlisting}[style=CSharpStyle]
+async private void DoRestartRequest()
+{
+	bool isValidPayload = false;
+	string payload = restartArgs.Text;
+	if (!string.IsNullOrEmpty(payload))
+	{
+		foreach (ImageViewModel imageItem in imageListView.Items)
+		{
+			if (imageItem.Name == payload)
+			{
+				isValidPayload = true;
+				break;
+			}
+		}
+	}
+	
+	if (isValidPayload)
+	{
+		AppRestartFailureReason result =
+		
+		await CoreApplication.RequestRestartAsync(payload);
+		
+		if (result == AppRestartFailureReason.NotInForeground ||
+		
+		result == AppRestartFailureReason.RestartPending ||
+		
+		result == AppRestartFailureReason.Other)
+		
+		{
+			
+			Debug.WriteLine("RequestRestartAsync failed: {0}", result);
+			
+		}
+		
+	}
+	
+}
+\end{lstlisting}
+
+
+To mitigate privacy concerns, an app is only permitted to restart itself if it is in the foreground at the time it makes the request. When the app restarts, it restarts with normal UI – that is, as a normal foreground window. If we were to permit a background task or minimized app to restart, the result would be unexpected to the user. This is why the API is framed as a request. If the request is denied, the app would need to handle the failure – perhaps by waiting until it is in the foreground and trying again. If you were to request a restart and then through some twist of logic managed to request it again before the system started the operation, then you’d get the RestartPending result, although this is an edge case. You’re unlikely to ever get the other result – unless something goes wrong in the platform.
+
+Note that this is the only significant constraint, but you should use this API carefully. For example, you probably should not use it if your app was not originally launched by the user – for example, if it was launched as the result of a share or picker operation. Restarting in the middle of one of those contract operations would certainly confuse the user.
+
+If the request is granted, the app is terminated and then restarted. There are many different ways to activate an app: in addition to a regular launch activation, apps can choose to support file activation, protocol activation, share or picker activation and so on. The list is documented here. For the restart case, the app will be activated as a regular launch – just as if the user had closed the app manually and tapped its tile to launch it again – but including the arbitrary arguments supplied earlier (if any).
+
+In your App class, you should handle this by overriding the OnActivated method. Test the ActivationKind, and if it’s ActivationKind.Launch, then the incoming IActivatedEventArgs will be a LaunchActivatedEventArgs. From this, you can get hold of the incoming activation arguments. For a regular user-initiated launch, the Arguments will be empty, so if it’s not empty you could simply infer that this is a restart activation. You can also check the PreviousExecutionState, which for a restart operation will be set to Terminated.
+
+Although the arguments might have originated from an untrusted source (eg, the user), you should have done the validation before requesting restart. If so, you can consider them trustworthy when you receive them in OnActivated.
+
+
+
+\begin{lstlisting}[style=CSharpStyle]
+protected override void OnActivated(IActivatedEventArgs args)
+
+{
+	
+	switch (args.Kind)
+	
+	{
+		
+		case ActivationKind.Launch:
+		
+		LaunchActivatedEventArgs launchArgs = args as LaunchActivatedEventArgs;
+		
+		string argString = launchArgs.Arguments;
+		
+		
+		
+		Frame rootFrame = Window.Current.Content as Frame;
+		
+		if (rootFrame == null)
+		
+		{
+			
+			rootFrame = new Frame();
+			
+			Window.Current.Content = rootFrame;
+			
+		}
+		
+		rootFrame.Navigate(typeof(MainPage), argString);
+		
+		Window.Current.Activate();
+		
+		break;
+		
+	}
+	
+}
+\end{lstlisting}
+
+
+What you do with the incoming arguments is entirely up to you. In this app, we’re simply passing them on to the MainPage. In the MainPage in turn, we have an override of OnNavigatedTo which uses the string to select an item in the ListView:
+
+
+
+\begin{lstlisting}[style=CSharpStyle]
+protected override void OnNavigatedTo(NavigationEventArgs e)
+
+
+
+{
+	
+	string payload = e.Parameter as string;
+	
+	if (!string.IsNullOrEmpty(payload))
+	
+	{
+		
+		foreach (ImageViewModel imageItem in imageListView.Items)
+		
+		{
+			
+			if (imageItem.Name == payload)
+			
+			{
+				
+				imageListView.SelectedItem = imageItem;
+				
+				break;
+				
+			}
+			
+		}
+		
+	}
+	
+}
+\end{lstlisting}
+
+As you can see, the CoreApplication.RequestRestartAsync method is a simple API. You can use it to terminate your app immediately, and have it restart as if by user action, with the additional option of passing in arbitrary arguments on activation.
