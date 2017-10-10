@@ -1,6 +1,0 @@
-class MyClass
-{
-private:
-    static inline int s_anInt = 42;
-    static inline std::string s_aString = "Hello World!";
-};

@@ -1,16 +1,15 @@
 \documentclass{ctexbook}
 
-\input{../preamble}
-\input{../commands}
-\input{../terminology}
+\input{../Preamble}
+\input{../Terminology}
 
 \bibliographystyle{plain} %推荐JabRef工具
 
 \newcommand{\documentTitle}
-    {\texorpdfstring{R语言学习笔记}{R语言学习笔记}}
+    {\texorpdfstring{生物信息学常用编程语言学习笔记}{生物信息学常用编程语言学习笔记}}
 \newcommand{\documentAuthor}{Roger Young}
-\newcommand{\documentKeywords}{R,笔记}
-\newcommand{\documentSubject}{R,笔记}
+\newcommand{\documentKeywords}{Python, R, Perl}
+\newcommand{\documentSubject}{\documentKeywords}
 
 \hypersetup{
 	pdftitle=\documentTitle,
@@ -31,11 +30,19 @@
 \maketitle
 \tableofcontents
 
+\input{./chapters/引言}
 
-\input{./chapters/RNA-Seq分析流程}
+\part{Python学习笔记}
 
+\input{./chapters/Python帮助系统}
 
-\input{./chapters/附录}
+\part{R学习笔记}
+
+\input{./chapters/R绘制中国地图}
+
+\part{Perl学习笔记}
+
+\part{C++学习笔记}
 
 
 \printindex
