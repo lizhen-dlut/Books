@@ -1,7 +1,141 @@
-\documentclass{ctexbook}
+\documentclass{book}
+\usepackage{ctex}
 
-\input{../preamble}
-\input{../commands}
+\usepackage{accsupp}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+\usepackage{animate}
+\usepackage{appendix}
+\usepackage{array}%表格相关
+\usepackage{bbding}%符号
+\usepackage{booktabs}% 三线表
+\usepackage{boxedminipage}
+\usepackage[format=hang, font=small, textfont=it]{caption}%改变图表标题格式
+\usepackage{changepage}
+\usepackage{chemformula}
+\usepackage{color}%颜色
+\usepackage{xcolor} % 颜色
+
+\definecolor{KeywordColor}{HTML}{00000f}
+\definecolor{StringColor}{HTML}{a31515}
+\definecolor{CommentColor}{HTML}{008000}
+\definecolor{VariableColor}{HTML}{008000}
+
+\usepackage{colortbl}%彩色表格
+
+\usepackage{ctexcap}
+\usepackage{diagbox}%斜线表格
+%\usepackage{dingbat}%符号
+%\usepackage{enumitem}%定制列表的标签、尺寸等
+\usepackage{esint}
+\usepackage{eurosym}
+\usepackage{extarrows}
+\usepackage{fancyvrb}
+\usepackage{fancyhdr}%页眉、页脚定制
+
+\usepackage{float}%提供H位置选项
+%\usepackage{fontspec}
+\usepackage{footmisc}%脚注定制
+
+\usepackage[left=1in, right=1in, top=1in, bottom=1in]{geometry} % 设计页面尺寸
+\usepackage{glossaries} % 词汇表支持
+\makeglossaries
+\usepackage{graphicx}%图形包
+\usepackage{graphpap}
+\usepackage{hologo}%符号
+\usepackage{ifthen}
+\usepackage{imakeidx}%索引支持
+\usepackage{lastpage}%获取最后一页的页码
+\usepackage{layout}
+\usepackage{lettrine} % 首字下沉
+\usepackage{lineno}% 行号
+\usepackage{listings}% 代码环境
+
+\usepackage{longtable}%处理跨页表格
+\usepackage{ltxtable}
+\usepackage{makecell}%单独控制表格单元
+\usepackage{makeidx}%索引支持
+\makeindex
+\usepackage{mathdots}
+\usepackage{mathrsfs}
+\usepackage{mathtools}
+\usepackage{mflogo}%符号
+\usepackage{multicol} % 分栏控制
+\usepackage{multirow}%表格跨行排版
+\usepackage{paralist}%段内列表
+\usepackage{pdflscape}
+\usepackage{pgfornament}
+\usepackage{picinpar}%图文绕排
+\usepackage[square,super,sort&compress]{natbib} %定制参考文献
+\usepackage{pifont}%符号
+\usepackage{shapepar}%根据预定义形状排版
+\usepackage{subcaption}%子图标排版
+\usepackage{svg}
+\usepackage{syntonly}%语法检查
+%	\syntaxonly
+\usepackage{tabularx}%提供X格式说明符
+
+\usepackage{textcomp}%多种符号
+
+\usepackage{tcolorbox}
+\tcbuselibrary{listings,skins,breakable}
+\usepackage{tikz}%绘图功能
+\usetikzlibrary{shapes}
+\usepackage{titlesec}%设置标题的对齐方式
+%\usepackage{titletoc} % 用于目录
+\usepackage[numindex,numbib]{tocbibind}%把目录、参考文献等加入到目录中
+\usepackage{tracefnt}
+\usepackage{ulem}
+\usepackage{verbatim}%原文输出功能
+\usepackage{wasysym}
+\usepackage{wrapfig}%图文绕排
+
+%\usepackage{xtab} % 长表格处理
+\usepackage{xunicode}%Unicode处理
+\usepackage{yhmath}
+
+\usepackage{hyperref}
+\usepackage{hyperxmp}
+
+\setcounter{secnumdepth}{4}
+
+\newcommand{\terminologyItem}[1]{\textbf{\uwave{#1}}}
+
+\newcommand{\Bioconductor}{\href{http://www.bioconductor.org/}{Bioconductor}}
+
+\newtheorem{定义}{定义}
+
+\newtheorem{定理}{定理}
+\newtheorem{推论}{推论}
+\newtheorem{引理}{引理}
+\newtheorem{性质}{性质}
+
+\newcommand{\SoftwareMenu}[1]{\textit{\textbf{#1}}}
+\newcommand{\ProgrammingLanguagePackageName}[1]{\textit{\textbf{#1}}}
+\newcommand{\ProgrammingLanguageNamespace}[1]{\textit{\textbf{#1}}}
+\newcommand{\ProgrammingLanguageClass}[1]{\textit{\textbf{#1}}}
+\newcommand{\ProgrammingLanguageFunction}[1]{\textit{\textbf{#1}}}
+\newcommand{\ProgrammingLanguageInterface}[1]{\textit{\textbf{#1}}}
+\newcommand{\ProgrammingLanguageVariable}[1]{\textit{\textbf{#1}}}
+
+\newcommand{\doubleQuote}[1]{``#1''}
+\newcommand{\myDoubleQuoteEnglish}[1]{\lq\lq#1\rq\rq}
+\newcommand{\myDoubleQuoteChinese}[1]{"#1"}
+\newcommand{\myHumanGene}[1]{\textbf{\textcolor{blue}{\textit{#1}}}}
+\newcommand{\mykeyword}[1]{\textbf{\textcolor{blue}{#1}}}
+\newcommand{\myImportantPoint}[1]{\textbf{\uline{#1}}}
+\newcommand{\myKeyPoint}[1]{\textbf{\uline{#1}}}
+\newcommand{\myWarningPoint}[1]{\textbf{\uline{#1}}}
+\newcommand{\mySuggestion}[1]{\textbf{\uline{#1}}}
+\newcommand{\myInlineGlossary}[1]{\textbf{\uline{#1}}}
+\newcommand{\myProteinName}[1]{\textcolor{red}{#1}}
+\newcommand{\myLifeSpan}[2]{ $ #1 \sim #2 $ }
+
+\newcommand{\myStructureVariation}[1]{\texttt{\detokenize{#1}}}
+
 \input{../terminology}
 \bibliographystyle{plain} %推荐JabRef工具
 
@@ -10,6 +144,8 @@
 \newcommand{\documentAuthor}{Roger Young}
 \newcommand{\documentKeywords}{高等数学,线性代数,概率论,数理统计}
 \newcommand{\documentSubject}{高等数学,线性代数,概率论,数理统计}
+
+\newcommand{\myKeypoint}[1]{\uline{#1}}
 
 \hypersetup{
 	pdftitle=\documentTitle,

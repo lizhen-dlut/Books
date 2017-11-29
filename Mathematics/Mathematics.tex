@@ -1,0 +1,88 @@
+\documentclass{book}
+\usepackage{ctex}
+\usepackage[left=1in, right=1in]{geometry}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+\usepackage{paralist}%段内列表
+
+\usepackage{hyperref}
+\usepackage{hyperxmp}
+%%% END Article customizations
+
+\DeclareMathOperator\dif{d\!}
+
+\newtheorem{definition}{定义}
+
+%%% The "real" document content comes below...
+\newcommand{\documentTitle}{\texorpdfstring{数学学习笔记}{数学学习笔记}}
+\newcommand{\documentAuthor}{ZHANG Yang}
+\newcommand{\documentKeywords}{{高等数学,线性代数,概率论,数理统计}}
+\newcommand{\documentSubject}{\documentKeywords}
+
+\hypersetup{
+	pdftitle=\documentTitle,
+	pdfauthor=\documentAuthor,
+	pdfsubject= \documentSubject,
+	pdfkeywords= \documentKeywords,
+	pdfstartview=FitH,
+	pdfproducer = \documentAuthor,
+	pdfcreator = \documentAuthor, 
+	pdfcopyright = \documentAuthor, 
+	pdflicenseurl = {https://github.com/hiatcg},
+	colorlinks=true,       % false: boxed links; true: colored links
+	linkcolor=red,          % color of internal links
+	citecolor=red,        % color of links to bibliography
+	filecolor=red,      % color of file links
+	urlcolor=red           % color of external links
+}
+
+\title{\documentTitle}
+\author{\documentAuthor}
+\date{\today}
+
+\begin{document}
+	\maketitle
+	\setcounter{secnumdepth}{4}
+	\tableofcontents
+
+	\part{高等数学}
+
+	\input{./chapters/functions_and_limits} %函数与极限
+	\input{./chapters/derivative_and_differential} %导数与微分
+	\input{./chapters/mean_value_theorem_for_derivatives}%微分中值定理与导数的应用
+	\input{./chapters/indefinite_integral} %不定积分
+	\input{./chapters/definite_integral} %定积分
+	\input{./chapters/applications_of_integration} %定积分的应用
+	\input{./chapters/differential_equations}%微分方程
+	\input{./chapters/vector_algebra_and_spatial_analytic_geometry} %向量代数与空间解析几何
+	\input{./chapters/differentiation_of_functions_of_several_variables}%多元函数微分法及其应用
+	\input{./chapters/multiple_integrals} %重积分
+	\input{./chapters/line_integral_and_surface_integral} %曲线积分与曲面积分
+	\input{./chapters/infinite_sequences_and_series} %无穷级数
+	\input{./chapters/table_of_integrals} %积分表
+	
+	\part{线性代数}
+%	\input{./chapters/行列式}
+%	\input{./chapters/矩阵及其运算}
+%	\input{./chapters/矩阵的初等变换与线性方程组}
+%	\input{./chapters/向量组的线性相关性}
+%	\input{./chapters/相似矩阵及二次型}
+%	\input{./chapters/线性空间与线性变换}
+	
+	\part{概率论与数理统计}
+%	\input{./chapters/概率论的基本概念}
+%	\input{./chapters/随机变量及其分布}
+%	\input{./chapters/多维随机变量及其分布}
+%	\input{./chapters/随机变量的数字特征}
+%	\input{./chapters/大数定律及中心极限定理}
+%	\input{./chapters/样本及抽样分布}
+%	\input{./chapters/参数估计}
+%	\input{./chapters/假设检验}
+%	\input{./chapters/方差分析及回归分析}
+%	\input{./chapters/bootstrap方法}
+%	\input{./chapters/随机过程及其统计描述}
+%	\input{./chapters/马尔可夫链}
+\end{document}

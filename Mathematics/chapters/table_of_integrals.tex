@@ -1,0 +1,85 @@
+\chapter{积分表}
+
+\newcommand{\dx}{\ensuremath{\hspace{2pt}\dif x}}
+\newcommand{\dd}[1]{\ensuremath{\hspace{2pt}\dif#1}}
+
+\section{基本积分表}
+
+\begin{equation}
+\int x^n \dx = \frac{1}{n+1}x^{n+1}, \hspace{1ex} n\neq-1
+\end{equation}
+
+\begin{equation}
+\int \frac{1}{x}\dx = \ln |x|
+\end{equation}
+
+\begin{equation}
+\int u \hspace{2pt} \dd{v} = uv - \int v du
+\end{equation}
+
+
+
+\begin{equation}
+\int e^x \dx = e^x 
+\end{equation}
+
+\begin{equation}
+\int a^x \dx = \frac{1}{\ln a} a^x
+\end{equation}
+
+\begin{equation}
+\int \ln x \dx = x \ln x - x
+\end{equation}
+
+
+\begin{equation}
+\int \sin x \dx = -\cos x
+\end{equation}
+
+\begin{equation}
+\int \cos x \dx = \sin x
+\end{equation}
+
+\begin{equation}
+\int \tan x \dx = \ln |\sec x| 
+\end{equation}
+
+\begin{equation}
+\int \sec x \dx = \ln |\sec x + \tan x|
+\end{equation}
+
+\begin{equation}
+\int \sec^2 x \dx = \tan x
+\end{equation}
+
+\begin{equation}
+\int \sec x \tan x \dx = \sec x
+\end{equation}
+
+\begin{equation}
+\int \frac{a}{a^2+x^2}\dx = \tan^{-1}\frac{x}{a}
+\end{equation}
+
+\begin{equation}
+\int \frac{a}{a^2-x^2}\dx = \frac{1}{2}\ln\left|\frac{x+a}{x-a}\right|
+\end{equation}
+
+\begin{equation}
+\int \frac{1}{\sqrt{a^2-x^2}} \dx = \sin^{-1} \frac{x}{a}
+\end{equation}
+
+\begin{equation}
+\int \frac{a}{x \sqrt{x^2-a^2}} \dx = \sec^{-1} \frac{x}{a}
+\end{equation}
+
+\begin{align}
+\int \frac{1}{\sqrt{x^2-a^2}} \dx &= \cosh^{-1} \frac{x}{a} \\&= \nonumber \ln (x+\sqrt{x^2-a^2})
+\end{align}
+
+\begin{align}
+\int \frac{1}{\sqrt{x^2+a^2}} \dx &= \sinh^{-1} \frac{x}{a} \\&=\nonumber \ln (x+\sqrt{x^2+a^2})
+\end{align}
+
+\section{含有$ ax+b $的积分}
+
+\section{含有$ \sqrt{ax+b} $的积分}
