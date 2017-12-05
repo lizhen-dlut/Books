@@ -1,0 +1,85 @@
+\chapter{随机变量的数字特征}
+
+前面我们介绍了随机变量的分布函数、概率函数和分布律，它们都能完整地描述随机变量，但在某些实际或理论问题中，人们感兴趣于某些能描述随机变量某一种特征的常数。这种由随机变量的分布所确定的、能刻画随机变量某一方面的特征的常数统称为\myconcepts{数字特征}，它在理论和实际应用中都很重要。
+
+\section{数学期望}
+
+\begin{definition}
+	设离散型随机变量X的分布律为
+	\begin{equation}
+		P\left\lbrace X = x_k \right\rbrace = p_k\text{，} k = 1, 2, \dots. \notag
+	\end{equation}
+	若级数
+	\begin{equation}
+		\sum_{k =1}^{\infty}x_{k}p_{k} \notag
+	\end{equation}
+	绝对收敛，则称级数$ \displaystyle \sum_{k=1}^{\infty}x_{k}p_{k} $的和为随机变量$ X $的\myconcepts{数学期望}，记为$ E(X) $，即
+	\begin{equation}
+		E(X) = \sum_{k =1}^{\infty}x_{k}p_{k} \notag
+	\end{equation}
+	
+	设连续型随机变量X的概率密度为f(x)，若积分
+	\begin{equation}
+		\int_{-\infty}^{\infty}xf(x)\dx \notag
+	\end{equation}
+	绝对收敛，则称积分$ \int_{-\infty}^{\infty}xf(x)\dx $的值为随机变量$ X $的\myconcepts{数学期望}，记为$ E(X) $，即
+	\begin{equation}
+		E(X) = \int_{-\infty}^{\infty}xf(x)\dx
+	\end{equation}
+\end{definition}
+
+数学期望简称\myconcepts{期望}，又称为\myconcepts{均值}。
+
+数学期望$ E(X) $完全由随机变量$ X $的概率分布所确定，若$ X $服从某一分布，也称$ E(X) $是这一分布的数学期望。
+
+\begin{theorem}
+	设$ Y $是随机变量$ X $的函数：$ Y=g(X) $\myparenthese{g是连续函数}
+	\begin{enumerate}
+		\item 如果$ X $是离散型随机变量，它的分布律为$ P\left\lbrace X=x_k\right\rbrace = p_k, k = 1, 2, \dots $，若$ \displaystyle \sum_{k=1}^{\infty}g(x_k)p_k $绝对收敛，则有
+		\begin{equation}
+			E(Y) = E[g(X)] = \sum_{k=1}^{\infty}g(x_k)p_K \text{。}
+		\end{equation}
+		\item 如果$ X $是连续型随机变量，它的概率密度为$ f(x) $，若$ \displaystyle \int_{\infty}^{\infty}g(x)f(x)\dx $绝对收敛，则有
+		\begin{equation}
+			E(Y) = E[g(X)] = \int_{\infty}^{\infty}g(x)f(x)\dx \text{。}
+		\end{equation}
+	\end{enumerate}
+\end{theorem}
+
+定理的重要意义在于当我们求$ E(Y) $时，不必算出$ Y $的分布律或概率密度，而只需要利用$ X $的分布律或概率密度就可以了。
+
+\section{方差}
+
+\begin{definition}
+	设$ X $是一个随机变量，若$ E\left\lbrace [X-E(X)]^2 \right\rbrace $存在，则称$ E\left\lbrace [X-E(X)]^2 \right\rbrace $为$ X $的方差，记为$ D(X) $或$ Var(X) $，即
+	\begin{equation}
+		D(X) = Var(X) = E\left\lbrace [X-E(X)]^2 \right\rbrace \text{。}
+	\end{equation}
+	在应用上，还引入量$ \sqrt{D(X)} $，记为$ \sigma(X) $，称为标准差或均方差。
+\end{definition}
+
+\begin{theorem}
+	设随机变量$ X $具有数学期望$ E(X)=\mu $，方差$ D(X)=\sigma^2 $，则对于任意整数$ \epsilon $，不等式
+	\begin{equation}
+		P\left\lbrace |X-\mu|\geqslant\epsilon \right\rbrace \leqslant \frac{\sigma^2}{\epsilon^2}
+	\end{equation}
+	成立。
+	
+	这一不等式称为\myconcepts{切比雪夫\myparenthese{Chebyshev}不等式}}。
+\end{theorem}
+
+\section{协方差及相关系数}
+
+\begin{definition}
+	量$ E\left\lbrace [X-E(X)][Y-E(Y)] \right\rbrace $称为随机变量$ X $与$ Y $的协方差，记为$ Cov(X, Y) $，即
+	\begin{equation}
+		Cov(X,Y)=E\left\lbrace [X-E(X)][Y-E(Y)] \right\rbrace \text{。}
+	\end{equation}
+	而
+	\begin{equation}
+		\rho_{XY} = \frac{Cov(X, Y)}{\sqrt{D(X)}\sqrt{D(Y)}}
+	\end{equation}
+	称为随机变量$ X $与$ Y $的相关系数。
+\end{definition}
+
+\section{矩、协方差矩阵}

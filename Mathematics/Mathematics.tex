@@ -5,6 +5,7 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
+\usepackage{ulem}
 
 \usepackage{paralist}%段内列表
 
@@ -13,8 +14,25 @@
 %%% END Article customizations
 
 \DeclareMathOperator\dif{d\!}
+\newcommand{\dx}{\ensuremath{\dif x}}
+\newcommand{\dd}[1]{\ensuremath{\dif#1}}
 
+\newcommand{\mydoublequote}[1]{``#1''}
+\newcommand{\myconcepts}[1]{\textbf{\uline{{#1}}}}
+\newcommand{\myimportantpoint}[1]{\textbf{\uline{#1}}}
+\newcommand{\myparenthese}[1]{（#1）}
+
+\newtheorem{axiom}{公理}
+\newtheorem{claim}{断言}
+\newtheorem{conjecture}{猜想}
+\newtheorem{corollary}{推论}
 \newtheorem{definition}{定义}
+\newtheorem{identity}{恒等式}
+\newtheorem{lemma}{引理}
+\newtheorem{note}{注}
+\newtheorem{paradox}{悖论}
+\newtheorem{proposition}{命题}
+\newtheorem{theorem}{定理}
 
 %%% The "real" document content comes below...
 \newcommand{\documentTitle}{\texorpdfstring{数学学习笔记}{数学学习笔记}}
@@ -74,10 +92,10 @@
 	
 	\part{概率论与数理统计}
 %	\input{./chapters/概率论的基本概念}
-%	\input{./chapters/随机变量及其分布}
-%	\input{./chapters/多维随机变量及其分布}
+	\input{./chapters/random_variables_and_probability_distributions} %随机变量及其分布
+	\input{./chapters/multidimensional_random_variable_and_distribution} %多维随机变量及其分布
 %	\input{./chapters/随机变量的数字特征}
-%	\input{./chapters/大数定律及中心极限定理}
+	\input{./chapters/law_of_large_numbers_and_central_limit_theorem} %大数定律及中心极限定理
 %	\input{./chapters/样本及抽样分布}
 %	\input{./chapters/参数估计}
 %	\input{./chapters/假设检验}

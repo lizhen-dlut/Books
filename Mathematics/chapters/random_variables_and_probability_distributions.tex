@@ -1,0 +1,201 @@
+\chapter{随机变量及其分布}
+
+\section{随机变量}
+
+现在来讨论如何引入一个法则，将随机实验的每一个结果，即将$ S $的每个元素$ e $与实数$ x $对应起来，从而引入了随机变量的概念。
+
+\begin{definition}
+	设随机试验的样本空间为$ S = \left\lbrace e \right\rbrace  $，$ X = X(e) $是定义在样本空间$ S $上的实值单值函数，称$ X = X(e) $为\myconcepts{随机变量} \footnote{严格地说，\mydoublequote{对于任意实数$ x $，集合$ \left\lbrace e|X(e) \le x \right\rbrace  $（即：使得$ X(e) \le x $的所有样本点$ e $所组成的集合）有确定的概率}这一要求应包括在随机变量的定义之中，一般来说，不满足这一条件的情况，在实际应用中是很少遇到的。因此，我们在定义中未提及这一要求。}。
+\end{definition}
+
+我们一般以大写的字母如$ X $、$ Y $、$ Z $、$ W $、$ \cdots $ 表示随机变量，而以小写字母$ x $、$ y $、$ z $、$ w $、$ \cdots $ 表示实数。
+
+随机变量的取值随实验的结果而定，而试验的各个结果出现有一定的概率，因而随机变量的取值有一定的概率。
+
+随机变量的取值随试验的结果而定，在试验之前不能预知它取什么值，且它的取值有一定的概率。这些性质显示了随机变量与普通函数有着本质的差异。
+
+随机变量的引入，使我们能用随机变量来描述各种随机现象，并能利用数学分析的方法对随机试验的结果进行深入广泛的研究和讨论。
+
+\section{离散型随机变量及其分布律}
+
+有些随机变量，它全部可能取到的值是有限个或可列无限多个，这种随机变量称为\myconcepts{离散型随机变量}。
+
+容易知道，要掌握一个离散型随机变量$ X $的统计规律，必须且只需知道$ X $的所有可能取值以及取每一个可能值的概率。
+
+设离散型随机变量X所有可能取的值为$ x_k(k=1,2,\cdots) $，X取各个可能值的概率，即事件$ \left\lbrace X = x_k \right\rbrace  $，为
+\begin{equation}
+	P\left\lbrace X = x_{k} \right\rbrace = p_{k} \text{，} k = 1, 2, \cdots \text{。}
+\end{equation}
+由概率的定义可知，$ p_{k} $满足如下两个条件：
+\begin{enumerate}
+	\item $ p_{k} \ge 0\text{，} k = 1, 2, \cdots $；
+	\item $ \sum\limits_{k=1}^{\infty}p_{k} = 1 $。
+\end{enumerate}
+
+下面介绍三种重要的离散型随机变量。
+
+\subsection{$ (0-1) $分布}
+
+\subsection{伯努利试验、二项分布}
+
+\begin{definition}
+	设试验$ E $只有两个可能结果：$ A $及$ \bar{A} $，则$ E $为\myconcepts{伯努利（Bernoulli）试验}。设$ P(A) = p (0<p<1) $，此时$ P(\bar{A}) = 1 - p $。将$ E $独立重复地进行$ n $次，则称这一串重复的独立试验为\myconcepts{n重伯努利试验}。
+\end{definition}
+
+这里\mydoublequote{重复}是指在每次试验中$ P(A) = p $保持不变；\mydoublequote{独立}是指各次试验的结果互不影响。
+
+以$ X $表示$ n $重伯努利试验中事件$ A $发生的次数，$ X $是一个随机变量，我们来求它的分布律。X所有可能取的值为$ 0 $，$ 1 $，$ 2 $，$ \cdots $，$ n $。由于各次试验是相互独立的，因此事件$ A $在指定的$ k(0 \le k \le n) $次试验中发生，在其他$ n-k $次试验中$ A $不发生（例如在前$ k $次试验中$ A $发生，而后$ n-k $次试验中$ A $不发生）的概率为
+\begin{equation}
+	\underbrace{p \cdot p \cdot \dots \cdot p}_{k\text{个}} \cdot
+	\underbrace{(1 - p) \cdot (1 - p) \cdot \dots \cdot (1 - p)}_{n - k\text{个}}
+	= p^{k}(1-p)^{n-k} \text{。}
+\end{equation}
+这种指定的方式共有$ \binom{n}{k} $种。它们是两两互不相容的，故在$ n $次试验中$ A $发生$ k $次的概率为$ \binom{n}{k}p^{k}(1-p)^{n-k} $，记$ q = 1 - p $，即有
+\begin{equation}\label{equation:binomial_distribution}
+	P\left\lbrace X = k \right\rbrace = \binom{n}{k}p^{k}q^{n-k} \text{，} k = 0, 1, 2, \cdots , n \text{。}
+\end{equation}
+显然
+\begin{equation}
+	P\left\lbrace X = k \right\rbrace \ge 0 \text{，} k = 0, 1, 2, \cdots , n \text{;}
+\end{equation}
+
+\begin{equation}
+	\sum\limits_{k=0}^{n}P\left\lbrace X = k \right\rbrace = \sum\limits_{k=0}^{n}\binom{n}{k}p^{k}q^{n-k} = (p+q)^{n} = 1\text{。}
+\end{equation}
+注意到$ \binom{n}{k}p^{k}q^{n-k} $刚好是二项式$ (p+q)^{n} $的展开式中出现$ p^k $的那一项，我们称随机变量$ X $服从参数$ n $，$ p $的二项分布，并记为$ X \sim b(n,p) $。
+
+特别地，当$ n=1 $时二项分布（\ref{equation:binomial_distribution}）化为
+\begin{equation}
+	P\left\lbrace X = k \right\rbrace = p^{k}q^{1-k} \text{，} k = 0, 1 \text{。}
+\end{equation}
+这就是$ (0-1) $分布。
+
+\subsection{泊松分布}
+
+\begin{definition}
+	设随机变量$ X $所有可能取的值为$ 0 $，$ 1 $，$ 2 $，$ \cdots $，而取各个值的概率为
+	\begin{equation}
+		P\left\lbrace X = k \right\rbrace = \frac{\lambda^{k}e^{-\lambda}}{k!}\text{，} k = 0, 1, 2, \cdots \text{，}
+	\end{equation}
+	其中，$ \lambda > 0 $是常数，则称$ X $服从参数为$ \lambda $的泊松分布，记为$ X \sim \pi(\lambda) $。
+\end{definition}
+
+\section{随机变量的分布函数}
+
+\section{连续型随机变量及其概率密度}
+
+如果对于随机变量$ X $的分布函数$ F(x) $，存在非负可积函数$ f(x) $，使对于任意实数$ x $有
+\begin{equation}
+	F(x) = \int_{-\infty}^{x}f(t)\dd{t}\text{，}
+\end{equation}
+则称$ X $为\myconcepts{连续型随机变量}，$ f(x) $称为$ X $的\myconcepts{概率密度函数}，简称\myconcepts{概率密度}。
+
+\subsection{均匀分布}
+
+\subsection{指数分布}
+
+\subsection{正态分布}
+
+\begin{definition}
+	若连续型随机变量$ X $的概率密度为
+	\begin{equation}
+		f(x) = \frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(x-\mu)^2}{2\sigma^{2}}}\text{，} -\infty<x<\infty\text{，}
+	\end{equation}
+	其中$ \mu $，$ \sigma (\sigma > 0)$为常数，则称X服从参数为$ \mu $，$ \sigma $的\myconcepts{正态分布}或\myconcepts{高斯\myparenthese{Gauss}分布}，记为$ X \sim N(\mu, \sigma^2) $。
+\end{definition}
+
+显然$ f(x) \geqslant 0 $，下面来证明$ \displaystyle\int_{-\infty}^{\infty}f(x)\dd{x} = 1 $。令$ \dfrac{x - \mu}{\sigma} = t $，得到
+\begin{equation}
+	\int\limits_{-\infty}^{\infty}f(x)\dd{x} = \int_{-\infty}^{\infty}\frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(x-\mu)^2}{2\sigma^2}}\dd{x} = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{\infty}e^{-\frac{t^2}{2}}\dd{t} \notag
+\end{equation}
+记$ \displaystyle I = \int_{-\infty}^{\infty}e^{-\frac{t^2}{2}}\dd{t} $，则有$ \displaystyle I^2 = \int_{-\infty}^{\infty}\int_{-\infty}^{\infty}e^{-\frac{t^2 + u^2}{2}}\dd{t}\dd{u} $，利用极坐标将它化成累次积分，得到
+\begin{equation}
+	I^2 = \int_{0}^{2\pi}\int_{0}^{\infty}re^{-\frac{r^2}{2}}\dd{r}\dd{\theta}\text{。} \notag
+\end{equation}
+而$ I > 0 $，故有$ I = \sqrt{2\pi} $，即有
+\begin{equation}
+	\int_{-\infty}^{\infty}e^{-\frac{t^2}{2}}\dd{t} = \sqrt{2\pi}
+\end{equation}
+于是$ \displaystyle\int_{-\infty}^{\infty}f(x)\dd{x} = \int_{-\infty}^{\infty}\frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(x-\mu)^2}{2\sigma^2}}\dd{x} = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{\infty}e^{-\frac{t^2}{2}}\dd{t} = 1 $。
+
+$ f(x) $具有以下性质：
+\begin{enumerate}
+	\item 曲线关于$ x = \mu $对称。这表明对于任意$ h > 0 $有
+		\begin{equation}
+			P\left\lbrace \mu - h < X \leqslant \mu \right\rbrace = P\left\lbrace \mu < X \leqslant \mu + h \right\rbrace \notag
+		\end{equation}
+	\item 当$ x = \mu  $时取得最大值
+		\begin{equation}
+			f(\mu) = \frac{1}{\sqrt{2\pi}\sigma} \notag
+		\end{equation}
+\end{enumerate}
+$ x $离$ \mu $越远，$ f(x) $的值越小。这表明对于同样长度的区间，当区间离$ \mu $越远，$ X $落在这个区间上的概率越小。
+
+在$ x=\mu\pm\sigma $处曲线有拐点，曲线以$ Ox $轴为渐进线。
+
+特别，当$ \mu = 0, \sigma = 1 $时称随机变量$ X $服从\myconcepts{标准正态分布}。其概率密度和分布函数分别用$ \varphi(x) $，$ \varPhi(x) $表示，即有
+\begin{equation}
+	\varphi(x) = \frac{1}{\sqrt{2\pi}}e^{-\frac{x^{2}}{2}}
+\end{equation}
+\begin{equation}
+	\varPhi(x) = \frac{1}{\sqrt{2\pi}}\int_{-\infty}^{x}e^{-\frac{x^{2}}{2}}\dd{t}
+\end{equation}
+易知
+\begin{equation}
+	\varPhi(-x) = 1 - \varPhi(x)
+\end{equation}
+
+\begin{lemma}
+	若$ X\sim N(\mu,\sigma^{2}) $，则$ Z = \dfrac{X-\mu}{\sigma}\sim N(0,1) $。
+\end{lemma}
+
+\begin{proof}
+	$ Z = \dfrac{X-\mu}{\sigma} $的分布函数为
+	\begin{align}
+	P\left\lbrace Z\le x \right\rbrace & = P\left\lbrace Z\le \frac{X-\mu}{\sigma} \right\rbrace \notag \\
+	& = P\left\lbrace X \le \mu + \sigma x \right\rbrace \notag\\
+	& = \frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\mu+\sigma x}e^{-\frac{(t-\mu)^2}{2\sigma^2}}\dd{t} \text{，} \notag
+	\end{align}
+	令$ \dfrac{t-\mu}{\sigma} = u $，得
+	\begin{equation}
+		P\left\lbrace Z \le x \right\rbrace = \frac{1}{\sqrt{2\pi}}\int_{-\infty}^{x}e^{-\frac{u^2}{2}}\dd{u} = \varPhi(x) \text{，} \notag
+	\end{equation}
+	由此知$ Z = \frac{X-u}{\sigma} \sim N(0,1) $。
+\end{proof}
+
+于是，若$ X\sim N(\mu,\sigma^{2}) $，则它的分布函数F(x)可写成
+\begin{equation}
+	F(x) = P\left\lbrace X\leqslant x \right\rbrace = P\left\lbrace \frac{X-\mu}{\sigma} \leqslant \frac{x-\mu}{\sigma} \right\rbrace = \varPhi(\frac{x-\mu}{\sigma})
+\end{equation}
+对于任意区间$ \left( x_1, x_2 \right]  $，有
+\begin{align}
+	P\left\lbrace x_1 < X \leqslant x_2 \right\rbrace  & = P\left\lbrace \frac{x_1 - \mu}{\sigma} < \frac{X - \mu}{\sigma} \leqslant \frac{x_2 - \mu}{\sigma} \right\rbrace \\
+	& = \varPhi(\frac{x_2 - \mu}{\sigma}) - \varPhi(\frac{x_1 - \mu}{\sigma})
+\end{align}
+
+尽管正态变量的取值范围是$ \left( -\infty, \infty \right)  $，但它的值落在$ \left( \mu - 3\sigma, \mu + 3\sigma \right)  $内几乎是肯定的事，这就是人们所说的\mydoublequote{$ 3\sigma $}法则。
+
+为了便于今后在数理统计中的应用，对于标准正态随机变量，我们引入了上$ \alpha $分位点的定义。
+
+\begin{definition}
+	设$ X \sim N(0,1) $，若$ z_{a} $满足条件
+	\begin{equation}
+		P\left\lbrace X > z_{a} \right\rbrace = a\text{，}0 < a < 1\text{，}
+	\end{equation}
+	则称点$ z_{a} $为标准正态分布的\myconcepts{上$ \alpha $分位点}。
+\end{definition}
+
+\section{随机变量的函数的分布}
+
+\begin{theorem}
+	设随机变量$ X $具有密度函数$ f_X(x),-\infty < x < \infty $，又设函数$ g(x) $处处可导且恒有$ g'(x) > 0 $\myparenthese{或恒有$ g'(x) < 0 $}，则$ Y = g(X) $是连续型随机变量，其概率密度为
+	\begin{equation}
+		f_Y(y) = \left\lbrace
+			\begin{array}{ll}
+				f_X[h(y)]\left| h'(y)\right| , & \alpha < y < \beta\\
+				0, & \text{其他}
+			\end{array}
+		\right. 
+	\end{equation}
+	其中$ \alpha = \min\left\lbrace g(-\infty), g(\infty) \right\rbrace $，$ \beta = \max\left\lbrace g(-\infty), g(\infty) \right\rbrace $，$ h(y) $是$ g(x) $的反函数。
+\end{theorem}
