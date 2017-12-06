@@ -1,0 +1,202 @@
+\chapter{方差分析及回归分析}
+
+\section{单因素试验的方差分析}
+
+\subsection{单因素试验}
+
+在科学试验和生产实践中，影响一事物的因素往往是很多的。例如，在化工生产中，有原料成分、原料剂量、催化剂、反应温度、压力、溶液浓度、反应时间、机器设备及操作人员的水平等因素。每一因素的改变都有可能影响产品的数量和质量。有些因素影响较大，有些较小。为了使生产过程得以稳定，保证优质、高产，就有必要找出对产品质量有显著影响的那些因素。为此，我们需进行试验。方差分析就是根据试验的结果进行分析，鉴别各个有关因素对试验结果影响的有效方法。
+
+在试验中，我们将要考察的指标称为\myconcepts{试验指标}。影响试验指标的条件称为\myconcepts{因素}。因素可分为两类，一类是人们可以控制的\myparenthese{可控因素}；一类是人们不能控制的。例如，反应温度、原料剂量、溶液浓度等是可以控制的，而测量误差、气象条件等一般是难以控制的。以下我们所说的因素都是指可控因素。因素所处的状态，称为该因素的水平。如果一项试验的过程中只有一个因素在改变，则称为\myconcepts{单因素试验}；如果多于一个因素在改变，则称\myconcepts{多因素试验}。
+
+现在开始讨论单因素试验的方差分析。设因素$ A $有$ s $个水平$ A_1 $，$ A_2 $，$ \cdots $，$ A_s $，在水平$ A_j\ (j=1,2,\cdots,s) $下，进行$ n_j\;\left( n_j \geqslant 2 \right)  $次独立试验，得到如表 \ref{table:result_of_single_factor_analysis_of_variance} 的结果。
+
+\begin{table}[ht]
+	\centering
+	\caption{单因素试验结果}
+	\label{table:result_of_single_factor_analysis_of_variance}
+	\begin{tabular}{|c|c|c|c|c|}
+		\hline 
+		\diagbox{观察结果}{水平} & $ A_{1} $ & $ A_{2} $ & $ \cdots $ & $ A_{s} $ \\ 
+		\hline 
+		& $ X_{11} $ & $ X_{12} $ & $ \cdots $ & $ X_{1s} $ \\ 
+		\cline{2-5} 
+		& $ X_{21} $ & $ X_{22} $ & $ \cdots $ & $ X_{2s} $ \\ 
+		\cline{2-5} 
+		& $ \vdots $ & $ \vdots $ & $ \ddots $  & $ \vdots $ \\ 
+		\cline{2-5}  
+		& $ X_{n_{1}1} $ & $ X_{n_{2}2} $ & $ \cdots $ & $ X_{n_{s}s} $ \\ 
+		\hline 
+		样本总和 & $ T_{\cdot 1} $ & $ T_{\cdot 2} $ & $ \cdots $ & $ T_{\cdot s} $ \\ 
+		\hline 
+		样本均值 & $ \overline{X}_{\cdot 1} $ & $ \overline{X}_{\cdot 2} $ & $ \cdots $ & $ \overline{X}_{\cdot s} $ \\ 
+		\hline 
+		总体均值 & $ \mu_{1} $ & $ \mu_{2} $ & $ \cdots $ & $ \mu_{s} $ \\ 
+		\hline 
+	\end{tabular} 
+\end{table}
+
+我们假定：各个水平$ A_j\ \left(j=1,2,\cdots,s\right) $下的样本$ X_{1j} $，$ X_{2j} $，$ \cdots $，$ X_{n_{j}j} $来自具有相同方差$ \sigma^2 $，均值分布为$ \mu_j\ (j=1,2,\cdots,s) $的正态总体$ N(\mu_j, \sigma^2) $，$ \mu_j $与$ \sigma^2 $未知。且设不同水平$ A_j $下的样本之间相互独立。
+
+由于$ X_{ij} \sim N\left( \mu_j, \sigma^2\right)  $，即有$ X_{ij} - \mu_j \sim N\left( 0, \sigma^2\right)  $，故$ X_{ij} - \mu_j $可看成是随机误差。记$ X_{ij} - \mu_j = \epsilon_{ij} $，则$ X_{ij} $可写出
+\begin{equation}\label{equation:model_of_single_factor_analysis_of_variance}
+	\left. 
+	\begin{array}{l}
+		X_{ij} = \mu_j + \epsilon_{ij} \text{，} \\
+		\epsilon_{ij} \sim N\left( 0, \sigma^2\right)  \text{，各} \epsilon_{ij} \text{独立，} \\
+		i = 1, 2, \cdots, n_j \text{，} j = 1,2,\cdots, s\text{。}
+	\end{array}
+	\right\rbrace 
+\end{equation}
+
+其中$ \mu_j $ 与 $ \sigma^2 $均为未知参数。式 \ref{equation:model_of_single_factor_analysis_of_variance} 称单因素试验方差分析的数学模型。这是本节的研究对象。
+
+方差分析的任务是对于模型 \ref{equation:model_of_single_factor_analysis_of_variance} ，
+\begin{enumerate}
+	\item 检验$ s $个总体$ N\left( \mu_1, \sigma^2\right)  $，$ \cdots $，$ N\left( \mu_s, \sigma^2\right) $的均值是否相等，即检验假设
+		\begin{equation}\label{equation:hypothesis_of_single_factor_analysis_of_variance}
+			\begin{array}{rcl}
+				H_{0} & : & \mu_1 = \mu_2 = \cdots = \mu_s \text{，}\\
+				H_{1} & : & \mu_1 \text{，} \mu_2 \text{，} \cdots \text{，} \mu_s \text{不全相等} \text{。}\\
+			\end{array}
+		\end{equation}
+	\item 作出未知参数$ \mu_1 $，$ \mu_2 $，$ \cdots $，$ \mu_s $，$ \sigma^2 $，的估计。
+\end{enumerate}
+
+为了将问题 \ref{equation:hypothesis_of_single_factor_analysis_of_variance} 写成便于讨论的形式，我们将$ \mu_1 $，$ \mu_2 $，$ \cdots $，$ \mu_s $的加权平均值$ \displaystyle \frac{1}{n}\sum_{j=1}^{s}n_{j}\mu_{j} $记为$ \mu $，即
+\begin{equation}\label{eq:mu_of_single_factor_analysis_of_variance}
+	\mu = \frac{1}{n}\sum_{j=1}^{s}n_{j}\mu_{j} \text{，}
+\end{equation}
+其中$ \displaystyle n = \sum_{j=1}^{s}n_j $，$ \mu $称为总平均。再引入
+\begin{equation}
+	\delta_j = \mu_j - \mu \text{，} j = 1, 2, \cdots, s \text{。}
+\end{equation}
+此时有$ n_1\delta_1 + n_2\delta_2 + \cdots + n_s\delta_s = 0 $，$ \delta^j $表示水平$ A_j $下的总体平均数与总平均的差异，习惯上将$ \delta_j $ 称为水平$ A_j $的效应。
+
+利用这些记号，模型 \ref{equation:model_of_single_factor_analysis_of_variance} 可改写成
+\begin{equation}\label{equation:updated_model_of_single_factor_analysis_of_variance}
+	\left. 
+	\begin{array}{l}
+		X_{ij} = \mu_j + \epsilon_{ij} \text{，} \\
+		\epsilon_{ij} \sim N\left( 0, \sigma^2\right) \text{，各} \epsilon_{ij} \text{独立，} \\
+		i = 1, 2, \cdots, n_j \text{，} j = 1,2,\cdots, s \text{，} \\
+		\displaystyle \sum_{j=1}^{s}n_{j}\delta_{j} = 0 \text{。}
+	\end{array}
+	\right\rbrace 
+\end{equation}
+而假设 \ref{equation:hypothesis_of_single_factor_analysis_of_variance} 等价于假设
+\begin{equation}\label{equation:updated_hypothesis_of_single_factor_analysis_of_variance}
+	\begin{array}{rcl}
+		H_{0} & : & \delta_1 = \delta_2 = \cdots = \delta_s = 0 \text{，}\\
+		H_{1} & : & \delta_1 \text{，} \delta_2 \text{，} \cdots \text{，} \delta_s \text{不全相等} \text{。}\\
+	\end{array}
+\end{equation}
+这是因为当且仅当$ \mu_1 = \mu_2 = \cdots = \mu_s $时$ \mu_j = \mu $，即$ \delta_j = 0 $，$ j=1,2,\cdots, s $。
+
+\subsection{平方和的分解}
+
+下面我们从平方和的分解着手，导出假设检验问题 \ref{equation:updated_hypothesis_of_single_factor_analysis_of_variance} 的检验统计量。
+
+引入总偏差平方和
+\begin{equation}
+	S_T = \sum_{j=1}^{s}\sum_{i=1}^{n_j}\left( X_{ij} - \overline{X}\right) ^2 \text{，}
+\end{equation}
+其中
+\begin{equation}\label{eq:average_of_single_factor_analysis_of_variance}
+	\overline{X} = \frac{1}{n}\sum_{j=1}^{s}\sum_{i=1}^{n_j}X_{ij}
+\end{equation}
+是数据的总平均。$ S_T $能反映全部试验数据之间的差异，因此$ S_T $又称为总变差。
+
+又记水平$ A_j $下的样本平均值为$ \overline{X}_{\cdot j} $，即
+\begin{equation}
+	\overline{X}_{\cdot j} = \frac{1}{n}\sum_{i=1}^{n_j}X_{ij} \text{。}
+\end{equation}
+
+我们将$ S_T $写出
+\begin{equation}
+	\begin{aligned}
+		S_T &= \sum_{j=1}^{s}\sum_{i=1}^{n_j}\left[ (X_{ij} - \overline{X}_{\cdot j}) + (\overline{X}_{\cdot j} - \overline{X}) \right]^{2} \\
+		&= \sum_{j=1}^{s}\sum_{i=1}^{n_j}(X_{ij} - \overline{X}_{\cdot j})^2 + \sum_{j=1}^{s}\sum_{i=1}^{n_j}(\overline{X}_{\cdot j} - \overline{X})^2 + 2 \sum_{j=1}^{s}\sum_{i=1}^{n_j}(X_{ij} - \overline{X}_{\cdot j})(\overline{X}_{\cdot j} - \overline{X})
+	\end{aligned}
+\end{equation}
+注意到上式第三项\myparenthese{即交叉项}
+\begin{equation}
+	\begin{aligned}
+		2 \sum_{j=1}^{s}\sum_{i=1}^{n_j}(X_{ij} - \overline{X}_{\cdot j})(\overline{X}_{\cdot j} - \overline{X}) &= 2 \sum_{j=1}^{s}(\overline{X}_{\cdot j} - \overline{X})\left[ \sum_{i=1}^{n_j}(X_{ij} - \overline{X}_{\cdot j}) \right] \\
+		&= 2 \sum_{j=1}^{s}(\overline{X}_{\cdot j} - \overline{X})(\sum_{j=1}^{n_j}X_{ij} - n_{j}\overline{X}_{\cdot j}) \\
+		&= 0
+	\end{aligned}
+\end{equation}
+于是，我们就将$ S_T $分解成我
+\begin{equation} \label{equation:decomposition_of_sum_of_squares}
+	S_T = S_E + S_A \text{，}
+\end{equation}
+其中
+\begin{equation}
+	S_E = \sum_{j=1}^{s}\sum_{i=1}^{n_j}\left( X_{ij} - \overline{X}_{\cdot j}\right)^2  \text{，}
+\end{equation}
+\begin{equation}
+	S_A = \sum_{j=1}^{s}\sum_{i=1}^{n_j}\left( \overline{X}_{\cdot j} - \overline{X}\right)^2 = \sum_{j=1}^{s}n_{j}\left( \overline{X}_{\cdot j} - \overline{X}\right) ^2 = \sum_{j=1}^{s}n_{j}\overline{X}_{\cdot j}^{2} - n\overline{X}^2 \text{，}
+\end{equation}
+上述$ S_E $的各项$ (X_{ij} - \overline{X}_{\cdot j})^{2} $表示在水平$ A_j $下，样本观测值与样本均值的差异，这是由随机误差所引起的。$ S_E $叫做误差平方和。$ S_A $的各项$ n_j(\overline{X}_{\cdot j} - \overline{X})^2 $表示$ A_j $水平下的样本平均值与数据总平均的差异，这是由水平$ A_j $的效应的差异以及随机误差引起的。$ S_A $叫做因素A的效应平方和。式 \ref{equation:decomposition_of_sum_of_squares}  就是我们所需要的平方和和分解式。
+
+\subsection{$ S_E $，$ S_A $的统计特征}
+
+为了引出检验问题 \ref{equation:updated_hypothesis_of_single_factor_analysis_of_variance} 的检验统计量，我们依次来讨论$ S_E $，$ S_A $的一些统计特征。先将$ S_E $写成
+\begin{equation}\label{equation:se}
+	S_E = \sum_{i=1}^{n_1}\left( X_{i1} - \overline{X}_{\cdot 1}\right)^2 + \cdots + \sum_{i=1}^{n_s}\left( X_{is} - \overline{X}_{\cdot s}\right)^2
+\end{equation}
+注意到$ \displaystyle \sum_{i=1}^{n_j}\left( X_{ij} - \overline{X}_{\cdot j}\right) ^2 $是总体$ N\left( \mu_j, \sigma^2\right)  $的样本方差的$ n_j - 1 $倍，于是有
+\begin{equation}
+	\frac{\displaystyle \sum_{i=1}^{n_j}\left( X_{ij} - \overline{X}_{\cdot j}\right) ^2}{\sigma^2} \sim \chi^2\left( n_j -1\right) 
+\end{equation}
+因各$ X_{ij} $相互独立，故式 \ref{equation:se} 中各平方和相互独立。由$ \chi^2 $分布的可加性知
+\begin{equation}
+	\frac{S_E}{\sigma^2} \sim \chi^2\left( \sum_{j=1}^{s}\left( n_j - 1\right) \right) 
+\end{equation}
+即
+\begin{equation}
+	\frac{S_E}{\sigma^2} \sim \chi^2(n - s)
+\end{equation}
+这里$ \displaystyle n = \sum_{j=1}^{s}n_{j} $，由式 还可知，$ S_E $的自由度为$ n-s $，且有
+\begin{equation}
+	E(S_E) = (n - s)\sigma^2
+\end{equation}
+
+下面讨论$ S_A $的统计特性，我们看到$ S_A $是$ s $个变量$ \sqrt{n_j}(\overline{X}_{\cdot j} - \overline{X}) \ (j=1,2,\cdots,s) $的平方和，它们之间仅有一个线性约束条件
+\begin{equation}
+	\sum_{j=1}^{s}\sqrt{n_j}\left[\sqrt{n_j}(\overline{X}_{\cdot j} - \overline{X})\right] = \sum_{j=1}^{s}n_{j}(\overline{X}_{\cdot j} - \overline{X}) = \sum_{j=1}^{s}\sum_{i=1}^{n_j}X_{ij} - n\overline{X} = 0
+\end{equation}
+故知，$ S_A $的自由度是$ s-1 $。
+
+再由式 \ref{eq:mu_of_single_factor_analysis_of_variance}、式 \ref{eq:average_of_single_factor_analysis_of_variance} 及$ X_{ij} $的独立性，知
+\begin{equation}
+	\overline{X} \sim N\left( \mu, \frac{\sigma^2}{n}\right) 
+\end{equation}
+即得
+\begin{equation}
+	\begin{aligned}
+		E\left( S_A\right) &= E\left[ \sum_{j=1}^{s}n_j\overline{X}_{\cdot j}^{2} - n\overline{X}^2 \right] \\
+		&= \sum_{j=1}^{s}n_jE\left( \overline{X}_{\cdot j}^2\right)  - nE\left( \overline{X}^2\right) \\
+		&= \sum_{j=1}^{s}n_j\left[ \frac{\sigma^2}{n_j} + \left( \mu + \delta_{j} \right)^2  \right] - n\left( \frac{\sigma^2}{n} + \mu^2 \right) \\
+		&= \left( s-1 \right) \sigma^2 + 2\mu\sum_{j=1}^{s}n_{j}\delta_{j} + n\mu^2 + \sum_{j=1}^{s}n_{j}\delta_{j}^{2} - n\mu^2
+	\end{aligned}
+\end{equation}
+由式 \ref{equation:updated_hypothesis_of_single_factor_analysis_of_variance} 知，$ \sum_{j=1}^{s}n_{j}\delta^{j} = 0 $，故有
+\begin{equation}
+	E\left( S_A \right) = \left( s-1 \right) \sigma^2 + \sum_{j=1}^{s}n_{j}\delta_{j}^{2}
+\end{equation}
+进一步还可以证明$ S_A $与$ S_E $独立，且当$ H_0 $为真时
+\begin{equation}
+	\frac{S_A}{\sigma^2} \sim \chi^2\left( s-1 \right) 
+\end{equation}
+
+\subsection{假设检验问题的拒绝域}
+
+\begin{equation}
+	\cfrac{\quad\cfrac{S_A}{s-1}\quad}{\quad\cfrac{S_E}{n-s}\quad} = 
+	\cfrac{\quad \cfrac{\ \cfrac{S_A}{\sigma^2}\ }{\ s-1\ }\quad}{\quad \cfrac{\ \cfrac{S_E}{\sigma^2}\ }{\ n-s\ }\quad} \sim F(s-1, n-s)
+\end{equation}
+
+\subsection{未知参数的估计}
+
+

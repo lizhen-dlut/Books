@@ -5,6 +5,7 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
+\usepackage{diagbox}
 \usepackage{ulem}
 
 \usepackage{paralist}%段内列表
@@ -22,17 +23,17 @@
 \newcommand{\myimportantpoint}[1]{\textbf{\uline{#1}}}
 \newcommand{\myparenthese}[1]{（#1）}
 
-\newtheorem{axiom}{公理}
-\newtheorem{claim}{断言}
-\newtheorem{conjecture}{猜想}
-\newtheorem{corollary}{推论}
-\newtheorem{definition}{定义}
-\newtheorem{identity}{恒等式}
-\newtheorem{lemma}{引理}
-\newtheorem{note}{注}
-\newtheorem{paradox}{悖论}
-\newtheorem{proposition}{命题}
-\newtheorem{theorem}{定理}
+\newtheorem{axiom}{公理}[chapter]
+\newtheorem{claim}{断言}[chapter]
+\newtheorem{conjecture}{猜想}[chapter]
+\newtheorem{corollary}{推论}[chapter]
+\newtheorem{definition}{定义}[chapter]
+\newtheorem{identity}{恒等式}[chapter]
+\newtheorem{lemma}{引理}[chapter]
+\newtheorem{note}{注}[chapter]
+\newtheorem{paradox}{悖论}[chapter]
+\newtheorem{proposition}{命题}[chapter]
+\newtheorem{theorem}{定理}[chapter]
 
 %%% The "real" document content comes below...
 \newcommand{\documentTitle}{\texorpdfstring{数学学习笔记}{数学学习笔记}}
@@ -91,7 +92,7 @@
 %	\input{./chapters/线性空间与线性变换}
 	
 	\part{概率论与数理统计}
-%	\input{./chapters/概率论的基本概念}
+	\input{./chapters/basic_concepts_of_probability} %概率论的基本概念
 	\input{./chapters/random_variables_and_probability_distributions} %随机变量及其分布
 	\input{./chapters/multidimensional_random_variable_and_distribution} %多维随机变量及其分布
 %	\input{./chapters/随机变量的数字特征}
@@ -99,7 +100,7 @@
 %	\input{./chapters/样本及抽样分布}
 %	\input{./chapters/参数估计}
 %	\input{./chapters/假设检验}
-%	\input{./chapters/方差分析及回归分析}
+	\input{./chapters/analysis_of_variance_and_regression_analysis} %方差分析及回归分析
 %	\input{./chapters/bootstrap方法}
 %	\input{./chapters/随机过程及其统计描述}
 %	\input{./chapters/马尔可夫链}
