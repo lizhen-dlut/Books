@@ -1,0 +1,350 @@
+\chapter{Samtools}\label{software:samtools}
+
+Samtools包含了一系列操作高通量测序数据的工具，主要用于操作SAM格式、BAM格式等。主要包括的模块包括：
+
+\noindent \begin{table}[ht]
+	\centering
+	\begin{tabular}{|c|c|}
+		\hline 
+		Samtools & 读写、编辑以及排序SAM/BAM/CRAM文件 \\ 
+		\hline 
+		BCFtools & 读写BCF2/VCF/gVCF文件；SNP和InDel的提取、过滤等 \\ 
+		\hline 
+		HTSlib & 读写高通量数据格式的C语言库 \\ 
+		\hline 
+	\end{tabular} 
+\end{table}
+
+通过Samtools可以很方便的对SAM、BAM文件进行排序、合并、索引，并可以很方便地提取任意区域的Reads。
+
+Samtools能够识别和打开FTP（\mydoubleQuote{ftp://}）或HTTP（\mydoubleQuote{http://}）服务器上的BAM文件（不能打开SAM文件）。
+
+\section{用法举例}
+
+\begin{lstlisting}[style=mycommandBlockStyle]
+samtools view -bt ref_list.txt -o aln.bam aln.sam.gz 
+\end{lstlisting}
+\begin{lstlisting}[style=mycommandBlockStyle]
+samtools sort -T /tmp/aln.sorted -o aln.sorted.bam aln.bam 
+\end{lstlisting}
+\begin{lstlisting}[style=mycommandBlockStyle]
+samtools index aln.sorted.bam 
+\end{lstlisting}
+\begin{lstlisting}[style=mycommandBlockStyle]
+samtools idxstats aln.sorted.bam 
+\end{lstlisting}
+\begin{lstlisting}[style=mycommandBlockStyle]
+samtools flagstat aln.sorted.bam 
+\end{lstlisting}
+\begin{lstlisting}[style=mycommandBlockStyle]
+samtools stats aln.sorted.bam 
+\end{lstlisting}
+\begin{lstlisting}[style=mycommandBlockStyle]
+samtools bedcov aln.sorted.bam 
+\end{lstlisting}
+\begin{lstlisting}[style=mycommandBlockStyle]
+samtools depth aln.sorted.bam 
+\end{lstlisting}
+\begin{lstlisting}[style=mycommandBlockStyle]
+samtools view aln.sorted.bam chr2:20,100,000-20,200,000 
+\end{lstlisting}
+\begin{lstlisting}[style=mycommandBlockStyle]
+samtools merge out.bam in1.bam in2.bam in3.bam 
+\end{lstlisting}
+\begin{lstlisting}[style=mycommandBlockStyle]
+samtools faidx ref.fasta 
+\end{lstlisting}
+\begin{lstlisting}[style=mycommandBlockStyle]
+samtools tview aln.sorted.bam ref.fasta 
+\end{lstlisting}
+\begin{lstlisting}[style=mycommandBlockStyle]
+samtools split merged.bam 
+\end{lstlisting}
+\begin{lstlisting}[style=mycommandBlockStyle]
+samtools quickcheck in1.bam in2.cram 
+\end{lstlisting}
+\begin{lstlisting}[style=mycommandBlockStyle]
+samtools dict -a GRCh38 -s "Homo sapiens" ref.fasta 
+\end{lstlisting}
+\begin{lstlisting}[style=mycommandBlockStyle]
+samtools fixmate in.namesorted.sam out.bam 
+\end{lstlisting}
+\begin{lstlisting}[style=mycommandBlockStyle]
+samtools mpileup -C50 -gf ref.fasta -r chr3:1,000-2,000 in1.bam in2.bam 
+\end{lstlisting}
+\begin{lstlisting}[style=mycommandBlockStyle]
+samtools flags PAIRED,UNMAP,MUNMAP 
+\end{lstlisting}
+\begin{lstlisting}[style=mycommandBlockStyle]
+samtools fastq input.bam > output.fastq 
+\end{lstlisting}
+\begin{lstlisting}[style=mycommandBlockStyle]
+samtools fasta input.bam > output.fasta 
+\end{lstlisting}
+\begin{lstlisting}[style=mycommandBlockStyle]
+samtools addreplacerg -r 'ID:fish' -r 'LB:1334' -r 'SM:alpha' -o output.bam input.bam 
+\end{lstlisting}
+\begin{lstlisting}[style=mycommandBlockStyle]
+samtools collate aln.sorted.bam aln.name_collated.bam 
+\end{lstlisting}
+\begin{lstlisting}[style=mycommandBlockStyle]
+samtools depad input.bam 
+\end{lstlisting}
+\begin{lstlisting}[style=mycommandBlockStyle]
+samtools markdup in.algnsorted.bam out.bam
+\end{lstlisting}
+
+\section{Samtools可用命令和参数}
+
+\subsection{samtools view}
+
+samtools view的基本用法如下：
+\begin{lstlisting}[style=mycommandBlockStyle]
+samtools view [options] in.sam|in.bam|in.cram [region...] 
+\end{lstlisting}
+
+改命令主要用于将比对文件（SAM、BAM或CRAM文件）中满足给定条件的比对结果输出到标准输出（屏幕）。
+
+可以在 \verb|[region...]| 处按 \verb|RNAME[:STARTPOS[-ENDPOS]]|的格式指定满足给定条件的比对结果所在的染色体区域（\mywarningPoint{当给定多个区域时，某些比对结果可能输出多次}）。指定\verb|[region...]|的形式举例（表 \ref{table:examples_for_samtools_view_region}）：
+
+\begin{table}
+	\label{table:examples_for_samtools_view_region}
+	\caption{samtools view [region...] 设置举例}
+	\begin{tabular}{|c|c|}
+		\hline 
+		chr1 & 输出所有参考序列名称为chr1的比对结果 \\ \hline 
+		chr2:1000000 & 输出所有参考序列名称为chr2的，比对位点在1000000之后的比对结果 \\ \hline 
+		chr3:1000-2000 & 输出所有参考序列名称为chr3的，比对位点在1000之后、2000之前的比对结果 \\ \hline 
+		'*' & 输出文件末尾的、未能比对的reads。\\ \hline
+		. & 输出所有比对结果，等同于未指定REGION。\\ \hline
+	\end{tabular} 
+\end{table}
+
+
+samtools view可以指定一系列的参数（options，表 \ref{table:samtools_view_options}）：
+
+\begin{longtable}{|c|c|p{0.8\textwidth}|}
+	\caption{samtools view可选参数} \label{table:samtools_view_options}\\
+	\hline
+	参数 & 值 & 说明\\
+	\endfirsthead
+	\multicolumn{3}{l}{续表 \ref{table:samtools_view_options} $ \cdots $} \\
+	\hline
+	参数 & 值 & 说明\\
+	\endhead
+	\hline 
+	-b &  & Output in the BAM format \\ \hline
+	-C &  & Output in the CRAM format (requires -T) \\ \hline
+	-1 &  & Enable fast BAM compression (implies -b) \\ \hline
+	-u &  & Output uncompressed BAM. This option saves time spent on compression/decompression and is thus preferred when the output is piped to another samtools command.  \\ \hline
+	-h & & Include the header in the output. \\ \hline
+	-H & & Output the header only. \\ \hline
+	-c & & Instead of printing the alignments, only count them and print the total number. All filter options, such as -f, -F, and -q, are taken into account. \\ \hline
+	-? & & Output long help and exit immediately. \\ \hline
+	-o & FILE & Output to FILE [stdout]. \\ \hline
+	-U & FILE & Write alignments that are not selected by the various filter options to FILE. When this option is used, all alignments (or all alignments intersecting the regions specified) are written to either the output file or this file, but never both. \\ \hline
+	-t & FILE & A tab-delimited FILE. Each line must contain the reference name in the first column and the length of the reference in the second column, with one line for each distinct reference. Any additional fields beyond the second column are ignored. This file also defines the order of the reference sequences in sorting. If you run: `samtools faidx <ref.fa>', the resulting index file <ref.fa>.fai can be used as this FILE. \\ \hline
+	-T & FILE & A FASTA format reference FILE, optionally compressed by bgzip and ideally indexed by samtools faidx. If an index is not present, one will be generated for you. \\ \hline
+	-L & FILE & Only output alignments overlapping the input BED FILE [null]. \\ \hline
+	-r & STR & Only output alignments in read group STR [null]. \\ \hline
+	-R & FILE & Output alignments in read groups listed in FILE [null]. \\ \hline
+	-q & INT & Skip alignments with MAPQ smaller than INT [0]. \\ \hline
+	-l & STR & Only output alignments in library STR [null]. \\ \hline
+	-m & INT & Only output alignments with number of CIGAR bases consuming query sequence ≥ INT [0] \\ \hline
+	-f & INT & Only output alignments with all bits set in INT present in the FLAG field. INT can be specified in hex by beginning with `0x' (i.e.\verb|/^0x[0-9A-F]+/|) or in octal by beginning with `0' (i.e. \verb|/^0[0-7]+/|) [0]. \\ \hline
+	-F & INT & Do not output alignments with any bits set in INT present in the FLAG field. INT can be specified in hex by beginning with `0x' (i.e. \verb|/^0x[0-9A-F]+/|) or in octal by beginning with `0' (i.e. \verb|/^0[0-7]+/|) [0]. \\ \hline
+	-G & INT & Do not output alignments with all bits set in INT present in the FLAG field. This is the opposite of -f such that -f12 -G12 is the same as no filtering at all. INT can be specified in hex by beginning with `0x' (i.e. \verb|/^0x[0-9A-F]+/|) or in octal by beginning with `0' (i.e.\verb|/^0[0-7]+/|) [0]. \\ \hline
+	-x & STR & Read tag to exclude from output (repeatable) [null] \\ \hline
+	-B & & Collapse the backward CIGAR operation. \\ \hline
+	-s & FLOAT & Output only a proportion of the input alignments. This subsampling acts in the same way on all of the alignment records in the same template or read pair, so it never keeps a read but not its mate. 
+	The integer and fractional parts of the -s INT.FRAC option are used separately: the part after the decimal point sets the fraction of templates/pairs to be kept, while the integer part is used as a seed that influences which subset of reads is kept. 
+	When subsampling data that has previously been subsampled, be sure to use a different seed value from those used previously; otherwise more reads will be retained than expected.  \\ \hline
+	-@ & INT & Number of BAM compression threads to use in addition to main thread [0]. \\ \hline
+	-S & & Ignored for compatibility with previous samtools versions. Previously this option was required if input was in SAM format, but now the correct format is automatically detected by examining the first few characters of input. \\ \hline
+\end{longtable}
+
+\subsection{samtools sort}
+
+samtools sort命令用于给定的条件对比对结果进行排序。默认情况下，按照按照个比对结果最左边的坐标。如果给出\verb|-n|，则按比对结果的read名称进行排序。
+
+排序规则为：
+\begin{quotation}
+	如果存在\mydoubleQuote{-t}参数，比对记录首先根据跟定的比对标签（alignment tag）；然后如果存在\mydoubleQuote{-n}参数，则按read名称排序，否则按坐标排序。
+\end{quotation}
+
+默认情况下，会将结果输出到标准输出（一般是屏幕）；如果给出\verb|-o|，则会将结果写入\verb|-o|指定的文件。
+
+samtools sort的基本用法如下：
+\begin{lstlisting}[style=mycommandBlockStyle]
+samtools sort [-l level] [-m maxMem] [-o out.bam] [-O format]
+	[-n] [-t tag] [-T tmpprefix] [-@ threads] 
+	[in.sam|in.bam|in.cram] 
+\end{lstlisting}
+
+samtools sort的可选参数包括（表 \ref{table:samtools_sort_options}）：
+
+\begin{longtable}{|c|c|p{0.8\textwidth}|}
+	\caption{samtools sort可选参数} \label{table:samtools_sort_options}\\
+	\hline
+	参数 & 值 & 说明\\
+	\endfirsthead
+	\hline
+	\multicolumn{3}{|l|}{续表 \ref{table:samtools_sort_options} $ \cdots $} \\
+	\hline
+	参数 & 值 & 说明\\
+	\endhead
+	\hline 
+	-l & INT & 小写字母\mydoubleQuote{L}，level；设置期望的压缩级别。0：不压缩；1速度最快，压缩程度较低；9：压缩程度最高； （与gzip的压缩级别类似）\\ \hline
+	-m & INT & 小写字母\mydoubleQuote{m}，memory；每个线程最大的（大致）内存需求。可以通过 K、M或 G指定单位。为防止参数大量临时文件，最小值需大于1M。\\ \hline
+	-n  & & 按read名称（SAM格式的QNAME字段）排序。 \\ \hline
+	-t & TAG & Sort first by the value in the alignment tag TAG, then by position or name (if also using -n). \\ \hline
+	-o & FILE & 将输出写入到FILE中。  \\ \hline
+	-O & FORMAT & 输出文件的格式（sam、bam和cram）；默认值bam。 \\ \hline
+	-T & PREFIX & 如果PREFIX是文件夹，则命名临时文件为\mydoubleQuote{PREFIX/samtools.mmm.mmm.tmp.nnnn.bam}。否则，命名临时文件为\mydoubleQuote{PREFIX.nnnn.bam}。 \\ \hline
+	-@ & INT & 设置线程数，默认为单线程。 \\ \hline
+\end{longtable}
+
+\subsection{samtools index}
+对BAM或CRAM创建索引，以便于快速随机访问。
+
+samtools index 的基本用法如下：
+\begin{lstlisting}[style=mycommandBlockStyle]
+samtools index [-bc] [-m INT] aln.bam|aln.cram [out.index] 
+\end{lstlisting}
+
+samtools  index 的可选参数包括（表 \ref{table:samtools_index_options}）：
+
+\begin{longtable}{|c|c|p{0.8\textwidth}|}
+	\caption{samtools sort可选参数} \label{table:samtools_index_options}\\
+	\hline
+	参数 & 值 & 说明\\
+	\endfirsthead
+	\hline
+	\multicolumn{3}{|l|}{续表 \ref{table:samtools_index_options} $ \cdots $} \\
+	\hline
+	参数 & 值 & 说明\\
+	\endhead
+	\hline 
+	-b & & 创建BAI索引。 \\ \hline
+	-c & & 创建CSI 索引。默认情况下，最小间隔大小为$ 2^{14} $。\\ \hline
+	-m & INT & 创建CSI 索引，将最小间隔大小设置为$ 2^{\text{INT}} $。 \\ \hline
+\end{longtable}
+
+\subsection{samtools idxstats}
+
+输出与给定文件相关的索引文件的状态。故在使用此命令前，应该对输入文件使用index命令处理。
+
+samtools idxstats 的基本用法如下：
+\begin{lstlisting}[style=mycommandBlockStyle]
+samtools idxstats in.sam|in.bam|in.cram 
+\end{lstlisting}
+
+输出内容包括：
+\begin{itemize}
+	\item 参考序列名称
+	\item 参考序列长度
+	\item 比对上的reads数目
+	\item 未必对上的reads数目
+\end{itemize}
+
+\subsection{samtools flagstat}
+计算并输出统计信息到标准输出（一般指屏幕）。
+
+samtools flagstat 的基本用法如下：
+\begin{lstlisting}[style=mycommandBlockStyle]
+samtools flagstat in.sam|in.bam|in.cram 
+\end{lstlisting}
+
+\subsection{samtools stats}
+samtools stats收集BAM文件的统计信息，并输入到文本文件中。输出文件可以通过\mysoftwareName{plot-bamstats}。
+
+samtools stats 的基本用法如下：
+\begin{lstlisting}[style=mycommandBlockStyle]
+samtools stats [options] in.sam|in.bam|in.cram [region...] 
+\end{lstlisting}
+
+\begin{longtable}{|c|c|c|p{0.5\textwidth}|}
+	\caption{samtools stats 可选参数} \label{table:samtools_stats_options}\\
+	\hline
+	参数 & 长参数 & 值 & 说明\\
+	\endfirsthead
+	\hline
+	\multicolumn{4}{|l|}{续表 \ref{table:samtools_stats_options} $ \cdots $} \\
+	\hline
+	参数 & 长参数 & 值 & 说明\\
+	\endhead
+	\hline 
+	-c & --coverage & MIN,MAX,STEP & 设置指定区域的覆盖分布情况 （MIN, MAX, STEP） [1,1000,1] \\ \hline
+	-d & --remove-dups & & Exclude from statistics reads marked as duplicates \\ \hline
+	-f & --required-flag & STR|INT & Required flag, 0 for unset. See also `samtools flags` [0] \\ \hline
+	-F & --filtering-flag & STR|INT & Filtering flag, 0 for unset. See also `samtools flags` [0] \\ \hline
+	& --GC-depth & FLOAT & the size of GC-depth bins (decreasing bin size increases memory requirement) [2e4] \\ \hline
+	-h & --help & & 输出帮助信息 \\ \hline
+	-i & --insert-size & INT & Maximum insert size [8000] \\ \hline
+	-I & --id & STR & Include only listed read group or sample name [] \\ \hline
+	-l & --read-length & INT & Include in the statistics only reads with the given read length [] \\ \hline
+	-m & --most-inserts & FLOAT & Report only the main part of inserts [0.99] \\ \hline
+	-P & --split-prefix & STR & A path or string prefix to prepend to filenames output when creating categorised statistics files with -S/--split. [input filename] \\ \hline
+	-q & --trim-quality & INT & The BWA trimming parameter [0] \\ \hline
+	-r & --ref-seq & FILE & Reference sequence (required for GC-depth and mismatches-per-cycle calculation). [] \\ \hline
+	-S & --split & TAG & In addition to the complete statistics, also output categorised statistics based on the tagged field TAG (e.g., use --split RG to split into read groups). 
+	Categorised statistics are written to files named \verb|<prefix>_<value>|.bamstat, where prefix is as given by --split-prefix (or the input filename by default) and value has been encountered as the specified tagged field's value in one or more alignment records. \\ \hline
+	-t & --target-regions & FILE & Do stats in these regions only. Tab-delimited file chr,from,to, 1-based, inclusive. [] \\ \hline
+	-x & --sparse & & Suppress outputting IS rows where there are no insertions. 。 \\ \hline
+\end{longtable}
+
+\subsection{samtools bedcov}
+
+\subsection{samtools depth}
+
+\subsection{samtools merge}
+
+\subsection{samtools faidx}
+
+\subsection{samtools tview}
+
+\subsection{samtools split}
+
+\subsection{samtools quickcheck}
+
+\subsection{samtools dict}
+
+\subsection{samtools fixmate}
+
+\subsection{samtools mpileup}
+
+\subsection{samtools flags}
+
+\subsection{samtools fastq/a}
+
+\subsection{samtools collate}
+
+\subsection{samtools reheader}
+
+\subsection{samtools cat}
+
+\subsection{samtools rmdup}
+
+\subsection{samtools addreplacerg}
+
+\subsection{samtools calmd}
+
+\subsection{samtools targetcut}
+
+\subsection{samtools phase}
+
+\subsection{samtools depad}
+
+\subsection{samtools markdup}
+
+\subsection{samtools help}
+
+显然，该命令用于输出samtools的帮助信息。另外，如果给出了samtools的命令名，该命令将输出有关samtools特定命令的帮助信息。
+
+samtools help的基本用法如下：
+
+\begin{lstlisting}[style=mycommandBlockStyle]
+samtools help view
+\end{lstlisting}
+
+

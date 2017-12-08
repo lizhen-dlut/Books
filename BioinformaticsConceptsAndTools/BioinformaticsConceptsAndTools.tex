@@ -1,0 +1,254 @@
+\documentclass[14pt]{book}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{color}
+\usepackage{ctex}
+\usepackage[left=0.5in, right=0.5in]{geometry}
+\usepackage{listings}% 代码环境
+\usepackage{longtable}%处理跨页表格
+\usepackage{makecell}%单独控制表格单元
+\usepackage{makeidx}%索引支持
+\usepackage{mathdots}
+\usepackage{mathtools}
+\usepackage{multicol} % 分栏控制
+\usepackage{multirow}%表格跨行排版
+\usepackage[square,super,sort&compress]{natbib} %定制参考文献
+\usepackage{paralist}%段内列表
+\usepackage{pdflscape}
+\usepackage{pgfornament}
+\usepackage{picinpar}%图文绕排
+\usepackage{pifont}%符号
+\usepackage{shapepar}%根据预定义形状排版
+\usepackage{subcaption}%子图标排版
+\usepackage{syntonly}%语法检查
+\usepackage{tabularx}%提供X格式说明符
+\usepackage{tcolorbox}
+\usepackage{textcomp}%多种符号
+\usepackage{tikz}%绘图功能
+\usepackage{titlesec}%设置标题的对齐方式
+%\usepackage{titletoc} % 用于目录
+%\usepackage[numindex,numbib]{tocbibind}%把目录、参考文献等加入到目录中
+\usepackage{tracefnt}
+\usepackage{ulem}
+\usepackage{verbatim}%原文输出功能
+\usepackage{wasysym}
+\usepackage{wrapfig}%图文绕排
+
+%hyperref、hyperxmp应该在最后
+\usepackage{hyperref}
+\usepackage{hyperxmp}
+
+%\syntaxonly
+\makeindex
+\usetikzlibrary{shapes}
+\tcbuselibrary{listings,skins,breakable}
+
+
+\newtheorem{axiom}{公理}[chapter]
+\newtheorem{claim}{断言}[chapter]
+\newtheorem{conjecture}{猜想}[chapter]
+\newtheorem{corollary}{推论}[chapter]
+\newtheorem{definition}{定义}[chapter]
+\newtheorem{identity}{恒等式}[chapter]
+\newtheorem{lemma}{引理}[chapter]
+\newtheorem{note}{注}[chapter]
+\newtheorem{paradox}{悖论}[chapter]
+\newtheorem{proposition}{命题}[chapter]
+\newtheorem{theorem}{定理}[chapter]
+
+\lstdefinestyle{mycommandBlockStyle}{
+	language=C++,
+	belowcaptionskip=1\baselineskip,
+	breaklines=true,
+	tabsize=4,
+	numbers=left,numberstyle=\tiny, numbersep=10pt,
+	frame=single,
+	xleftmargin=\parindent,
+	showstringspaces=false,
+	basicstyle=\footnotesize\ttfamily,
+	keywordstyle=\bfseries\color{green!40!black},
+	commentstyle=\itshape\color[rgb]{57,A6,4A},
+	identifierstyle=\color{blue},
+	stringstyle=\color{red},
+	backgroundcolor=\color{yellow!10},
+}
+
+\lstdefinestyle{mycppBlockStyle}{
+	language=C++,
+	belowcaptionskip=1\baselineskip,
+	breaklines=true,
+	tabsize=4,
+	numbers=left,numberstyle=\tiny, numbersep=10pt,
+	frame=single,
+	xleftmargin=\parindent,
+	showstringspaces=false,
+	basicstyle=\footnotesize\ttfamily,
+	keywordstyle=\bfseries\color{green!40!black},
+	commentstyle=\itshape\color[rgb]{57,A6,4A},
+	identifierstyle=\color{blue},
+	stringstyle=\color{red},
+	backgroundcolor=\color{yellow!10},
+}
+
+\lstdefinestyle{mycppInlineStyle}{
+	language=C++,
+	belowcaptionskip=1\baselineskip,
+	breaklines=true,
+	tabsize=4,
+	numbers=left,numberstyle=\tiny, numbersep=10pt,
+	frame=single,
+	xleftmargin=\parindent,
+	showstringspaces=false,
+	basicstyle=\ttfamily,
+	keywordstyle=\bfseries\color{green!40!black},
+	commentstyle=\itshape\color[rgb]{57,A6,4A},
+	identifierstyle=\color{blue},
+	stringstyle=\color{red},
+	backgroundcolor=\color{red!10},
+}
+
+\lstdefinestyle{mypythonBlockStyle}{
+	language=C++,
+	belowcaptionskip=1\baselineskip,
+	breaklines=true,
+	tabsize=4,
+	numbers=left,numberstyle=\tiny, numbersep=10pt,
+	frame=single,
+	xleftmargin=\parindent,
+	showstringspaces=false,
+	basicstyle=\footnotesize\ttfamily,
+	keywordstyle=\bfseries\color{green!40!black},
+	commentstyle=\itshape\color[rgb]{57,A6,4A},
+	identifierstyle=\color{blue},
+	stringstyle=\color{red},
+	backgroundcolor=\color{yellow!10},
+}
+
+\newcommand{\myprogrammingLanguagePackageName}[1]{\textit{\textbf{#1}}}
+\newcommand{\myprogrammingLanguageNamespace}[1]{\textit{\textbf{#1}}}
+\newcommand{\myprogrammingLanguageClass}[1]{\textit{\textbf{#1}}}
+\newcommand{\myprogrammingLanguageFunction}[1]{\textit{\textbf{#1}}}
+\newcommand{\myprogrammingLanguageInterface}[1]{\textit{\textbf{ #1 }}}
+\newcommand{\myprogrammingLanguageVariable}[1]{\textit{\textbf{ #1 }}}
+\newcommand{\myprogrammingLanguageKeyword}[1]{\textbf{\textcolor{blue}{ #1 }}}
+
+\newcommand{\mysoftwareName}[1]{\textit{\textbf{ #1 }}}
+\newcommand{\mysoftwareCommand}[1]{\textit{\textbf{ #1 }}}
+\newcommand{\mysoftwareOption}[1]{\textit{\textbf{ #1 }}}
+
+\newcommand{\cpp}{C++}
+
+\newcommand{\mydoubleQuote}[1]{``#1''}
+\newcommand{\myhumanGene}[1]{\textbf{\textcolor{blue}{\textit{#1}}}}
+
+\newcommand{\myimportantPoint}[1]{\textbf{\uline{#1}}}
+\newcommand{\mykeyPoint}[1]{\textbf{\uline{#1}}}
+\newcommand{\mywarningPoint}[1]{\textbf{\uline{#1}}}
+\newcommand{\mysuggestion}[1]{\textbf{\uline{#1}}}
+\newcommand{\myproteinName}[1]{\textcolor{red}{#1}}
+\newcommand{\mylifeSpan}[2]{ $ #1 \sim #2 $ }
+
+\bibliographystyle{plain} %推荐JabRef工具
+
+\newcommand{\mydocumentTitle}{
+	\texorpdfstring{生物信息学基本概念与工具}
+	{生物信息学基本概念与工具}}
+\newcommand{\mydocumentAuthor}{ZHANG Yang}
+\newcommand{\mydocumentKeywords}{生物信息学, Bioinformatics, C++, Python, R}
+\newcommand{\mydocumentSubject}{\mydocumentKeywords}
+
+\hypersetup{
+	pdftitle=\mydocumentTitle,
+	pdfauthor=\mydocumentAuthor,
+	pdfsubject= \mydocumentSubject,
+	pdfkeywords= \mydocumentKeywords,
+	pdfstartview=FitH,
+	pdfproducer = \mydocumentAuthor,
+	pdfcreator = \mydocumentAuthor, 
+	pdfcopyright = \mydocumentAuthor, 
+	pdflicenseurl = {https://github.com/hiatcg},
+	colorlinks=true, % false: boxed links; true: colored links
+	linkcolor=red, % color of internal links
+	citecolor=red, % color of links to bibliography
+	filecolor=red, % color of file links
+	urlcolor=yellow, % color of external links
+}
+
+\title{\mydocumentTitle}
+\author{\mydocumentAuthor}
+
+\begin{document}
+	
+\frontmatter
+
+\maketitle
+\include{./chapters/preface}
+\tableofcontents
+
+\mainmatter
+\include{./chapters/introduction}
+
+\part{生物信息学基本概念介绍}
+
+\part{生物信息学常用文件格式}
+
+\part{生物信息学常用工具}
+\input{./chapters/Samtools}
+
+\part{R程序设计语言}
+\input{./chapters/r_help}
+\input{./chapters/r_control_flow}
+\input{./chapters/r_data_structures}
+\input{./chapters/r_builtin_functions}
+\input{./chapters/r_object_oriented_programming}
+\input{./chapters/r_input_and_output}
+\input{./chapters/r_errors_and_exceptions}
+\input{./chapters/r_standard_library}
+
+\part{Python程序设计语言}
+\input{./chapters/python_help}
+\input{./chapters/python_control_flow}
+\input{./chapters/python_data_structures}
+\input{./chapters/python_builtin_functions}
+\input{./chapters/python_object_oriented_programming}
+\input{./chapters/python_input_and_output}
+\input{./chapters/python_errors_and_exceptions}
+\input{./chapters/python_standard_library}
+
+\part{\cpp 程序设计语言}
+\input{./chapters/cpp_help}
+\input{./chapters/cpp_control_flow}
+\input{./chapters/cpp_data_structures}
+%\input{./chapters/cpp_operators}
+%\input{./chapters/cpp_class}
+%\input{./chapters/cpp_inheritance}
+%\input{./chapters/cpp_polymorphism}
+%\input{./chapters/cpp_operator_overloading}
+%\input{./chapters/cpp_templates}
+%\input{./chapters/cpp_generic_programming}
+%\input{./chapters/cpp_standard_library_introduction}
+%\input{./chapters/cpp_stl_containers}
+%\input{./chapters/cpp_stl_algorithms}
+%\input{./chapters/cpp_stl_iterators}
+%\input{./chapters/cpp_stl_memory_and_resources}
+%\input{./chapters/cpp_string}
+%\input{./chapters/cpp_regex}
+%\input{./chapters/cpp_concurrency}
+%\input{./chapters/cpp_treads}
+%\input{./chapters/cpp_errors_and_exceptions}
+
+
+\appendix
+\include{./chapters/appendix}
+
+\backmatter
+
+\include{./chapters/prologue} % 后记prologue.tex
+
+\bibliography{...} % 利用BibTeX 工具生成参考文献
+
+\printindex % 利用makeindex 工具生成索引
+
+\end{document}

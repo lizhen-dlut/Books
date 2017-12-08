@@ -1,0 +1,50 @@
+\chapter{Python控制语句}
+
+\section{\myprogrammingLanguageKeyword{if}语句}
+
+\begin{verbatim}
+if_stmt ::=  "if" expression ":" suite
+			( "elif" expression ":" suite )*
+			["else" ":" suite]
+\end{verbatim}
+
+\begin{lstlisting}[style=mypythonBlockStyle]
+x = int(input("Please enter an integer: "))
+
+if x < 0:
+	x = 0
+	print('Negative changed to zero')
+elif x == 0:
+	print('Zero')
+elif x == 1:
+	print('Single')
+else:
+	print('More')
+\end{lstlisting}
+
+\section{\myprogrammingLanguageKeyword{for}语句}
+
+\begin{verbatim}
+for_stmt ::=  "for" target_list "in" expression_list ":" suite
+["else" ":" suite]
+\end{verbatim}
+
+\begin{lstlisting}[style=mypythonBlockStyle]
+animals = ['cat', 'dog']
+
+for animal in animals:
+	print(animal, len(animal))
+\end{lstlisting}
+
+\section{\myprogrammingLanguageKeyword{while}语句}
+
+\begin{verbatim}
+while_stmt ::=  "while" expression ":" suite
+["else" ":" suite]
+\end{verbatim}
+
+\section{\myprogrammingLanguageKeyword{break}语句}
+
+\section{\myprogrammingLanguageKeyword{continue}语句}
+
+\section{\myprogrammingLanguageKeyword{pass}语句}
